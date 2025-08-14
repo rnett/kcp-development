@@ -1,23 +1,21 @@
 package dev.rnett.kcp.development.testing.tests
 
-import kotlin.reflect.KClass
+import dev.rnett.kcp.development.testing.tests.levels.TestLevel
+import dev.rnett.kcp.development.testing.tests.levels.TestSpec
 
-//TODO a more defined progression Diagnostic -> FIR -> IR -> Run.  That allows you to mix and match parts.
+enum class TestType(val spec: TestSpec) {
+    Diagnostics(TestLevel.Diagnostics.full),
+    Fir(TestLevel.Fir.only),
+    Ir(TestLevel.Ir.only),
+    Compile(TestLevel.Ir.full),
+    Run(TestLevel.Run.only),
+    Box(TestLevel.Run.full);
 
-enum class TestType(val directoryName: String, val testSuffix: String, val cls: KClass<out AppliesDynamicConfigurators>) {
-    Diagnostic("diagnostics", "Diagnostics", AbstractDiagnosticsTest::class),
-    Fir("fir", "Fir", AbstractDumpingFirDiagnosticsTest::class),
-    Ir("ir", "Ir", AbstractIrDumpTest::class),
-    Dump("dump", "Dump", AbstractDumpTest::class),
-    Box("box", "Box", AbstractDumpingJvmBoxTest::class),
-    BlackBox("run", "BlackBox", AbstractJvmBoxTest::class);
+    val directoryName by lazy { name.lowercase() }
+
+    val testSuiteName by lazy { "${name}TestGenerated" }
 
     companion object {
         val byDirectoryName = entries.associateBy { it.directoryName }
-
-        init {
-            require(entries.map { it.directoryName }.toSet().size == entries.size) { "All directory names must be unique" }
-            require(entries.map { it.testSuffix }.toSet().size == entries.size) { "All test suffixes must be unique" }
-        }
     }
 }

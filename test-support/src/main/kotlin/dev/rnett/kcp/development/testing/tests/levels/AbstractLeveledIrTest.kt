@@ -1,7 +1,5 @@
-package dev.rnett.kcp.development.testing.tests
+package dev.rnett.kcp.development.testing.tests.levels
 
-import dev.rnett.kcp.development.testing.runtime.ClasspathBasedStandardLibrariesPathProvider
-import dev.rnett.kcp.development.testing.tests.KcpDevelopmentCompilerTest.Companion.applyDefaults
 import org.jetbrains.kotlin.test.backend.BlackBoxCodegenSuppressor
 import org.jetbrains.kotlin.test.backend.handlers.IrPrettyKotlinDumpHandler
 import org.jetbrains.kotlin.test.backend.handlers.IrTextDumpHandler
@@ -12,29 +10,21 @@ import org.jetbrains.kotlin.test.configuration.additionalK2ConfigurationForIrTex
 import org.jetbrains.kotlin.test.configuration.commonConfigurationForJvmTest
 import org.jetbrains.kotlin.test.configuration.commonHandlersForCodegenTest
 import org.jetbrains.kotlin.test.configuration.setupDefaultDirectivesForIrTextTest
-import org.jetbrains.kotlin.test.directives.CodegenTestDirectives.IGNORE_DEXING
-import org.jetbrains.kotlin.test.directives.FirDiagnosticsDirectives.FIR_DUMP
 import org.jetbrains.kotlin.test.directives.TestPhaseDirectives.LATEST_PHASE_IN_PIPELINE
 import org.jetbrains.kotlin.test.runners.ir.AbstractFirLightTreeJvmIrTextTest
-import org.jetbrains.kotlin.test.services.KotlinStandardLibrariesPathProvider
 import org.jetbrains.kotlin.test.services.PhasedPipelineChecker
 import org.jetbrains.kotlin.test.services.TestPhase
 import org.jetbrains.kotlin.utils.bind
 
-open class AbstractDumpTest : AbstractFirLightTreeJvmIrTextTest(), KcpDevelopmentCompilerTest, AppliesDynamicConfigurators {
-    override fun createKotlinStandardLibrariesPathProvider(): KotlinStandardLibrariesPathProvider {
-        return ClasspathBasedStandardLibrariesPathProvider
-    }
+open class AbstractLeveledIrTest : AbstractFirLightTreeJvmIrTextTest() {
 
-    override fun configuration(builder: TestConfigurationBuilder) {
-        builder.applyDefaults()
-        builder.defaultDirectives {
-            +IGNORE_DEXING
-        }
-    }
+    override fun configure(builder: TestConfigurationBuilder) {
+        // this - pre super
+        val levels = TestSpec.forTestClass(this)
+        levels.preConfigure(this, builder)
 
-    final override fun configure(builder: TestConfigurationBuilder) {
-        // super.super
+
+        // AbstractJvmIrTextTest
         with(builder) {
             commonConfigurationForJvmTest(targetFrontend, frontendFacade, frontendToBackendConverter, backendFacade)
             commonHandlersForCodegenTest()
@@ -58,12 +48,10 @@ open class AbstractDumpTest : AbstractFirLightTreeJvmIrTextTest(), KcpDevelopmen
             )
             enableMetaInfoHandler()
         }
-        // super
+        // AbstractFirJvmIrTextTest
         builder.additionalK2ConfigurationForIrTextTest(parser)
 
-        applyConfiguration(builder)
-        builder.defaultDirectives {
-            +FIR_DUMP
-        }
+        // this - post super
+        levels.configure(this, builder)
     }
 }

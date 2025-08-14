@@ -1,12 +1,14 @@
 package dev.rnett.kcp.development.testing.generation
 
-import dev.rnett.kcp.development.testing.configuration.Configurator
+import dev.rnett.kcp.development.testing.generation.configuration.ConfigurationHost
+import dev.rnett.kcp.development.testing.generation.configuration.RuntimeConfigurationMethodModel
 import org.jetbrains.kotlin.generators.TestGroup
 import org.jetbrains.kotlin.generators.TestGroupSuite
 import org.jetbrains.kotlin.generators.getDefaultSuiteTestClassName
 import org.jetbrains.kotlin.generators.model.AnnotationModel
 import org.jetbrains.kotlin.generators.model.RunTestMethodModel
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.runners.AbstractKotlinCompilerTest
 import kotlin.reflect.KClass
 
 sealed class TestClassConfig(private val parent: TestClassConfig?) {
@@ -27,7 +29,7 @@ sealed class TestClassConfig(private val parent: TestClassConfig?) {
     val annotations: List<AnnotationModel> get() = _annotations + (parent?.annotations.orEmpty())
 }
 
-class TestSuiteGeneration(val internal: TestGroupSuite) : TestClassConfig(null) {
+class TestSuiteGeneration(val internal: TestGroupSuite, val configurationHosts: Set<KClass<out ConfigurationHost>>) : TestClassConfig(null) {
     private val _testClasses = mutableMapOf<String, TestClassGeneration>()
 
     fun testGroup(
@@ -90,11 +92,12 @@ class TestGroupGeneration(val internal: TestGroup, val parent: TestClassConfig) 
 class TestClassGeneration(val internal: TestGroup.TestClass, val parent: TestGroupGeneration) {
     init {
         parent.suite.register(internal.suiteTestClassName, this)
+        internal.method(RuntimeConfigurationMethodModel(parent.suite.configurationHosts))
     }
 
-    internal fun applyConfiguration(builder: TestConfigurationBuilder) {
+    internal fun applyConfiguration(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
         configurators.forEach {
-            with(it) { builder.configure() }
+            with(it) { builder.configure(testInstance) }
         }
     }
 

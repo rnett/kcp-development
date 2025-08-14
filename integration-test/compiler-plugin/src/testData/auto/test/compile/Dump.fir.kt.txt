@@ -1,5 +1,3 @@
-package auto.test.dump
-
 val a: String
   field = 2 as String
   get

@@ -1,9 +1,14 @@
 
 
-package dev.rnett.kcp.development.testing.tests;
+package dev.rnett.kcp.development.testing.tests.levels;
 
 import com.intellij.testFramework.TestDataPath;
 import org.jetbrains.kotlin.test.util.KtTestUtil;
+import dev.rnett.kcp.development.testing.tests.levels.TestWithLevel;
+import dev.rnett.kcp.development.testing.tests.levels.TestLevel;
+import dev.rnett.kcp.development.testing.generation.AutoGenerator;
+import dev.rnett.kcp.development.testing.generation.configuration.ConfigurationHost;
+import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder;
 import org.jetbrains.kotlin.test.TestMetadata;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +19,14 @@ import java.util.regex.Pattern;
 @SuppressWarnings("all")
 @TestMetadata("src/testData/auto/test/diagnostics")
 @TestDataPath("$PROJECT_ROOT")
-public class AutoTestDiagnosticsTestGenerated extends AbstractDiagnosticsTest {
+@TestWithLevel(level = TestLevel.Diagnostics)
+public class AutoTestDiagnosticsTestGenerated extends AbstractLeveledFirTest {
+  @Override
+  public void configure(TestConfigurationBuilder builder) {
+    super.configure(builder);
+    ConfigurationHost.applyRuntimeConfiguration(this, builder, AutoGenerator.class);
+  }
+
   @Test
   public void testAllFilesPresentInDiagnostics() {
     KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("src/testData/auto/test/diagnostics"), Pattern.compile("^(.+)\\.kt$"), null, true);

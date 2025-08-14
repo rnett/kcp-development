@@ -1,0 +1,12 @@
+val a: String /* by */
+  field = lazy<String>(initializer = local fun <anonymous>(): String {
+    return 2 as String
+  }
+)
+  get(): String {
+    return getValue<String>(/* <this> = #a$delegate, */ thisRef = null, property = ::a)
+  }
+
+fun box(): String {
+  return "OK"
+}
