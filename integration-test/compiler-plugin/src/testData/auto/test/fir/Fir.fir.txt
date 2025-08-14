@@ -1,10 +1,10 @@
-FILE: Dump.kt
-    package test.dump
+FILE: Fir.kt
+    package auto.test.fir
 
     public final fun test(): R|kotlin/Unit| {
     }
     public final class Test : R|kotlin/Any| {
-        public constructor(): R|test/dump/Test| {
+        public constructor(): R|auto/test/fir/Test| {
             super<R|kotlin/Any|>()
         }
 

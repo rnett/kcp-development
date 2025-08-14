@@ -29,6 +29,7 @@ import kotlin.reflect.full.createInstance
 //TODO I'd like to be able to have a .directives or similar file in the test data that affects it and subdirs
 
 interface TestGenerator {
+    val disableAutogeneration: Boolean get() = false
     fun TestGroup.generateTests()
 
     companion object {
@@ -45,6 +46,12 @@ interface TestGenerator {
             }
         }
 
+        private fun TestGenerator.doGeneration(group: TestGroup): Unit = with(group) {
+            if (!disableAutogeneration)
+                autoGenerateTests()
+            generateTests()
+        }
+
         @JvmStatic
         fun main(args: Array<String>) {
             val generator = args.getOrNull(0)
@@ -53,7 +60,7 @@ interface TestGenerator {
                 if (TestGenerator::class.java.isAssignableFrom(cls)) {
                     val instance = (cls.kotlin.objectInstance ?: cls.kotlin.createInstance()) as TestGenerator
                     generateTestSuite {
-                        instance.apply { generateTests() }
+                        instance.doGeneration(this)
                     }
                 } else
                     error("Class $generator is not a subtype of dev.rnett.kcp.development.testing.generation.TestGenerator")
@@ -64,8 +71,10 @@ interface TestGenerator {
             }
         }
 
-        fun TestGroup.autoGenerateTests(skip: (Path) -> Boolean = { false }) {
-            Path(testDataRoot).visitFileTree {
+        fun TestGroup.autoGenerateTests(relativeRootPath: String = "auto", skip: (Path) -> Boolean = { false }) {
+            val root = Path(testDataRoot)
+            val relativeRoot = relativeRootPath?.let { root.resolve(it) } ?: root
+            relativeRoot.visitFileTree {
                 onPreVisitDirectory { it, attr ->
                     if (skip(it))
                         return@onPreVisitDirectory FileVisitResult.SKIP_SUBTREE

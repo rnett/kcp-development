@@ -1,4 +1,4 @@
-package test.dump
+package auto.test.ir
 
 val a: String
   field = 2 as String
@@ -15,4 +15,3 @@ class Test {
 
 fun test() {
 }
-
