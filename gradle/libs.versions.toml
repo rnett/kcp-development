@@ -1,0 +1,20 @@
+[versions]
+kotlin = "2.2.0"
+buildconfig = "5.6.7"
+shadow = "9.0.1"
+dokka = "2.0.0"
+publishing-plugin = "0.34.0"
+
+[libraries]
+shadow-plugin = { module = "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin", version.ref = "shadow" }
+buildconfig-plugin = { module = "com.github.gmazzo.buildconfig:com.github.gmazzo.buildconfig.gradle.plugin", version.ref = "buildconfig" }
+dokka-plugin = { module = "org.jetbrains.dokka:org.jetbrains.dokka.gradle.plugin", version.ref = "dokka" }
+publishing-plugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "publishing-plugin" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+publishing = { id = "com.vanniktech.maven.publish", version.ref = "publishing-plugin" }

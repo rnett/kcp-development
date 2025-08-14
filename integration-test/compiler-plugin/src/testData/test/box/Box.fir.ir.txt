@@ -1,0 +1,25 @@
+FILE fqName:test.box fileName:/Box.kt
+  PROPERTY name:a visibility:public modality:FINAL [delegated,val]
+    FIELD PROPERTY_DELEGATE name:a$delegate type:kotlin.Lazy<kotlin.String> visibility:private [final,static]
+      EXPRESSION_BODY
+        CALL 'public final fun lazy <T> (initializer: kotlin.Function0<T of kotlin.lazy>): kotlin.Lazy<T of kotlin.lazy> declared in kotlin' type=kotlin.Lazy<kotlin.String> origin=null
+          TYPE_ARG T: kotlin.String
+          ARG initializer: FUN_EXPR type=kotlin.Function0<kotlin.String> origin=LAMBDA
+            FUN LOCAL_FUNCTION_FOR_LAMBDA name:<anonymous> visibility:local modality:FINAL returnType:kotlin.String
+              BLOCK_BODY
+                RETURN type=kotlin.Nothing from='local final fun <anonymous> (): kotlin.String declared in test.box.a$delegate'
+                  TYPE_OP type=kotlin.String origin=CAST typeOperand=kotlin.String
+                    CONST Int type=kotlin.Int value=2
+    FUN DELEGATED_PROPERTY_ACCESSOR name:<get-a> visibility:public modality:FINAL returnType:kotlin.String
+      correspondingProperty: PROPERTY name:a visibility:public modality:FINAL [delegated,val]
+      BLOCK_BODY
+        RETURN type=kotlin.Nothing from='public final fun <get-a> (): kotlin.String declared in test.box'
+          CALL 'public final fun getValue <T> (<this>: kotlin.Lazy<T of kotlin.getValue>, thisRef: kotlin.Any?, property: kotlin.reflect.KProperty<*>): T of kotlin.getValue declared in kotlin' type=kotlin.String origin=null
+            TYPE_ARG T: kotlin.String
+            ARG <this>: GET_FIELD 'FIELD PROPERTY_DELEGATE name:a$delegate type:kotlin.Lazy<kotlin.String> visibility:private [final,static] declared in test.box' type=kotlin.Lazy<kotlin.String> origin=null
+            ARG thisRef: CONST Null type=kotlin.Nothing? value=null
+            ARG property: PROPERTY_REFERENCE 'public final a: kotlin.String declared in test.box' field=null getter='public final fun <get-a> (): kotlin.String declared in test.box' setter=null type=kotlin.reflect.KProperty0<kotlin.String> origin=PROPERTY_REFERENCE_FOR_DELEGATE
+  FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    BLOCK_BODY
+      RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in test.box'
+        CONST String type=kotlin.String value="OK"

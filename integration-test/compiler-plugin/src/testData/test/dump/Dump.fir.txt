@@ -1,0 +1,13 @@
+FILE: Dump.kt
+    package test.dump
+
+    public final fun test(): R|kotlin/Unit| {
+    }
+    public final class Test : R|kotlin/Any| {
+        public constructor(): R|test/dump/Test| {
+            super<R|kotlin/Any|>()
+        }
+
+    }
+    public final val a: R|kotlin/String| = (Int(2) as R|kotlin/String|)
+        public get(): R|kotlin/String|

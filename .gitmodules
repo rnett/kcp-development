@@ -1,0 +1,3 @@
+[submodule "compiler-plugin-template"]
+	path = compiler-plugin-template
+	url = https://github.com/Kotlin/compiler-plugin-template.git

@@ -1,0 +1,18 @@
+package test.dump
+
+val a: String
+  field = 2 as String
+  get
+
+class Test {
+  constructor() /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+fun test() {
+}
+

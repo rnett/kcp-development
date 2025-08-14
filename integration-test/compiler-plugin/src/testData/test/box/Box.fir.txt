@@ -1,0 +1,13 @@
+FILE: Box.kt
+    package test.box
+
+    public final fun box(): R|kotlin/String| {
+        ^box String(OK)
+    }
+    public final val a: R|kotlin/String|by R|kotlin/lazy|<R|kotlin/String|>(<L> = lazy@fun <anonymous>(): R|kotlin/String| <inline=NoInline>  {
+        ^ (Int(2) as R|kotlin/String|)
+    }
+    )
+        public get(): R|kotlin/String| {
+            ^ D|test/box/a|.R|kotlin/getValue|<R|kotlin/String|>(Null(null), ::R|test/box/a|)
+        }

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="plugin-annotations-wasm-js-0.1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/compiler-plugin-template/plugin-annotations/build/libs</output-path>
+    <root id="archive" name="plugin-annotations-wasm-js-0.1.0-SNAPSHOT.jar">
+      <element id="module-output" name="compiler-plugin-template.plugin-annotations.wasmJsMain" />
+    </root>
+  </artifact>
+</component>
