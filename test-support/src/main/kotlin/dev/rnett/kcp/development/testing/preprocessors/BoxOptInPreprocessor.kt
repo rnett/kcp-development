@@ -17,14 +17,14 @@ class BoxOptInPreprocessor(val optIns: Set<String>, testServices: TestServices) 
 
     override fun revert(file: TestFile, actualContent: String): String {
         if (!file.isKtFile) return actualContent
-        if(optIns.isEmpty()) return actualContent
+        if (optIns.isEmpty()) return actualContent
 
         return actualContent.replaceFirst(optInString, "")
     }
 
     override fun process(file: TestFile, content: String): String {
         if (!file.isKtFile) return content
-        if(optIns.isEmpty()) return content
+        if (optIns.isEmpty()) return content
 
         return content.replaceFirst(boxFun, optInString + boxFun)
     }

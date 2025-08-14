@@ -16,8 +16,8 @@ enum class TestType(val directoryName: String, val testSuffix: String, val cls: 
         val byDirectoryName = entries.associateBy { it.directoryName }
 
         init {
-            require(entries.map { it.directoryName }.toSet().size == entries.size){ "All directory names must be unique" }
-            require(entries.map { it.testSuffix }.toSet().size == entries.size){ "All test suffixes must be unique" }
+            require(entries.map { it.directoryName }.toSet().size == entries.size) { "All directory names must be unique" }
+            require(entries.map { it.testSuffix }.toSet().size == entries.size) { "All test suffixes must be unique" }
         }
     }
 }

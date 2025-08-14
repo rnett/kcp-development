@@ -4,14 +4,6 @@ import org.jetbrains.kotlin.test.services.KotlinStandardLibrariesPathProvider
 import java.io.File
 import java.io.File.pathSeparator
 import java.io.File.separator
-import kotlin.collections.associateBy
-import kotlin.collections.dropLastWhile
-import kotlin.collections.joinToString
-import kotlin.collections.map
-import kotlin.let
-import kotlin.text.isEmpty
-import kotlin.text.split
-import kotlin.text.toRegex
 
 object ClasspathBasedStandardLibrariesPathProvider : KotlinStandardLibrariesPathProvider() {
     private val SEP = "\\$separator"

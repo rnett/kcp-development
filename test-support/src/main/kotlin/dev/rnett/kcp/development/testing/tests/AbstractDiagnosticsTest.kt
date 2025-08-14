@@ -17,7 +17,6 @@ open class AbstractDiagnosticsTest : AbstractFirLightTreeDiagnosticsTest(), KcpD
 
     final override fun configure(builder: TestConfigurationBuilder) {
         super.configure(builder)
-        this.
-        applyConfiguration(builder)
+        this.applyConfiguration(builder)
     }
 }
