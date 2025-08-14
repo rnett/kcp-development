@@ -1,6 +1,5 @@
 package dev.rnett.kcp.development.testing.tests
 
-import dev.rnett.kcp.development.testing.configuration.applyDynamicConfigurators
 import dev.rnett.kcp.development.testing.preprocessors.PackagePreprocessor
 import dev.rnett.kcp.development.testing.preprocessors.useBoxOptInPreprocessor
 import dev.rnett.kcp.development.testing.preprocessors.useImportsPreprocessor
@@ -41,5 +40,4 @@ internal fun KcpDevelopmentCompilerTest.applyConfiguration(builder: TestConfigur
         LanguageSettingsDirectives.OPT_IN.with(globalOptIns.toList())
     }
     configuration(builder)
-    applyDynamicConfigurators(this, builder)
 }

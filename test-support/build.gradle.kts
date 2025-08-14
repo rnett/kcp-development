@@ -16,5 +16,6 @@ dependencies {
     api(kotlin("compiler"))
     api(kotlin("stdlib"))
     api(project(":core"))
+    api(kotlin("test-junit5"))
     implementation(kotlin("reflect"))
 }
