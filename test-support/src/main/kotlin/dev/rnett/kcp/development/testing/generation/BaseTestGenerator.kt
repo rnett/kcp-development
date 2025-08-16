@@ -1,5 +1,6 @@
 package dev.rnett.kcp.development.testing.generation
 
+import auto.test.box.dev.rnett.kcp.development.testing.SysProps
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives.BOX_OPT_IN
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives.IMPORTS
 import dev.rnett.kcp.development.testing.directives.preprocessors.useBoxOptInPreprocessor
@@ -26,9 +27,9 @@ import kotlin.io.path.deleteRecursively
 import kotlin.io.path.listDirectoryEntries
 
 abstract class BaseTestGenerator : ConfigurationHost() {
-    open val testDataRoot: Path = Path("src/testData") //TODO make configurable in plugin
+    open val testDataRoot: Path = Path(SysProps.testDataRoot)
     open val cleanGeneratedRoot: Boolean = true
-    open val testGenerationRoot: Path = Path("src/test-gen") //TODO make configurable in plugin
+    open val testGenerationRoot: Path = Path(SysProps.testGenRoot)
 
     open val testsRootPackage: String = this::class.java.packageName
 

@@ -27,6 +27,12 @@ class CompilerPluginBasePlugin : Plugin<Project> {
 
             addCoreDependency.convention(true)
             addCoreDependency.finalizeValueOnRead()
+
+            testGenerationRoot.convention(layout.projectDirectory.dir("src/test-gen"))
+            testGenerationRoot.finalizeValueOnRead()
+
+            testDataRoot.convention(layout.projectDirectory.dir("src/testData"))
+            testDataRoot.finalizeValueOnRead()
         }
 
         extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"

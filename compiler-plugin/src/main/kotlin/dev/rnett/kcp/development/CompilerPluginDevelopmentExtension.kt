@@ -1,5 +1,6 @@
 package dev.rnett.kcp.development
 
+import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.provider.Property
 
 abstract class CompilerPluginDevelopmentExtension {
@@ -21,6 +22,9 @@ abstract class CompilerPluginDevelopmentExtension {
 
     abstract val addTestSupportDependency: Property<Boolean>
     abstract val addCoreDependency: Property<Boolean>
+
+    abstract val testGenerationRoot: DirectoryProperty
+    abstract val testDataRoot: DirectoryProperty
 
     init {
         this::class.objectInstance

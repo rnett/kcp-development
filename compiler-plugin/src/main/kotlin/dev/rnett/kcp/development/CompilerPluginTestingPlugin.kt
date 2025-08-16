@@ -4,9 +4,8 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.Delete
-import org.gradle.api.tasks.JavaExec
-import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.toolchain.JavaToolchainService
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getValue
 import org.gradle.kotlin.dsl.kotlin
@@ -53,17 +52,22 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
         val javaExtension = the<JavaPluginExtension>()
         javaExtension.sourceSets.apply {
             named("test") {
-                java.srcDir("src/test-gen")
-                resources.srcDir("src/testData")
+                java.srcDir(extension.testGenerationRoot)
+                resources.srcDir(extension.testDataRoot)
             }
         }
 
+        val javaToolchains = the<JavaToolchainService>()
+
         the<IdeaModel>().apply {
-            module.generatedSourceDirs.add(projectDir.resolve("src/test-gen"))
+            afterEvaluate {
+                module.generatedSourceDirs.add(extension.testGenerationRoot.get().asFile.relativeTo(projectDir))
+            }
         }
 
 
         val projectGroup = provider { group.toString().replace("-", ".") }
+        val projectDir = this.projectDir
 
         tasks.named<Test>("test") {
             useJUnitPlatform()
@@ -73,9 +77,6 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
             val conf = compilerTestRuntimeClasspath.map { it.asPath }
 
             doFirst {
-
-                systemProperty("default.package", projectGroup.get())
-
                 systemProperty("compilerTestRuntime.classpath", conf.get())
 
                 // Properties required to run the internal test framework.
@@ -85,35 +86,33 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
                 setLibraryProperty("org.jetbrains.kotlin.test.kotlin-test", "kotlin-test")
                 setLibraryProperty("org.jetbrains.kotlin.test.kotlin-script-runtime", "kotlin-script-runtime")
                 setLibraryProperty("org.jetbrains.kotlin.test.kotlin-annotations-jvm", "kotlin-annotations-jvm")
+
+
+                systemProperty("default.package", projectGroup.get())
+                systemProperty("kcp.dev.test-gen", extension.testGenerationRoot.get().asFile.relativeTo(projectDir).path)
+                systemProperty("kcp.dev.test-data", extension.testDataRoot.get().asFile.relativeTo(projectDir).path)
             }
             systemProperty("idea.ignore.disabled.plugins", "true")
             systemProperty("idea.home.path", projectDir)
         }
 
-        val generateTests by tasks.registering(JavaExec::class) {
-            inputs.dir(layout.projectDirectory.dir("src/testData"))
-                .withPropertyName("testData")
-                .withPathSensitivity(PathSensitivity.RELATIVE)
+        val generateTests by tasks.registering(CompilerPluginGenerateTestsTask::class) {
+            testDataDirectory.set(extension.testDataRoot)
+            generatedTestsDirectory.set(extension.testGenerationRoot)
 
-            inputs.property("testGenerator", extension.testGenerator)
-            inputs.property("useTestGenerator", extension.useTestGenerator)
+            testGenerator.set(extension.testGenerator)
+            useTestGenerator.set(extension.useTestGenerator)
 
-            outputs.dir(layout.projectDirectory.dir("src/test-gen"))
-                .withPropertyName("generatedTests")
+            defaultPackage.set(projectGroup)
+            classpath.from(javaExtension.sourceSets.named("testFixtures").get().runtimeClasspath)
+            workingDirectory.set(projectDir)
 
-            doFirst {
-                systemProperty("default.package", projectGroup.get())
-            }
-
-            classpath = javaExtension.sourceSets.named("testFixtures").get().runtimeClasspath
-            mainClass.set(extension.useTestGenerator.flatMap { if (it) provider { CompilerPluginDevelopmentExtension.TEST_GENERATOR_MAIN } else extension.testGenerator })
-            argumentProviders.add { listOfNotNull(extension.testGenerator.orNull).filter { extension.useTestGenerator.get() } }
-            workingDir = projectDir
+            launcher.convention(javaToolchains.launcherFor { })
         }
 
         val clearDumps by tasks.registering(Delete::class) {
             delete(
-                fileTree(layout.projectDirectory.dir("src/testData")) {
+                fileTree(extension.testDataRoot) {
                     include("**/*.fir.txt")
                     include("**/*.fir.*.txt")
                 }
