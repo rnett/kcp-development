@@ -9,6 +9,7 @@ val a: String /* by */
     return getValue<String>(/* <this> = #a$delegate, */ thisRef = null, property = ::a)
   }
 
+@OptIn(markerClass = [ExperimentalStdlibApi::class, ExperimentalTime::class])
 fun box(): String {
   return "OK"
 }

@@ -1,5 +1,7 @@
 package dev.rnett.kcp.development.testing.generation
 
+import dev.rnett.kcp.development.testing.directives.UtilityDirectives.BOX_OPT_IN
+import dev.rnett.kcp.development.testing.directives.UtilityDirectives.IMPORTS
 import dev.rnett.kcp.development.testing.tests.TestType
 import dev.rnett.kcp.development.testing.tests.levels.TestLevel
 import dev.rnett.kcp.development.testing.tests.levels.TestSpec
@@ -8,11 +10,13 @@ import org.jetbrains.kotlin.generators.model.MethodModel
 import org.jetbrains.kotlin.test.TargetBackend
 import org.jetbrains.kotlin.test.builders.RegisteredDirectivesBuilder
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.OPT_IN
 import org.jetbrains.kotlin.test.directives.model.DirectivesContainer
 import java.io.File
 import java.nio.file.Path
 import kotlin.reflect.KClass
 
+//TODO DSL annotation
 interface TestGenerationBuilder {
     val pathFromRoot: Path?
     val path: Path
@@ -23,6 +27,7 @@ interface TestGenerationBuilder {
 
     fun group(path: String? = null, inferPackageNames: Boolean = true, inferType: Boolean = true, block: TestGenerationBuilder.() -> Unit)
 
+    //TODO infer levels from path like done for group
     fun generateTests(
         path: String,
         testClassName: String? = null,
@@ -71,6 +76,44 @@ fun TestGenerationBuilder.group(path: String? = null, type: TestType, block: Tes
     block()
 }
 
+fun TestGenerationBuilder.import(vararg imports: String) {
+    directives {
+        IMPORTS.with(imports.toList())
+    }
+}
+
+fun TestGenerationBuilder.optIn(vararg optIns: String) {
+    directives {
+        OPT_IN.with(optIns.toList())
+    }
+}
+
+fun TestGenerationBuilder.optInBox(vararg optIns: String) {
+    directives {
+        BOX_OPT_IN.with(optIns.toList())
+        IMPORTS.with(optIns.toList())
+    }
+}
+
+fun TestGenerationBuilder.import(vararg imports: KClass<*>) {
+    directives {
+        IMPORTS.with(imports.map { it.qualifiedName!! })
+    }
+}
+
+fun TestGenerationBuilder.optIn(vararg optIns: KClass<*>) {
+    directives {
+        OPT_IN.with(optIns.map { it.qualifiedName!! })
+    }
+}
+
+fun TestGenerationBuilder.optInBox(vararg optIns: KClass<*>) {
+    directives {
+        val qualifiedNames = optIns.map { it.qualifiedName!! }
+        BOX_OPT_IN.with(qualifiedNames)
+        IMPORTS.with(qualifiedNames)
+    }
+}
 
 fun TestGenerationBuilder.addLevel(level: TestLevel) = configureGeneration { addLevel(level) }
 fun TestGenerationBuilder.removeLevel(level: TestLevel) = configureGeneration { removeLevel(level) }

@@ -20,6 +20,8 @@ FILE fqName:auto.test.box fileName:/Box.kt
             ARG thisRef: CONST Null type=kotlin.Nothing? value=null
             ARG property: PROPERTY_REFERENCE 'public final a: kotlin.String declared in auto.test.box' field=null getter='public final fun <get-a> (): kotlin.String declared in auto.test.box' setter=null type=kotlin.reflect.KProperty0<kotlin.String> origin=PROPERTY_REFERENCE_FOR_DELEGATE
   FUN name:box visibility:public modality:FINAL returnType:kotlin.String
+    annotations:
+      OptIn(markerClass = [CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB ANNOTATION_CLASS name:ExperimentalStdlibApi modality:OPEN visibility:public superTypes:[kotlin.Annotation]' type=kotlin.reflect.KClass<kotlin.ExperimentalStdlibApi>, CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB ANNOTATION_CLASS name:ExperimentalTime modality:OPEN visibility:public superTypes:[kotlin.Annotation]' type=kotlin.reflect.KClass<kotlin.time.ExperimentalTime>] type=kotlin.Array<out kotlin.reflect.KClass<out kotlin.Annotation>> varargElementType=kotlin.reflect.KClass<out kotlin.Annotation>)
     BLOCK_BODY
       RETURN type=kotlin.Nothing from='public final fun box (): kotlin.String declared in auto.test.box'
         CONST String type=kotlin.String value="OK"

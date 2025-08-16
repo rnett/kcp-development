@@ -3,3 +3,6 @@ plugins {
     id("dev.rnett.kcp-development.compiler-plugin")
 }
 
+compilerPluginDevelopment {
+    testGenerator = "dev.rnett.kcp.tests.TestGenerator"
+}

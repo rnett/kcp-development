@@ -5,7 +5,7 @@ import org.gradle.api.provider.Property
 abstract class CompilerPluginDevelopmentExtension {
     companion object {
         const val NAME = "compilerPluginDevelopment"
-        const val TEST_GENERATOR_MAIN = "dev.rnett.kcp.development.testing.generation.TestGenerator"
+        const val TEST_GENERATOR_MAIN = "dev.rnett.kcp.development.testing.generation.TestGenerationBootstrapper"
     }
 
     /**

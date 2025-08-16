@@ -1,0 +1,21 @@
+package generated.ir
+
+val a: String
+  field = 2 as String
+  get
+
+class Test {
+  constructor() /* primary */ {
+    super/*Any*/()
+    /* <init>() */
+
+  }
+
+}
+
+@OptIn(markerClass = [ExperimentalStdlibApi::class, ExperimentalTime::class, ExperimentalPathApi::class])
+fun box() {
+}
+
+fun test() {
+}

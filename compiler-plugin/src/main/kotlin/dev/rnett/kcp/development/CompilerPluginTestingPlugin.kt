@@ -95,6 +95,9 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
                 .withPropertyName("testData")
                 .withPathSensitivity(PathSensitivity.RELATIVE)
 
+            inputs.property("testGenerator", extension.testGenerator)
+            inputs.property("useTestGenerator", extension.useTestGenerator)
+
             outputs.dir(layout.projectDirectory.dir("src/test-gen"))
                 .withPropertyName("generatedTests")
 
