@@ -1,7 +1,7 @@
 package test
 
-import dev.rnett.kcp.development.registrar.BaseCompilerPluginRegistrar
-import dev.rnett.kcp.development.registrar.SpecBasedCompilerPluginRegistrar
+import dev.rnett.kcp.development.registrar.BaseSpecCompilerPluginRegistrar
+import dev.rnett.kcp.development.registrar.SpecBasedCompilerPluginExtensions
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.jetbrains.kotlin.config.CompilerConfiguration
@@ -10,8 +10,8 @@ import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrar
 data class Spec(val name: String)
 
 @OptIn(ExperimentalCompilerApi::class)
-class Registrar : BaseCompilerPluginRegistrar<Spec>() {
-    override val registrar: SpecBasedCompilerPluginRegistrar<Spec>
+class Registrar : BaseSpecCompilerPluginRegistrar<Spec>() {
+    override val extensions: SpecBasedCompilerPluginExtensions<Spec>
         get() = TODO("Not yet implemented")
 
     override fun produceSpec(configuration: CompilerConfiguration): Spec {
@@ -22,7 +22,7 @@ class Registrar : BaseCompilerPluginRegistrar<Spec>() {
 }
 
 @OptIn(ExperimentalCompilerApi::class)
-object PluginRegistrar : SpecBasedCompilerPluginRegistrar<Spec>() {
+object PluginExtensions : SpecBasedCompilerPluginExtensions<Spec>() {
     override fun irExtension(spec: Spec): IrGenerationExtension? = null
 
     override fun firExtension(spec: Spec): FirExtensionRegistrar? = null

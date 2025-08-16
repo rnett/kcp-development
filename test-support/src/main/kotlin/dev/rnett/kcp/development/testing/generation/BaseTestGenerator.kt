@@ -1,6 +1,7 @@
 package dev.rnett.kcp.development.testing.generation
 
 import auto.test.box.dev.rnett.kcp.development.testing.SysProps
+import dev.rnett.kcp.development.testing.configuration.withCompilerPluginRegistrar
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives.BOX_OPT_IN
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives.IMPORTS
 import dev.rnett.kcp.development.testing.directives.preprocessors.useBoxOptInPreprocessor
@@ -10,6 +11,9 @@ import dev.rnett.kcp.development.testing.generation.configuration.RuntimeConfigu
 import dev.rnett.kcp.development.testing.preprocessors.PackagePreprocessor
 import dev.rnett.kcp.development.testing.runtime.ClasspathBasedStandardLibrariesPathProvider
 import dev.rnett.kcp.development.testing.runtime.useTestRuntime
+import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
+import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
+import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.generators.MethodGenerator
 import org.jetbrains.kotlin.generators.generateTestGroupSuiteWithJUnit5
@@ -18,13 +22,19 @@ import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.FULL_JDK
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.JVM_TARGET
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.OPT_IN
+import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.runners.AbstractKotlinCompilerTest
+import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.KotlinStandardLibrariesPathProvider
+import org.jetbrains.kotlin.test.services.TestServices
 import java.nio.file.Path
 import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.Path
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.listDirectoryEntries
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
+import kotlin.reflect.full.isSubclassOf
 
 abstract class BaseTestGenerator : ConfigurationHost() {
     open val testDataRoot: Path = Path(SysProps.testDataRoot)
@@ -35,15 +45,34 @@ abstract class BaseTestGenerator : ConfigurationHost() {
 
     open val disableAutogeneration: Boolean get() = false
 
+    @OptIn(ExperimentalCompilerApi::class)
+    open val compilerPluginRegistrar: CompilerPluginRegistrar? = SysProps.pluginRegistrar?.let {
+        val cls = Class.forName(it).kotlin
+        check(cls.isSubclassOf(CompilerPluginRegistrar::class)) { "Cannot use $it as a compiler plugin registrar, it is not a subclass of CompilerPluginRegistrar" }
+        @Suppress("UNCHECKED_CAST")
+        (cls as KClass<out CompilerPluginRegistrar>).createInstance()
+    }
+
     open fun TestGenerationBuilder.generateTests() {}
 
     open val imports: Set<String> = emptySet()
     open val optIns: Set<String> = emptySet()
     open val boxOptIns: Set<String> = emptySet()
 
+    open fun adjustCompilerConfiguration(module: TestModule, configuration: CompilerConfiguration) {
+
+    }
+
+    inner class Configurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
+        override fun configureCompilerConfiguration(configuration: CompilerConfiguration, module: TestModule) {
+            adjustCompilerConfiguration(module, configuration)
+        }
+    }
+
     open val additionalMethods: List<MethodGenerator<*>> = emptyList()
 
-    open fun coreDefaultConfiguration(builder: TestConfigurationBuilder) {
+    @OptIn(ExperimentalCompilerApi::class)
+    open fun coreConfiguration(builder: TestConfigurationBuilder) {
         with(builder) {
             defaultDirectives {
                 JVM_TARGET.with(JvmTarget.JVM_17)
@@ -52,12 +81,7 @@ abstract class BaseTestGenerator : ConfigurationHost() {
             }
             useTestRuntime()
             useAdditionalService<KotlinStandardLibrariesPathProvider> { ClasspathBasedStandardLibrariesPathProvider }
-        }
-    }
 
-    open fun defaultConfiguration(builder: TestConfigurationBuilder) {
-        with(builder) {
-            useSourcePreprocessor(::PackagePreprocessor)
             useImportsPreprocessor()
             useBoxOptInPreprocessor()
             defaultDirectives {
@@ -67,6 +91,15 @@ abstract class BaseTestGenerator : ConfigurationHost() {
                 val actualImports = imports + optIns + boxOptIns
                 IMPORTS.with(actualImports.toList())
             }
+
+            useConfigurators(::Configurator)
+            compilerPluginRegistrar?.let { withCompilerPluginRegistrar(it) }
+        }
+    }
+
+    open fun defaultConfiguration(builder: TestConfigurationBuilder) {
+        with(builder) {
+            useSourcePreprocessor(::PackagePreprocessor)
         }
     }
 
@@ -110,10 +143,9 @@ abstract class BaseTestGenerator : ConfigurationHost() {
     }
 
     override fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
-        coreDefaultConfiguration(builder)
+        coreConfiguration(builder)
         defaultConfiguration(builder)
         val testClass = testSpecs[testInstance::class.java.name] ?: error("No test spec for ${testInstance::class.java.name}")
         testClass.generatedFrom.applyConfiguration(builder)
     }
 }
-
