@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.test.frontend.fir.handlers.FirCfgDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirScopeDumpHandler
 import org.jetbrains.kotlin.test.frontend.fir.handlers.FirVFirDumpHandler
-import org.jetbrains.kotlin.test.runners.AbstractFirDiagnosticTestBase
 import org.jetbrains.kotlin.test.runners.AbstractKotlinCompilerTest
 import java.util.EnumSet
 import kotlin.reflect.KClass
@@ -30,7 +29,7 @@ annotation class TestWithLevel(val level: TestLevel)
 
 data class TestSpec(val levels: EnumSet<TestLevel>) {
     constructor(levels: Collection<TestLevel>) : this(
-        EnumSet.copyOf(levels)
+        if (levels.isEmpty()) EnumSet.noneOf(TestLevel::class.java) else EnumSet.copyOf(levels)
     )
 
     constructor(first: TestLevel, vararg rest: TestLevel) : this(EnumSet.of(first, *rest))
@@ -49,13 +48,12 @@ data class TestSpec(val levels: EnumSet<TestLevel>) {
     operator fun plus(other: TestLevel) = TestSpec(levels + other)
     operator fun minus(other: TestLevel) = TestSpec(levels - other)
 
-    init {
-        require(levels.isNotEmpty()) { "Must have at least one level" }
-    }
-
     fun annotations(): List<AnnotationModel> = levels.map { AnnotationModel(TestWithLevel::class.java, listOf(AnnotationArgumentModel("level", it))) }
 
-    fun testClass(): KClass<*> {
+    fun testClass(): KClass<*>? {
+        if (levels.isEmpty())
+            return null
+
         val max = levels.max()
         return when (max) {
             TestLevel.Diagnostics,
@@ -90,7 +88,7 @@ data class TestSpec(val levels: EnumSet<TestLevel>) {
                                 DIAGNOSTICS.with(listOf("+infos", "+warnings", "+errors"))
                             }
                         }
-                        if (test !is AbstractFirDiagnosticTestBase && test !is AbstractLeveledBoxTest) {
+                        if (test !is AbstractLeveledFirTest && test !is AbstractLeveledBoxTest) {
                             firHandlersStep {
                                 setupHandlersForDiagnosticTest()
                             }
@@ -101,7 +99,7 @@ data class TestSpec(val levels: EnumSet<TestLevel>) {
                         defaultDirectives {
                             +FIR_DUMP
                         }
-                        if (test !is AbstractFirDiagnosticTestBase) {
+                        if (test !is AbstractLeveledFirTest && test !is AbstractLeveledIrTest) {
                             firHandlersStep {
                                 useHandlers(
                                     ::FirDumpHandler,
@@ -119,8 +117,10 @@ data class TestSpec(val levels: EnumSet<TestLevel>) {
                             +DUMP_KT_IR
                             +IGNORE_DEXING
                         }
-                        configureIrHandlersStep {
-                            useHandlers(::IrPrettyKotlinDumpHandler)
+                        if (test !is AbstractLeveledIrTest) {
+                            configureIrHandlersStep {
+                                useHandlers(::IrPrettyKotlinDumpHandler)
+                            }
                         }
                     }
 

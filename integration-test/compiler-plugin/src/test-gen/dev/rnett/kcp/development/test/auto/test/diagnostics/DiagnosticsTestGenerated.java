@@ -1,6 +1,6 @@
 
 
-package dev.rnett.kcp.development.testing.tests.levels;
+package dev.rnett.kcp.development.test.auto.test.diagnostics;
 
 import com.intellij.testFramework.TestDataPath;
 import org.jetbrains.kotlin.test.util.KtTestUtil;
@@ -9,6 +9,7 @@ import dev.rnett.kcp.development.testing.tests.levels.TestLevel;
 import dev.rnett.kcp.development.testing.generation.AutoGenerator;
 import dev.rnett.kcp.development.testing.generation.configuration.ConfigurationHost;
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder;
+import dev.rnett.kcp.development.testing.tests.levels.AbstractLeveledFirTest;
 import org.jetbrains.kotlin.test.TestMetadata;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +21,7 @@ import java.util.regex.Pattern;
 @TestMetadata("src/testData/auto/test/diagnostics")
 @TestDataPath("$PROJECT_ROOT")
 @TestWithLevel(level = TestLevel.Diagnostics)
-public class AutoTestDiagnosticsTestGenerated extends AbstractLeveledFirTest {
+public class DiagnosticsTestGenerated extends AbstractLeveledFirTest {
   @Override
   public void configure(TestConfigurationBuilder builder) {
     super.configure(builder);

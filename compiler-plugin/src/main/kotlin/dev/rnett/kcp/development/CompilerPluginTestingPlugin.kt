@@ -63,6 +63,8 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
         }
 
 
+        val projectGroup = provider { group.toString().replace("-", ".") }
+
         tasks.named<Test>("test") {
             useJUnitPlatform()
             dependsOn(compilerTestRuntimeClasspath)
@@ -71,6 +73,8 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
             val conf = compilerTestRuntimeClasspath.map { it.asPath }
 
             doFirst {
+
+                systemProperty("default.package", projectGroup.get())
 
                 systemProperty("compilerTestRuntime.classpath", conf.get())
 
@@ -93,6 +97,10 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
 
             outputs.dir(layout.projectDirectory.dir("src/test-gen"))
                 .withPropertyName("generatedTests")
+
+            doFirst {
+                systemProperty("default.package", projectGroup.get())
+            }
 
             classpath = javaExtension.sourceSets.named("testFixtures").get().runtimeClasspath
             mainClass.set(extension.useTestGenerator.flatMap { if (it) provider { CompilerPluginDevelopmentExtension.TEST_GENERATOR_MAIN } else extension.testGenerator })

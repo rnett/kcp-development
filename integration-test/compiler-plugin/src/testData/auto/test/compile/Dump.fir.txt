@@ -1,8 +1,10 @@
 FILE: Dump.kt
+    package auto.test.compile
+
     public final fun test(): R|kotlin/Unit| {
     }
     public final class Test : R|kotlin/Any| {
-        public constructor(): R|Test| {
+        public constructor(): R|auto/test/compile/Test| {
             super<R|kotlin/Any|>()
         }
 

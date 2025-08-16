@@ -1,4 +1,4 @@
-FILE fqName:<root> fileName:/Dump.kt
+FILE fqName:auto.test.compile fileName:/Dump.kt
   PROPERTY name:a visibility:public modality:FINAL [val]
     FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.String visibility:private [final,static]
       EXPRESSION_BODY
@@ -7,11 +7,11 @@ FILE fqName:<root> fileName:/Dump.kt
     FUN DEFAULT_PROPERTY_ACCESSOR name:<get-a> visibility:public modality:FINAL returnType:kotlin.String
       correspondingProperty: PROPERTY name:a visibility:public modality:FINAL [val]
       BLOCK_BODY
-        RETURN type=kotlin.Nothing from='public final fun <get-a> (): kotlin.String declared in <root>'
+        RETURN type=kotlin.Nothing from='public final fun <get-a> (): kotlin.String declared in auto.test.compile'
           GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:a type:kotlin.String visibility:private [final,static]' type=kotlin.String origin=null
   CLASS CLASS name:Test modality:FINAL visibility:public superTypes:[kotlin.Any]
-    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:<root>.Test
-    CONSTRUCTOR visibility:public returnType:<root>.Test [primary]
+    thisReceiver: VALUE_PARAMETER INSTANCE_RECEIVER kind:DispatchReceiver name:<this> type:auto.test.compile.Test
+    CONSTRUCTOR visibility:public returnType:auto.test.compile.Test [primary]
       BLOCK_BODY
         DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () declared in kotlin.Any'
         INSTANCE_INITIALIZER_CALL classDescriptor='CLASS CLASS name:Test modality:FINAL visibility:public superTypes:[kotlin.Any]' type=kotlin.Unit

@@ -1,3 +1,5 @@
+package auto.test.box
+
 val a: String /* by */
   field = lazy<String>(initializer = local fun <anonymous>(): String {
     return 2 as String

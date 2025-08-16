@@ -1,0 +1,119 @@
+package dev.rnett.kcp.development.testing.generation
+
+import dev.rnett.kcp.development.testing.tests.TestType
+import dev.rnett.kcp.development.testing.tests.levels.TestLevel
+import dev.rnett.kcp.development.testing.tests.levels.TestSpec
+import org.jetbrains.kotlin.generators.model.AnnotationModel
+import org.jetbrains.kotlin.generators.model.MethodModel
+import org.jetbrains.kotlin.test.TargetBackend
+import org.jetbrains.kotlin.test.builders.RegisteredDirectivesBuilder
+import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.directives.model.DirectivesContainer
+import java.io.File
+import java.nio.file.Path
+import kotlin.reflect.KClass
+
+interface TestGenerationBuilder {
+    val pathFromRoot: Path?
+    val path: Path
+
+    fun configure(block: TestConfigurationBuilder.() -> Unit)
+
+    fun configureGeneration(block: TestGenerationConfigBuilder.() -> Unit)
+
+    fun group(path: String? = null, inferPackageNames: Boolean = true, inferType: Boolean = true, block: TestGenerationBuilder.() -> Unit)
+
+    fun generateTests(
+        path: String,
+        testClassName: String? = null,
+        customBaseClass: KClass<*>? = null,
+        arguments: TestArguments = TestArguments()
+    )
+
+    fun generateThisTest(
+        testClassName: String? = null,
+        customBaseClass: KClass<*>? = null,
+        arguments: TestArguments = TestArguments()
+    )
+}
+
+data class TestArguments(
+    val recursive: Boolean = true,
+    val excludeParentDirs: Boolean = false,
+    val extension: String? = "kt", // null string means dir (name without dot)
+    val pattern: String = if (extension == null) """^([^\.]+)$""" else "^(.+)\\.$extension\$",
+    val excludedPattern: String? = null,
+    val testMethod: String = "doTest",
+    val singleClass: Boolean = false, // if true then tests from subdirectories will be flattened to single class
+//    val testClassName: String? = null, // specific name for generated test class
+    // which backend will be used in test. Specifying value may affect some test with
+    // directives TARGET_BACKEND/DONT_TARGET_EXACT_BACKEND won't be generated
+    val targetBackend: TargetBackend? = null,
+    val excludeDirs: List<String> = listOf(),
+    val excludeDirsRecursively: List<String> = listOf(),
+    val filenameStartsLowerCase: Boolean? = null, // assert that file is properly named
+    val skipIgnored: Boolean = false, // pretty meaningless flag, affects only few test names in one test runner
+    val deep: Int? = null, // specifies how deep recursive search will follow directory with testdata
+    val skipSpecificFile: (File) -> Boolean = { false },
+    val skipTestAllFilesCheck: Boolean = false,
+    val generateEmptyTestClasses: Boolean = true, // All test classes will be generated, even if empty
+    val nativeTestInNonNativeTestInfra: Boolean = false,
+)
+
+fun TestGenerationBuilder.group(path: String? = null, vararg levels: TestLevel, block: TestGenerationBuilder.() -> Unit) =
+    group(path) {
+        levels.forEach { addLevel(it) }
+        block()
+    }
+
+fun TestGenerationBuilder.group(path: String? = null, type: TestType, block: TestGenerationBuilder.() -> Unit) = group(path, true, false) {
+    +type
+    block()
+}
+
+
+fun TestGenerationBuilder.addLevel(level: TestLevel) = configureGeneration { addLevel(level) }
+fun TestGenerationBuilder.removeLevel(level: TestLevel) = configureGeneration { removeLevel(level) }
+fun TestGenerationBuilder.testsPackage(vararg packageNames: String) = configureGeneration { testsPackage(*packageNames) }
+
+context(generator: TestGenerationBuilder)
+operator fun TestLevel.unaryPlus() {
+    generator.addLevel(this)
+}
+
+context(generator: TestGenerationBuilder)
+operator fun TestLevel.unaryMinus() {
+    generator.removeLevel(this)
+}
+
+context(generator: TestGenerationBuilder)
+operator fun TestSpec.unaryPlus() {
+    this.levels.forEach { generator.addLevel(it) }
+}
+
+context(generator: TestGenerationBuilder)
+operator fun TestSpec.unaryMinus() {
+    this.levels.forEach { generator.removeLevel(it) }
+}
+
+context(generator: TestGenerationBuilder)
+operator fun TestType.unaryPlus() {
+    +this.spec
+}
+
+
+fun TestGenerationBuilder.registerDirectives(vararg containers: DirectivesContainer) = configure {
+    useDirectives(*containers)
+}
+
+fun TestGenerationBuilder.directives(vararg containers: DirectivesContainer, block: RegisteredDirectivesBuilder.() -> Unit) {
+    configure {
+        useDirectives(*containers)
+        defaultDirectives {
+            block()
+        }
+    }
+}
+
+fun TestGenerationBuilder.annotation(annotation: AnnotationModel) = configureGeneration { annotation(annotation) }
+fun TestGenerationBuilder.method(method: MethodModel) = configureGeneration { method(method) }

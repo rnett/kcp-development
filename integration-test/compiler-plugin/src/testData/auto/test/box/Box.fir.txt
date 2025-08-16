@@ -1,4 +1,6 @@
 FILE: Box.kt
+    package auto.test.box
+
     public final fun box(): R|kotlin/String| {
         ^box String(OK)
     }
@@ -7,5 +9,5 @@ FILE: Box.kt
     }
     )
         public get(): R|kotlin/String| {
-            ^ D|/a|.R|kotlin/getValue|<R|kotlin/String|>(Null(null), ::R|/a|)
+            ^ D|auto/test/box/a|.R|kotlin/getValue|<R|kotlin/String|>(Null(null), ::R|auto/test/box/a|)
         }
