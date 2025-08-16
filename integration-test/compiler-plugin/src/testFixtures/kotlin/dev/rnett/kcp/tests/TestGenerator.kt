@@ -16,7 +16,7 @@ class TestGenerator : BaseTestGenerator() {
             optInBox(ExperimentalPathApi::class.qualifiedName!!)
 
             group("ir") {
-                generateThisTest()
+                tests()
             }
         }
     }

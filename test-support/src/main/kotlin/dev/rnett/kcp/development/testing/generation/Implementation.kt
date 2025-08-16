@@ -44,7 +44,8 @@ class TestGenerationBuilderImplementation(val pathSpec: TestGenerationPath) : Te
     val configurations: MutableList<TestConfigurationBuilder.() -> Unit> = mutableListOf()
     val generationConfigs: MutableList<TestGenerationConfigBuilder.() -> Unit> = mutableListOf()
 
-    val generatedTests = mutableMapOf<Path?, TestData>()
+    var generatedTests: TestData? = null
+        private set
 
     data class TestData(
         val testClassName: String?,
@@ -93,23 +94,25 @@ class TestGenerationBuilderImplementation(val pathSpec: TestGenerationPath) : Te
             childrenByPath[actualPath] = child
     }
 
-    override fun generateTests(
+    override fun tests(
         path: String,
         testClassName: String?,
         customBaseClass: KClass<*>?,
         arguments: TestArguments
     ) {
-        if (pathFromRoot == null) error("Can't generate a test with no relative path")
-        generatedTests[Path(path)] = TestData(testClassName, customBaseClass, arguments)
+        group(path) {
+            tests(testClassName, customBaseClass, arguments)
+        }
     }
 
-    override fun generateThisTest(
+    override fun tests(
         testClassName: String?,
         customBaseClass: KClass<*>?,
         arguments: TestArguments
     ) {
         if (pathFromRoot == null) error("Can't generate a test with no relative path")
-        generatedTests[null] = TestData(testClassName, customBaseClass, arguments)
+        if (generatedTests != null) error("Already generated tests for this group")
+        generatedTests = TestData(testClassName, customBaseClass, arguments)
     }
 
     fun applyConfiguration(builder: TestConfigurationBuilder) {
@@ -121,36 +124,37 @@ class TestGenerationBuilderImplementation(val pathSpec: TestGenerationPath) : Te
 fun TestGenerationBuilderImplementation.createGenerationSpecs(rootPackage: String): Map<String, GeneratedTestSpec> = buildMap { createAndPutGenerationSpecs(rootPackage, this) }
 
 private fun TestGenerationBuilderImplementation.createAndPutGenerationSpecs(rootPackage: String, specs: MutableMap<String, GeneratedTestSpec>) {
-    val config = TestGenerationConfig()
-    ancestors.forEach { it.generationConfigs.forEach { config.it() } }
-    val spec = TestSpec(config.levels)
+    val tests = generatedTests
 
-    generatedTests.forEach { (testPath, data) ->
-        val path = if (testPath == null) pathFromRoot else pathFromRoot?.resolve(testPath) ?: testPath
-        if (path == null)
-            error("Can't generate test with a null path")
+    if (tests != null) {
+        val config = TestGenerationConfig()
+        ancestors.forEach { it.generationConfigs.forEach { config.it() } }
+
+        val spec = TestSpec(config.levels)
+
+        val path = pathFromRoot ?: error("Can't generate test with a null path")
 
         val suiteName = buildList {
             addAll(rootPackage.trim('.').split(".").filter { it.isNotBlank() })
             addAll(config.testsPackage)
-            add(adjustTestName(data.testClassName ?: guessTestClassNameFromPath(testPath ?: pathSpec.relativePath ?: ancestors.firstNotNullOf { it.pathSpec.relativePath })))
+            add(adjustTestName(tests.testClassName ?: guessTestClassNameFromPath(pathSpec.relativePath ?: ancestors.asReversed().firstNotNullOf { it.pathSpec.relativePath })))
         }.joinToString(".")
 
         if (suiteName in specs) {
             throw IllegalArgumentException("Duplicate test name: $suiteName")
         }
 
-        if (data.testClassName == null && spec.testClass() == null)
+        if (tests.testClassName == null && spec.testClass() == null)
             error("Can't generate test without test levels and no custom base class")
 
         specs[suiteName] = GeneratedTestSpec(
             this,
             suiteName,
             path.toString(),
-            data.testBaseClass ?: spec.testClass()!!,
+            tests.testBaseClass ?: spec.testClass()!!,
             config.annotations(),
             config.methods,
-            data.arguments,
+            tests.arguments,
         )
     }
 

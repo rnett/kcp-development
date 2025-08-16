@@ -17,7 +17,7 @@ fun TestGenerationBuilder.autoGenerateTests(skip: (Path) -> Boolean = { false })
         if (it.isDirectory()) {
             if (it.name in TestType.byDirectoryName) {
                 group(it.name) {
-                    generateThisTest()
+                    tests()
                 }
             } else {
                 group(it.name) {
