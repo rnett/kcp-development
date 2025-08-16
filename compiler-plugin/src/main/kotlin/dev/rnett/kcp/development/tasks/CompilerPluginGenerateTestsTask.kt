@@ -1,5 +1,6 @@
-package dev.rnett.kcp.development
+package dev.rnett.kcp.development.tasks
 
+import dev.rnett.kcp.development.CompilerPluginDevelopmentExtension
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.DirectoryProperty
@@ -10,6 +11,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Nested
+import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.jvm.toolchain.JavaLauncher
@@ -47,6 +49,10 @@ abstract class CompilerPluginGenerateTestsTask @Inject constructor(
     @get:Nested
     abstract val launcher: Property<JavaLauncher>
 
+    @get:Input
+    @get:Optional
+    abstract val compilerPluginRegistrar: Property<String>
+
     @TaskAction
     fun generateTests() {
         execOperations.javaexec {
@@ -58,8 +64,12 @@ abstract class CompilerPluginGenerateTestsTask @Inject constructor(
             systemProperty("kcp.dev.test-gen", generatedTestsDirectory.get().asFile.relativeTo(workingDir).path)
             systemProperty("kcp.dev.test-data", testDataDirectory.get().asFile.relativeTo(workingDir).path)
 
+            compilerPluginRegistrar.orNull?.let {
+                systemProperty("kcp.dev.plugin-registrar", it)
+            }
+
             if (useTestGenerator.get()) {
-                mainClass.set(CompilerPluginDevelopmentExtension.TEST_GENERATOR_MAIN)
+                mainClass.set(CompilerPluginDevelopmentExtension.Companion.TEST_GENERATOR_MAIN)
                 args(testGenerator.get())
             } else {
                 mainClass.set(testGenerator.get())

@@ -47,6 +47,10 @@ gradlePlugin {
             id = "dev.rnett.kcp-development.compiler-plugin.testing"
             implementationClass = "dev.rnett.kcp.development.CompilerPluginTestingPlugin"
         }
+        create("KcpDevelopmentCompilerPluginServicesPlugin") {
+            id = "dev.rnett.kcp-development.compiler-plugin.services"
+            implementationClass = "dev.rnett.kcp.development.CompilerPluginAutoServicesPlugin"
+        }
         create("KcpDevelopmentCompilerPluginPlugin") {
             id = "dev.rnett.kcp-development.compiler-plugin"
             implementationClass = "dev.rnett.kcp.development.CompilerPluginPlugin"

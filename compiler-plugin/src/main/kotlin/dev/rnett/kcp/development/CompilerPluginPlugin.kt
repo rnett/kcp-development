@@ -10,6 +10,7 @@ class CompilerPluginPlugin : Plugin<Project> {
             apply(CompilerPluginBuildConfigPlugin::class.java)
             apply(CompilerPluginTestingPlugin::class.java)
             apply(CompilerPluginShadowPlugin::class.java)
+            apply(CompilerPluginAutoServicesPlugin::class.java)
         }
     }
 }

@@ -1,5 +1,6 @@
 package dev.rnett.kcp.development
 
+import dev.rnett.kcp.development.tasks.CompilerPluginGenerateTestsTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
@@ -91,6 +92,10 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
                 systemProperty("default.package", projectGroup.get())
                 systemProperty("kcp.dev.test-gen", extension.testGenerationRoot.get().asFile.relativeTo(projectDir).path)
                 systemProperty("kcp.dev.test-data", extension.testDataRoot.get().asFile.relativeTo(projectDir).path)
+
+                extension.compilerPluginRegistrar.orNull?.let {
+                    systemProperty("kcp.dev.plugin-registrar", it)
+                }
             }
             systemProperty("idea.ignore.disabled.plugins", "true")
             systemProperty("idea.home.path", projectDir)
@@ -108,6 +113,8 @@ class CompilerPluginTestingPlugin : Plugin<Project> {
             workingDirectory.set(projectDir)
 
             launcher.convention(javaToolchains.launcherFor { })
+
+            compilerPluginRegistrar.set(extension.compilerPluginRegistrar)
         }
 
         val clearDumps by tasks.registering(Delete::class) {

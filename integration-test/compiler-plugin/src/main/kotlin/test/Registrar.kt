@@ -11,8 +11,7 @@ data class Spec(val name: String)
 
 @OptIn(ExperimentalCompilerApi::class)
 class Registrar : BaseSpecCompilerPluginRegistrar<Spec>() {
-    override val extensions: SpecBasedCompilerPluginExtensions<Spec>
-        get() = TODO("Not yet implemented")
+    override val extensions: SpecBasedCompilerPluginExtensions<Spec> = PluginExtensions
 
     override fun produceSpec(configuration: CompilerConfiguration): Spec {
         return Spec("prod")

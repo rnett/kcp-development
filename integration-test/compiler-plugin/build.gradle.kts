@@ -5,4 +5,5 @@ plugins {
 
 compilerPluginDevelopment {
     testGenerator = "dev.rnett.kcp.tests.TestGenerator"
+    compilerPluginRegistrar = "test.Registrar"
 }

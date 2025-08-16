@@ -26,6 +26,9 @@ abstract class CompilerPluginDevelopmentExtension {
     abstract val testGenerationRoot: DirectoryProperty
     abstract val testDataRoot: DirectoryProperty
 
+    abstract val commandLineProcessor: Property<String>
+    abstract val compilerPluginRegistrar: Property<String>
+
     init {
         this::class.objectInstance
     }
