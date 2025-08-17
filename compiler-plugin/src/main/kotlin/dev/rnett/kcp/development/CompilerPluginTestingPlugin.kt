@@ -96,6 +96,11 @@ public class CompilerPluginTestingPlugin : Plugin<Project> {
                 extension.compilerPluginRegistrar.orNull?.let {
                     systemProperty("kcp.dev.plugin-registrar", it)
                 }
+
+                if (extension.parallelTests.get()) {
+                    systemProperty("junit.jupiter.execution.parallel.enabled", "true")
+                    systemProperty("junit.jupiter.execution.parallel.mode.classes.default", "concurrent")
+                }
             }
             systemProperty("idea.ignore.disabled.plugins", "true")
             systemProperty("idea.home.path", projectDir)

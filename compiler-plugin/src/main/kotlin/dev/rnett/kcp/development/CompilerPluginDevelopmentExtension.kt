@@ -29,6 +29,8 @@ public abstract class CompilerPluginDevelopmentExtension {
     public abstract val commandLineProcessor: Property<String>
     public abstract val compilerPluginRegistrar: Property<String>
 
+    public abstract val parallelTests: Property<Boolean>
+
     init {
         this::class.objectInstance
     }

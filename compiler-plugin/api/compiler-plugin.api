@@ -25,6 +25,7 @@ public abstract class dev/rnett/kcp/development/CompilerPluginDevelopmentExtensi
 	public abstract fun getAddTestSupportDependency ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCommandLineProcessor ()Lorg/gradle/api/provider/Property;
 	public abstract fun getCompilerPluginRegistrar ()Lorg/gradle/api/provider/Property;
+	public abstract fun getParallelTests ()Lorg/gradle/api/provider/Property;
 	public abstract fun getTestDataRoot ()Lorg/gradle/api/file/DirectoryProperty;
 	public abstract fun getTestGenerationRoot ()Lorg/gradle/api/file/DirectoryProperty;
 	public abstract fun getTestGenerator ()Lorg/gradle/api/provider/Property;
