@@ -38,22 +38,6 @@ extensionIfPresent<MavenPublishBaseExtension> {
     }
 }
 
-fun registerDokkaJavadocTask(prefix: String? = null): TaskProvider<Jar> {
-
-    val name = if (prefix == null) "dokkaJavadocJar" else prefix + "DokkaJavadocJar"
-
-    return tasks.register<Jar>(name) {
-        val task = tasks.named("dokkaGeneratePublicationHtml")
-        dependsOn(task)
-        from(task)
-        archiveClassifier.set("javadoc")
-
-        if (prefix != null) {
-            archiveBaseName.set("${project.name}-$prefix")
-        }
-    }
-}
-
 plugins.withId("org.gradle.java-test-fixtures") {
     val component = components["java"] as AdhocComponentWithVariants
     component.withVariantsFromConfiguration(configurations["testFixturesApiElements"]) { skip() }
@@ -64,22 +48,28 @@ afterEvaluate {
     val hasGradlePlugin = project.plugins.hasPlugin("java-gradle-plugin")
     val hasKotlinJvm = project.plugins.hasPlugin("org.jetbrains.kotlin.jvm")
 
-    when {
-        hasKotlinJvm -> {
-            gradlePublishing.publications.register<MavenPublication>("maven") {
-                val componentName = "java"
+    if (hasKotlinJvm) {
+        extensionIfPresent<JavaPluginExtension> {
+            withSourcesJar()
+        }
 
-                from(project.components.getByName(componentName))
-            }
+        val javadocTask = tasks.register<Jar>("dokkaJavadocJar") {
+            val task = tasks.named("dokkaGeneratePublicationHtml")
+            dependsOn(task)
+            from(task)
+            archiveClassifier.set("javadoc")
+        }
 
-            extensionIfPresent<JavaPluginExtension> {
-                withSourcesJar()
-            }
+        mavenPublicationsWithoutPluginMarker {
+            artifact(javadocTask)
+        }
+    }
 
-            val javadocTask = registerDokkaJavadocTask()
-            mavenPublicationsWithoutPluginMarker {
-                artifact(javadocTask)
-            }
+    if (hasKotlinJvm && !hasGradlePlugin) {
+        gradlePublishing.publications.register<MavenPublication>("maven") {
+            val componentName = "java"
+
+            from(project.components.getByName(componentName))
         }
     }
 }

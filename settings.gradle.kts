@@ -16,8 +16,8 @@ gradle.beforeProject {
 }
 
 include(
-    ":compiler-plugin",
-    ":gradle-plugin",
+    ":compiler-plugin-plugins",
+    ":gradle-plugin-plugins",
     ":test-support",
     ":core"
 )

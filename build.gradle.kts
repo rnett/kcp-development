@@ -30,8 +30,8 @@ afterEvaluate {
 }
 
 dependencies {
-    dokka(project(":compiler-plugin"))
-    dokka(project(":gradle-plugin"))
+    dokka(project(":compiler-plugin-plugins"))
+    dokka(project(":gradle-plugin-plugins"))
     dokka(project(":core"))
     dokka(project(":test-support"))
 }
