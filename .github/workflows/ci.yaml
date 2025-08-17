@@ -1,0 +1,128 @@
+name: CI
+run-name: CI
+on: [ push ]
+jobs:
+  buildAndTest:
+    name: Build and test
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    env:
+      GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m"
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Setup Java 24
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 24
+
+      - name: Cache .konan
+        uses: actions/cache@v4
+        with:
+          path: ~/.konan
+          key: ${{ runner.os }}-konan
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          build-scan-publish: true
+          build-scan-terms-of-use-url: 'https://gradle.com/terms-of-service'
+          build-scan-terms-of-use-agree: 'yes'
+
+      - name: Build library
+        run: |
+          ./gradlew assemble
+
+      - name: Build tests
+        working-directory: ./integration-test
+        run: |
+          ./gradlew assemble
+
+      - name: Test library
+        run: ./gradlew check
+
+      - name: Run integration tests
+        working-directory: ./integration-test
+        run: ./gradlew check
+
+      - name: Get version
+        id: get-version
+        run: echo "version=$(cat version.txt)" >> "$GITHUB_OUTPUT"
+
+  publishSnapshot:
+    name: Publish snapshot
+    needs: buildAndTest
+    runs-on: macos-latest
+    if: ${{ github.ref == 'refs/heads/main' && endsWith(needs.buildAndTest.outputs.version, '-SNAPSHOT') }}
+    env:
+      GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=512m"
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Setup Java 24
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 24
+
+      - name: Cache .konan
+        uses: actions/cache@v4
+        with:
+          path: ~/.konan
+          key: ${{ runner.os }}-konan
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+          build-scan-publish: true
+          build-scan-terms-of-use-url: 'https://gradle.com/terms-of-service'
+          build-scan-terms-of-use-agree: 'yes'
+
+      - name: Generate dokka docs
+        run: |
+          ./gradlew dokkaGenerate
+
+      - name: Publish to staging
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.ORG_GRADLE_PROJECT_MAVENCENTRALUSERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.ORG_GRADLE_PROJECT_MAVENCENTRALPASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD }}
+        run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
+
+      - name: Upload docs
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/dokka/html
+
+  deployDocs:
+    name: Deploy snapshot docs
+    needs: [ buildAndTest, publishSnapshot ]
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' && endsWith(needs.buildAndTest.outputs.version, '-SNAPSHOT') }}
+
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    steps:
+      - name: Deploy docs
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  reviewers: [
+    "rnett"
+  ],
+  assignees: [
+    "rnett"
+  ],
+  "pruneStaleBranches": false,
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "org.jetbrains.kotlin:kotlin-gradle-plugin",
+        "com.google.devtools.ksp:symbol-processing-api"
+      ],
+      groupName: "kotlin",
+      labels: [
+        "kotlin"
+      ],
+      branchPrefix: "kotlin-update/",
+      "allowedVersions": "/.*/",
+      "ignoreUnstable": false,
+      automerge: false,
+      draftPR: true,
+      baseBranchPatterns: [
+        "main",
+        "renovate/kotlin",
+        "kotlin-update/*"
+      ]
+    }
+  ],
+  enabledManagers: [
+    "gradle",
+    "gradle-wrapper"
+  ],
+}
