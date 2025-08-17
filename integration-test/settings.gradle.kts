@@ -20,8 +20,8 @@ includeBuild("..")
 
 include(
     ":compiler-plugin",
-    ":gradle-plugin",
-    ":annotations"
+//    ":gradle-plugin",
+//    ":annotations"
 )
 
 rootProject.name = "kcp-development-parent"
