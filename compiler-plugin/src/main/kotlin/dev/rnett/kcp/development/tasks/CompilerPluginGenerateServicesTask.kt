@@ -8,21 +8,21 @@ import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
-abstract class CompilerPluginGenerateServicesTask : DefaultTask() {
+public abstract class CompilerPluginGenerateServicesTask : DefaultTask() {
 
     @get:Input
     @get:Optional
-    abstract val compilerPluginRegistrar: Property<String>
+    public abstract val compilerPluginRegistrar: Property<String>
 
     @get:Input
     @get:Optional
-    abstract val commandLineProcessor: Property<String>
+    public abstract val commandLineProcessor: Property<String>
 
     @get:OutputDirectory
-    abstract val resourcesDirectory: DirectoryProperty
+    public abstract val resourcesDirectory: DirectoryProperty
 
     @TaskAction
-    fun generate() {
+    protected fun generate() {
         resourcesDirectory.get().asFile.mkdirs()
         commandLineProcessor.orNull?.let {
             resourcesDirectory.file("META-INF/services/org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor").get().asFile.apply {

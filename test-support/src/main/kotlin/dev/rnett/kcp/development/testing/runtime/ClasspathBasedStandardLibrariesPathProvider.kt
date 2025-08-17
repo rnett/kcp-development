@@ -5,7 +5,7 @@ import java.io.File
 import java.io.File.pathSeparator
 import java.io.File.separator
 
-object ClasspathBasedStandardLibrariesPathProvider : KotlinStandardLibrariesPathProvider() {
+public object ClasspathBasedStandardLibrariesPathProvider : KotlinStandardLibrariesPathProvider() {
     private val SEP = "\\$separator"
 
     private val GRADLE_DEPENDENCY = (".*?" +

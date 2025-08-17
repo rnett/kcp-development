@@ -22,34 +22,34 @@ import java.nio.file.Path
 import kotlin.reflect.KClass
 
 @DslMarker
-annotation class TestGenerationDslMarker
+public annotation class TestGenerationDslMarker
 
 @TestGenerationDslMarker
-interface TestGenerationBuilder {
-    val pathFromRoot: Path?
-    val path: Path
+public interface TestGenerationBuilder {
+    public val pathFromRoot: Path?
+    public val path: Path
 
-    fun configure(block: TestConfigurationBuilder.() -> Unit)
+    public fun configure(block: TestConfigurationBuilder.() -> Unit)
 
-    fun configureGeneration(block: TestGenerationConfigBuilder.() -> Unit)
+    public fun configureGeneration(block: TestGenerationConfigBuilder.() -> Unit)
 
-    fun group(path: String? = null, inferPackageNames: Boolean = true, inferType: Boolean = true, block: TestGenerationBuilder.() -> Unit)
+    public fun group(path: String? = null, inferPackageNames: Boolean = true, inferType: Boolean = true, block: TestGenerationBuilder.() -> Unit)
 
-    fun tests(
+    public fun tests(
         path: String,
         testClassName: String? = null,
         customBaseClass: KClass<*>? = null,
         arguments: TestArguments = TestArguments()
     )
 
-    fun tests(
+    public fun tests(
         testClassName: String? = null,
         customBaseClass: KClass<*>? = null,
         arguments: TestArguments = TestArguments()
     )
 }
 
-data class TestArguments(
+public data class TestArguments(
     val recursive: Boolean = true,
     val excludeParentDirs: Boolean = false,
     val extension: String? = "kt", // null string means dir (name without dot)
@@ -73,34 +73,34 @@ data class TestArguments(
 )
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.group(path: String? = null, vararg levels: TestLevel, block: TestGenerationBuilder.() -> Unit) =
+public fun TestGenerationBuilder.group(path: String? = null, vararg levels: TestLevel, block: TestGenerationBuilder.() -> Unit): Unit =
     group(path) {
         levels.forEach { addLevel(it) }
         block()
     }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.group(path: String? = null, type: TestType, block: TestGenerationBuilder.() -> Unit) = group(path, inferPackageNames = true, inferType = false) {
+public fun TestGenerationBuilder.group(path: String? = null, type: TestType, block: TestGenerationBuilder.() -> Unit): Unit = group(path, inferPackageNames = true, inferType = false) {
     +type
     block()
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.import(vararg imports: String) {
+public fun TestGenerationBuilder.import(vararg imports: String) {
     directives {
         IMPORTS.with(imports.toList())
     }
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.optIn(vararg optIns: String) {
+public fun TestGenerationBuilder.optIn(vararg optIns: String) {
     directives {
         OPT_IN.with(optIns.toList())
     }
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.optInBox(vararg optIns: String) {
+public fun TestGenerationBuilder.optInBox(vararg optIns: String) {
     directives {
         BOX_OPT_IN.with(optIns.toList())
         IMPORTS.with(optIns.toList())
@@ -108,21 +108,21 @@ fun TestGenerationBuilder.optInBox(vararg optIns: String) {
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.import(vararg imports: KClass<*>) {
+public fun TestGenerationBuilder.import(vararg imports: KClass<*>) {
     directives {
         IMPORTS.with(imports.map { it.qualifiedName!! })
     }
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.optIn(vararg optIns: KClass<*>) {
+public fun TestGenerationBuilder.optIn(vararg optIns: KClass<*>) {
     directives {
         OPT_IN.with(optIns.map { it.qualifiedName!! })
     }
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.optInBox(vararg optIns: KClass<*>) {
+public fun TestGenerationBuilder.optInBox(vararg optIns: KClass<*>) {
     directives {
         val qualifiedNames = optIns.map { it.qualifiedName!! }
         BOX_OPT_IN.with(qualifiedNames)
@@ -131,52 +131,52 @@ fun TestGenerationBuilder.optInBox(vararg optIns: KClass<*>) {
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.addLevel(level: TestLevel) = configureGeneration { addLevel(level) }
+public fun TestGenerationBuilder.addLevel(level: TestLevel): Unit = configureGeneration { addLevel(level) }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.removeLevel(level: TestLevel) = configureGeneration { removeLevel(level) }
+public fun TestGenerationBuilder.removeLevel(level: TestLevel): Unit = configureGeneration { removeLevel(level) }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.testsPackage(vararg packageNames: String) = configureGeneration { testsPackage(*packageNames) }
+public fun TestGenerationBuilder.testsPackage(vararg packageNames: String): Unit = configureGeneration { testsPackage(*packageNames) }
 
 @TestGenerationDslMarker
 context(generator: TestGenerationBuilder)
-operator fun TestLevel.unaryPlus() {
+public operator fun TestLevel.unaryPlus() {
     generator.addLevel(this)
 }
 
 @TestGenerationDslMarker
 context(generator: TestGenerationBuilder)
-operator fun TestLevel.unaryMinus() {
+public operator fun TestLevel.unaryMinus() {
     generator.removeLevel(this)
 }
 
 @TestGenerationDslMarker
 context(generator: TestGenerationBuilder)
-operator fun TestSpec.unaryPlus() {
+public operator fun TestSpec.unaryPlus() {
     this.levels.forEach { generator.addLevel(it) }
 }
 
 @TestGenerationDslMarker
 context(generator: TestGenerationBuilder)
-operator fun TestSpec.unaryMinus() {
+public operator fun TestSpec.unaryMinus() {
     this.levels.forEach { generator.removeLevel(it) }
 }
 
 @TestGenerationDslMarker
 context(generator: TestGenerationBuilder)
-operator fun TestType.unaryPlus() {
+public operator fun TestType.unaryPlus() {
     +this.spec
 }
 
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.registerDirectives(vararg containers: DirectivesContainer) = configure {
+public fun TestGenerationBuilder.registerDirectives(vararg containers: DirectivesContainer): Unit = configure {
     useDirectives(*containers)
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.directives(vararg containers: DirectivesContainer, block: RegisteredDirectivesBuilder.() -> Unit) {
+public fun TestGenerationBuilder.directives(vararg containers: DirectivesContainer, block: RegisteredDirectivesBuilder.() -> Unit) {
     configure {
         useDirectives(*containers)
         defaultDirectives {
@@ -186,15 +186,15 @@ fun TestGenerationBuilder.directives(vararg containers: DirectivesContainer, blo
 }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.annotation(annotation: AnnotationModel) = configureGeneration { annotation(annotation) }
+public fun TestGenerationBuilder.annotation(annotation: AnnotationModel): Unit = configureGeneration { annotation(annotation) }
 
 @TestGenerationDslMarker
-fun TestGenerationBuilder.method(method: MethodModel) = configureGeneration { method(method) }
+public fun TestGenerationBuilder.method(method: MethodModel): Unit = configureGeneration { method(method) }
 
 
 @TestGenerationDslMarker
 @OptIn(ExperimentalCompilerApi::class)
-fun <T> TestGenerationBuilder.withTestSpec(configurator: KClass<out BaseSpecCompilerPluginRegistrar<T>>, spec: T) {
+public fun <T> TestGenerationBuilder.withTestSpec(configurator: KClass<out BaseSpecCompilerPluginRegistrar<T>>, spec: T) {
     withCompilerConfiguration {
         add(BaseSpecCompilerPluginRegistrar.testSpecKey, BaseSpecCompilerPluginRegistrar.TestSpec(configurator, spec))
     }
@@ -202,7 +202,7 @@ fun <T> TestGenerationBuilder.withTestSpec(configurator: KClass<out BaseSpecComp
 
 @TestGenerationDslMarker
 @OptIn(ExperimentalCompilerApi::class)
-fun TestGenerationBuilder.withCompilerConfiguration(configurator: CompilerConfiguration.(TestModule) -> Unit) {
+public fun TestGenerationBuilder.withCompilerConfiguration(configurator: CompilerConfiguration.(TestModule) -> Unit) {
     configure {
         useConfigurators({
             object : EnvironmentConfigurator(it) {

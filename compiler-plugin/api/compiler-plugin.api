@@ -1,0 +1,86 @@
+public final class dev/rnett/kcp/development/CompilerPluginAutoServicesPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginBasePlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginBuildConfigPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public abstract class dev/rnett/kcp/development/CompilerPluginDevelopmentExtension {
+	public static final field Companion Ldev/rnett/kcp/development/CompilerPluginDevelopmentExtension$Companion;
+	public static final field NAME Ljava/lang/String;
+	public static final field TEST_GENERATOR_MAIN Ljava/lang/String;
+	public fun <init> ()V
+	public abstract fun getAddCoreDependency ()Lorg/gradle/api/provider/Property;
+	public abstract fun getAddTestSupportDependency ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCommandLineProcessor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCompilerPluginRegistrar ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTestDataRoot ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getTestGenerationRoot ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getTestGenerator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getUseTestGenerator ()Lorg/gradle/api/provider/Property;
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginDevelopmentExtension$Companion {
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginShadowPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginShadowPlugin$apply$1$1$inlined$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final synthetic fun execute (Ljava/lang/Object;)V
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginTestingPlugin : org/gradle/api/Plugin {
+	public fun <init> ()V
+	public synthetic fun apply (Ljava/lang/Object;)V
+	public fun apply (Lorg/gradle/api/Project;)V
+}
+
+public final class dev/rnett/kcp/development/CompilerPluginTestingPlugin$inlined$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final synthetic fun execute (Ljava/lang/Object;)V
+}
+
+public abstract class dev/rnett/kcp/development/tasks/CompilerPluginGenerateServicesTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	protected final fun generate ()V
+	public abstract fun getCommandLineProcessor ()Lorg/gradle/api/provider/Property;
+	public abstract fun getCompilerPluginRegistrar ()Lorg/gradle/api/provider/Property;
+	public abstract fun getResourcesDirectory ()Lorg/gradle/api/file/DirectoryProperty;
+}
+
+public abstract class dev/rnett/kcp/development/tasks/CompilerPluginGenerateTestsTask : org/gradle/api/DefaultTask {
+	public fun <init> (Lorg/gradle/api/provider/ProviderFactory;Lorg/gradle/process/ExecOperations;)V
+	protected final fun generateTests ()V
+	public abstract fun getClasspath ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public abstract fun getCompilerPluginRegistrar ()Lorg/gradle/api/provider/Property;
+	public abstract fun getDefaultPackage ()Lorg/gradle/api/provider/Property;
+	public abstract fun getGeneratedTestsDirectory ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getLauncher ()Lorg/gradle/api/provider/Property;
+	public abstract fun getTestDataDirectory ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getTestGenerator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getUseTestGenerator ()Lorg/gradle/api/provider/Property;
+	public abstract fun getWorkingDirectory ()Lorg/gradle/api/provider/Property;
+}
+

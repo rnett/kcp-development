@@ -4,34 +4,34 @@ import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.CompilerConfigurationKey
 
-sealed class CompilerOption<T>(
-    val name: String,
+public sealed class CompilerOption<T>(
+    public val name: String,
     valueDescription: String,
     description: String,
     required: Boolean,
     allowMultipleOccurrences: Boolean,
 ) {
-    abstract fun processOption(value: String, configuration: CompilerConfiguration)
-    abstract fun getOption(configuration: CompilerConfiguration): T?
+    public abstract fun processOption(value: String, configuration: CompilerConfiguration)
+    public abstract fun getOption(configuration: CompilerConfiguration): T?
 
-    val cliOption: CliOption = CliOption(name, valueDescription, description, required, allowMultipleOccurrences)
+    public val cliOption: CliOption = CliOption(name, valueDescription, description, required, allowMultipleOccurrences)
 
-    val key: CompilerConfigurationKey<T> = CompilerConfigurationKey.create<T>(name)
+    public val key: CompilerConfigurationKey<T> = CompilerConfigurationKey.create<T>(name)
 
-    sealed class WithDefault<T>(name: String, valueDescription: String, description: String, required: Boolean, allowMultipleOccurrences: Boolean) :
+    public sealed class WithDefault<T>(name: String, valueDescription: String, description: String, required: Boolean, allowMultipleOccurrences: Boolean) :
         CompilerOption<T>(name, valueDescription, description, required, allowMultipleOccurrences) {
-        abstract fun defaultValue(): T
+        public abstract fun defaultValue(): T
 
-        fun getOptionOrDefault(configuration: CompilerConfiguration): T = getOption(configuration) ?: defaultValue()
+        public fun getOptionOrDefault(configuration: CompilerConfiguration): T = getOption(configuration) ?: defaultValue()
 
     }
 
-    class Singular<T : Any>(
+    public class Singular<T : Any>(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean,
-        val transform: (String) -> T?,
+        public val transform: (String) -> T?,
     ) : CompilerOption<T>(name, valueDescription, description, required, false) {
         override fun processOption(value: String, configuration: CompilerConfiguration) {
             configuration.putIfNotNull(key, transform(value))
@@ -42,12 +42,12 @@ sealed class CompilerOption<T>(
         }
     }
 
-    class SingularWithDefault<T>(
+    public class SingularWithDefault<T>(
         name: String,
         valueDescription: String,
         description: String,
-        val transform: (String) -> T?,
-        val defaultValue: T,
+        public val transform: (String) -> T?,
+        public val defaultValue: T,
     ) : WithDefault<T>(name, valueDescription, description, false, false) {
         override fun processOption(value: String, configuration: CompilerConfiguration) {
             configuration.putIfNotNull(key, transform(value))
@@ -60,12 +60,12 @@ sealed class CompilerOption<T>(
         override fun defaultValue(): T = defaultValue
     }
 
-    class Repeated<T>(
+    public class Repeated<T>(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean,
-        val transform: (String) -> T?,
+        public val transform: (String) -> T?,
     ) : WithDefault<List<T>>(name, valueDescription, description, required, true) {
         override fun processOption(value: String, configuration: CompilerConfiguration) {
             val value = transform(value) ?: return
@@ -79,12 +79,12 @@ sealed class CompilerOption<T>(
         override fun defaultValue(): List<T> = emptyList()
     }
 
-    class Keyed<K : Any, V : Any>(
+    public class Keyed<K : Any, V : Any>(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean,
-        val transform: (String) -> Pair<K, V>?,
+        public val transform: (String) -> Pair<K, V>?,
     ) : WithDefault<Map<K, V>>(name, valueDescription, description, required, true) {
         override fun processOption(value: String, configuration: CompilerConfiguration) {
             val value = transform(value) ?: return
@@ -99,6 +99,6 @@ sealed class CompilerOption<T>(
     }
 }
 
-operator fun <T : Any> CompilerConfiguration.get(option: CompilerOption<T>): T? = option.getOption(this)
+public operator fun <T : Any> CompilerConfiguration.get(option: CompilerOption<T>): T? = option.getOption(this)
 
-operator fun <T : Any> CompilerConfiguration.get(option: CompilerOption.WithDefault<T>): T = option.getOptionOrDefault(this)
+public operator fun <T : Any> CompilerConfiguration.get(option: CompilerOption.WithDefault<T>): T = option.getOptionOrDefault(this)

@@ -5,18 +5,18 @@ import dev.rnett.kcp.development.testing.tests.levels.TestSpec
 import org.jetbrains.kotlin.generators.model.AnnotationModel
 import org.jetbrains.kotlin.generators.model.MethodModel
 
-interface TestGenerationConfigBuilder {
+public interface TestGenerationConfigBuilder {
 
-    fun testsPackage(vararg packageNames: String)
+    public fun testsPackage(vararg packageNames: String)
 
-    fun annotation(annotation: AnnotationModel)
-    fun method(method: MethodModel)
+    public fun annotation(annotation: AnnotationModel)
+    public fun method(method: MethodModel)
 
-    fun addLevel(level: TestLevel)
-    fun removeLevel(level: TestLevel)
+    public fun addLevel(level: TestLevel)
+    public fun removeLevel(level: TestLevel)
 }
 
-class TestGenerationConfig() : TestGenerationConfigBuilder {
+internal class TestGenerationConfig() : TestGenerationConfigBuilder {
     val testsPackage: MutableList<String> = mutableListOf()
     private val annotations: MutableList<AnnotationModel> = mutableListOf()
     val methods: MutableList<MethodModel> = mutableListOf()

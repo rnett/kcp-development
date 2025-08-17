@@ -10,17 +10,17 @@ import org.jetbrains.kotlin.fir.extensions.FirExtensionRegistrarAdapter
 import kotlin.reflect.KClass
 
 @ExperimentalCompilerApi
-abstract class BaseSpecCompilerPluginRegistrar<T> : CompilerPluginRegistrar() {
+public abstract class BaseSpecCompilerPluginRegistrar<T> : CompilerPluginRegistrar() {
 
-    abstract val extensions: SpecBasedCompilerPluginExtensions<T>
-    abstract fun produceSpec(configuration: CompilerConfiguration): T
+    public abstract val extensions: SpecBasedCompilerPluginExtensions<T>
+    public abstract fun produceSpec(configuration: CompilerConfiguration): T
 
 
-    companion object {
-        val testSpecKey = CompilerConfigurationKey<List<TestSpec<*>>>("testSpecs")
+    public companion object {
+        public val testSpecKey: CompilerConfigurationKey<List<TestSpec<*>>> = CompilerConfigurationKey<List<TestSpec<*>>>("testSpecs")
     }
 
-    data class TestSpec<T>(val forRegistrar: KClass<out BaseSpecCompilerPluginRegistrar<T>>, val spec: T)
+    public data class TestSpec<T>(val forRegistrar: KClass<out BaseSpecCompilerPluginRegistrar<T>>, val spec: T)
 
     final override fun ExtensionStorage.registerExtensions(configuration: CompilerConfiguration) {
 
@@ -38,15 +38,15 @@ abstract class BaseSpecCompilerPluginRegistrar<T> : CompilerPluginRegistrar() {
 }
 
 @ExperimentalCompilerApi
-abstract class SpecBasedCompilerPluginExtensions<T> {
-    abstract fun irExtension(spec: T): IrGenerationExtension?
-    abstract fun firExtension(spec: T): FirExtensionRegistrar?
+public abstract class SpecBasedCompilerPluginExtensions<T> {
+    public abstract fun irExtension(spec: T): IrGenerationExtension?
+    public abstract fun firExtension(spec: T): FirExtensionRegistrar?
 
-    fun registerExtensions(storage: CompilerPluginRegistrar.ExtensionStorage, spec: T) = with(storage) {
+    public fun registerExtensions(storage: CompilerPluginRegistrar.ExtensionStorage, spec: T): Unit = with(storage) {
         irExtension(spec)?.let { IrGenerationExtension.registerExtension(it) }
         firExtension(spec)?.let { FirExtensionRegistrarAdapter.registerExtension(it) }
         registerAdditionalExtensions(spec)
     }
 
-    open fun CompilerPluginRegistrar.ExtensionStorage.registerAdditionalExtensions(spec: T) {}
+    public open fun CompilerPluginRegistrar.ExtensionStorage.registerAdditionalExtensions(spec: T) {}
 }

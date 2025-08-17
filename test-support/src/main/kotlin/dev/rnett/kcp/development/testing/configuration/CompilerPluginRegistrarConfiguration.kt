@@ -9,7 +9,7 @@ import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.TestServices
 
 @ExperimentalCompilerApi
-class CompilerPluginRegistrarConfigurator(testServices: TestServices, val registrar: CompilerPluginRegistrar) : EnvironmentConfigurator(testServices) {
+public class CompilerPluginRegistrarConfigurator(testServices: TestServices, public val registrar: CompilerPluginRegistrar) : EnvironmentConfigurator(testServices) {
     override fun CompilerPluginRegistrar.ExtensionStorage.registerCompilerExtensions(
         module: TestModule,
         configuration: CompilerConfiguration,
@@ -19,9 +19,9 @@ class CompilerPluginRegistrarConfigurator(testServices: TestServices, val regist
 }
 
 @ExperimentalCompilerApi
-fun TestConfigurationBuilder.withCompilerPluginRegistrar(registrar: CompilerPluginRegistrar) =
+public fun TestConfigurationBuilder.withCompilerPluginRegistrar(registrar: CompilerPluginRegistrar): Unit =
     useConfigurators({ CompilerPluginRegistrarConfigurator(it, registrar) })
 
-fun interface TestSpecProducer<T> {
-    fun produceSpec(original: Result<T>, module: TestModule, configuration: CompilerConfiguration): T
+public fun interface TestSpecProducer<T> {
+    public fun produceSpec(original: Result<T>, module: TestModule, configuration: CompilerConfiguration): T
 }

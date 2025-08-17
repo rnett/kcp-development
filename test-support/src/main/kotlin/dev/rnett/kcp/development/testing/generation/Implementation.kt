@@ -10,25 +10,25 @@ import kotlin.io.path.name
 import kotlin.io.path.relativeTo
 import kotlin.reflect.KClass
 
-sealed interface TestGenerationPath {
+internal sealed interface TestGenerationPathSpec {
     val relativePath: Path?
     val path: Path
     val root: Path
     val parent: TestGenerationBuilderImplementation? get() = null
 
-    data class Root(override val root: Path) : TestGenerationPath {
+    data class Root(override val root: Path) : TestGenerationPathSpec {
         override val relativePath: Path? = null
         override val path: Path = root
     }
 
-    data class Child(val ownRelativePath: Path?, override val parent: TestGenerationBuilderImplementation) : TestGenerationPath {
+    data class Child(val ownRelativePath: Path?, override val parent: TestGenerationBuilderImplementation) : TestGenerationPathSpec {
         override val relativePath: Path? = ownRelativePath
         override val path: Path = ownRelativePath?.let { parent.pathSpec.path.resolve(it) } ?: parent.pathSpec.path
         override val root: Path get() = parent.pathSpec.root
     }
 }
 
-class TestGenerationBuilderImplementation(val pathSpec: TestGenerationPath) : TestGenerationBuilder {
+internal class TestGenerationBuilderImplementation(internal val pathSpec: TestGenerationPathSpec) : TestGenerationBuilder {
     override val path: Path
         get() = pathSpec.path
     override val pathFromRoot: Path?
@@ -36,8 +36,8 @@ class TestGenerationBuilderImplementation(val pathSpec: TestGenerationPath) : Te
 
     val parent: TestGenerationBuilderImplementation? get() = pathSpec.parent
 
-    val children = mutableListOf<TestGenerationBuilderImplementation>()
-    val childrenByPath = mutableMapOf<Path, TestGenerationBuilderImplementation>()
+    internal val children: MutableList<TestGenerationBuilderImplementation> = mutableListOf<TestGenerationBuilderImplementation>()
+    private val childrenByPath: MutableMap<Path, TestGenerationBuilderImplementation> = mutableMapOf<Path, TestGenerationBuilderImplementation>()
 
     val ancestors: List<TestGenerationBuilderImplementation> by lazy { parent?.ancestors.orEmpty() + this }
 
@@ -68,7 +68,7 @@ class TestGenerationBuilderImplementation(val pathSpec: TestGenerationPath) : Te
             if (overlapping.isNotEmpty())
                 error("Already registered test group with path that overlaps $actualPath: $overlapping")
         }
-        val child = TestGenerationBuilderImplementation(TestGenerationPath.Child(actualPath, this))
+        val child = TestGenerationBuilderImplementation(TestGenerationPathSpec.Child(actualPath, this))
 
         if (inferPackageNames && actualPath != null) {
             child.configureGeneration {
@@ -121,7 +121,7 @@ class TestGenerationBuilderImplementation(val pathSpec: TestGenerationPath) : Te
     }
 }
 
-fun TestGenerationBuilderImplementation.createGenerationSpecs(rootPackage: String): Map<String, GeneratedTestSpec> = buildMap { createAndPutGenerationSpecs(rootPackage, this) }
+internal fun TestGenerationBuilderImplementation.createGenerationSpecs(rootPackage: String): Map<String, GeneratedTestSpec> = buildMap { createAndPutGenerationSpecs(rootPackage, this) }
 
 private fun TestGenerationBuilderImplementation.createAndPutGenerationSpecs(rootPackage: String, specs: MutableMap<String, GeneratedTestSpec>) {
     val tests = generatedTests

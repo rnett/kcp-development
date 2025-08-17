@@ -5,7 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.the
 
-class CompilerPluginBuildConfigPlugin : Plugin<Project> {
+public class CompilerPluginBuildConfigPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply(CompilerPluginBasePlugin::class.java)
         pluginManager.apply("com.github.gmazzo.buildconfig")

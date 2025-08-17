@@ -9,7 +9,7 @@ import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.the
 
-class CompilerPluginAutoServicesPlugin : Plugin<Project> {
+public class CompilerPluginAutoServicesPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply(CompilerPluginBasePlugin::class.java)
 

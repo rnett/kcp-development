@@ -3,9 +3,9 @@ package dev.rnett.kcp.development.testing.generation
 import kotlin.reflect.full.createInstance
 
 // hard coded in gradle plugin
-object TestGenerationBootstrapper {
+public object TestGenerationBootstrapper {
     @JvmStatic
-    fun main(args: Array<String>) {
+    public fun main(args: Array<String>) {
         val generator = args.getOrNull(0)
         if (generator != null) {
             val cls = Class.forName(generator)

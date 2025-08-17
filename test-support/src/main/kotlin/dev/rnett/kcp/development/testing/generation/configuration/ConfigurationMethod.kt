@@ -9,13 +9,13 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
 
-abstract class ConfigurationHost {
-    abstract fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder)
+public abstract class ConfigurationHost {
+    public abstract fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder)
 
-    companion object {
+    public companion object {
 
         @JvmStatic
-        fun applyRuntimeConfiguration(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder, vararg hosts: Class<out ConfigurationHost>) {
+        public fun applyRuntimeConfiguration(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder, vararg hosts: Class<out ConfigurationHost>) {
             val instances = hosts.toSet().map {
                 (it.kotlin.objectInstance ?: it.kotlin.createInstance()) as ConfigurationHost
             }
@@ -26,7 +26,7 @@ abstract class ConfigurationHost {
     }
 }
 
-class RuntimeConfigurationMethodModel(val hosts: Set<KClass<out ConfigurationHost>>) : MethodModel {
+public class RuntimeConfigurationMethodModel(public val hosts: Set<KClass<out ConfigurationHost>>) : MethodModel {
     override val kind: MethodModel.Kind = Kind
     override val name: String = "configuration"
     override val dataString: String? = null
@@ -40,7 +40,7 @@ class RuntimeConfigurationMethodModel(val hosts: Set<KClass<out ConfigurationHos
         return super.imports() + hosts.map { it.java } + ConfigurationHost::class.java + TestConfigurationBuilder::class.java
     }
 
-    data object Kind : MethodModel.Kind()
+    public data object Kind : MethodModel.Kind()
 
     override fun isTestMethod(): Boolean = false
 
@@ -48,7 +48,7 @@ class RuntimeConfigurationMethodModel(val hosts: Set<KClass<out ConfigurationHos
 
     override fun shouldBeGenerated(): Boolean = hosts.isNotEmpty()
 
-    object Generator : MethodGenerator<RuntimeConfigurationMethodModel>() {
+    public object Generator : MethodGenerator<RuntimeConfigurationMethodModel>() {
 
         override fun generateSignature(method: RuntimeConfigurationMethodModel, p: Printer) {
             p.println("@Override")

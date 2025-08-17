@@ -5,7 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.named
 
-class CompilerPluginShadowPlugin : Plugin<Project> {
+public class CompilerPluginShadowPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply(CompilerPluginBasePlugin::class.java)
         pluginManager.apply("com.gradleup.shadow")

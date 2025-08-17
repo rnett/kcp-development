@@ -24,4 +24,4 @@ include(
     ":annotations"
 )
 
-rootProject.name = "kcp-development-test"
+rootProject.name = "kcp-development-parent"

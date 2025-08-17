@@ -16,8 +16,8 @@ import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.the
 import org.gradle.plugins.ide.idea.model.IdeaModel
 
-class CompilerPluginTestingPlugin : Plugin<Project> {
-    fun Test.setLibraryProperty(propName: String, jarName: String) {
+public class CompilerPluginTestingPlugin : Plugin<Project> {
+    private fun Test.setLibraryProperty(propName: String, jarName: String) {
         val path = classpath
             .files
             .find { """$jarName-\d.*jar""".toRegex().matches(it.name) }

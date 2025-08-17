@@ -16,7 +16,7 @@ import org.jetbrains.kotlin.test.services.PhasedPipelineChecker
 import org.jetbrains.kotlin.test.services.TestPhase
 import org.jetbrains.kotlin.utils.bind
 
-open class AbstractLeveledIrTest : AbstractFirLightTreeJvmIrTextTest() {
+public open class AbstractLeveledIrTest : AbstractFirLightTreeJvmIrTextTest() {
 
     override fun configure(builder: TestConfigurationBuilder) {
         // this - pre super

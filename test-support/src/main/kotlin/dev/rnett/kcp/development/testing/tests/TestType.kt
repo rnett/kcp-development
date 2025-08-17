@@ -3,7 +3,7 @@ package dev.rnett.kcp.development.testing.tests
 import dev.rnett.kcp.development.testing.tests.levels.TestLevel
 import dev.rnett.kcp.development.testing.tests.levels.TestSpec
 
-enum class TestType(val spec: TestSpec) {
+public enum class TestType(public val spec: TestSpec) {
     Diagnostics(TestLevel.Diagnostics.full),
     Fir(TestLevel.Fir.only),
     Ir(TestLevel.Ir.only),
@@ -11,11 +11,11 @@ enum class TestType(val spec: TestSpec) {
     Run(TestLevel.Run.only),
     Box(TestLevel.Run.full);
 
-    val directoryName by lazy { name.lowercase() }
+    public val directoryName: String by lazy { name.lowercase() }
 
-    val testSuiteName by lazy { "${name}TestGenerated" }
+    public val testSuiteName: String by lazy { "${name}TestGenerated" }
 
-    companion object {
-        val byDirectoryName = entries.associateBy { it.directoryName }
+    public companion object {
+        public val byDirectoryName: Map<String, TestType> = entries.associateBy { it.directoryName }
     }
 }

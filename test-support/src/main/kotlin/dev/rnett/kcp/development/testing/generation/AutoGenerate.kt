@@ -1,6 +1,6 @@
 package dev.rnett.kcp.development.testing.generation
 
-import auto.test.box.dev.rnett.kcp.development.testing.SysProps
+import dev.rnett.kcp.development.testing.SysProps
 import dev.rnett.kcp.development.testing.tests.TestType
 import java.nio.file.Path
 import kotlin.io.path.exists
@@ -9,7 +9,7 @@ import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 
 
-fun TestGenerationBuilder.autoGenerateTests(skip: (Path) -> Boolean = { false }) {
+public fun TestGenerationBuilder.autoGenerateTests(skip: (Path) -> Boolean = { false }) {
     if (!path.exists() || !path.isDirectory()) {
         return
     }
@@ -29,6 +29,6 @@ fun TestGenerationBuilder.autoGenerateTests(skip: (Path) -> Boolean = { false })
     }
 }
 
-object AutoGenerator : BaseTestGenerator() {
+public object AutoGenerator : BaseTestGenerator() {
     override val testsRootPackage: String = SysProps.defaultPackage
 }

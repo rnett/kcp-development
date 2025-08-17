@@ -3,14 +3,9 @@ package dev.rnett.kcp.development.testing.generation
 import org.jetbrains.kotlin.generators.TestGroup
 import org.jetbrains.kotlin.generators.model.AnnotationModel
 import org.jetbrains.kotlin.generators.model.MethodModel
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import kotlin.reflect.KClass
 
-data class GeneratedTestConfiguration(
-    val configurationAppliers: List<TestConfigurationBuilder.() -> Unit>
-)
-
-data class GeneratedTestSpec(
+internal data class GeneratedTestSpec(
     val generatedFrom: TestGenerationBuilderImplementation,
     val suiteName: String,
     val testDataPath: String,

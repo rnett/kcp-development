@@ -13,7 +13,7 @@ private val runtimeClasspath =
     System.getProperty("compilerTestRuntime.classpath")?.split(File.pathSeparator)?.map(::File)
         ?: error("Unable to get a valid classpath from 'compilerTestRuntime.classpath' property")
 
-class RuntimeEnvironmentConfigurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
+public class RuntimeEnvironmentConfigurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
     override fun configureCompilerConfiguration(configuration: CompilerConfiguration, module: TestModule) {
         for (file in runtimeClasspath) {
             configuration.addJvmClasspathRoot(file)
@@ -21,13 +21,13 @@ class RuntimeEnvironmentConfigurator(testServices: TestServices) : EnvironmentCo
     }
 }
 
-class RuntimeClassPathProvider(testServices: TestServices) : RuntimeClasspathProvider(testServices) {
+public class RuntimeClassPathProvider(testServices: TestServices) : RuntimeClasspathProvider(testServices) {
     override fun runtimeClassPaths(module: TestModule): List<File> {
         return runtimeClasspath
     }
 }
 
-fun TestConfigurationBuilder.useTestRuntime() {
+public fun TestConfigurationBuilder.useTestRuntime() {
     useConfigurators(::RuntimeEnvironmentConfigurator)
     useCustomRuntimeClasspathProviders(::RuntimeClassPathProvider)
 }

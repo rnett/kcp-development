@@ -1,11 +1,11 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    id("build.kotlin-jvm")
+    id("build.public-module")
 }
 
 description = "Kotlin compiler plugin test support"
 
 kotlin {
-    jvmToolchain(17)
     compilerOptions {
         freeCompilerArgs.add("-Xcontext-parameters")
     }

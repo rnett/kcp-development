@@ -22,4 +22,6 @@ include(
     ":core"
 )
 
+includeBuild("gradle/build-logic")
+
 rootProject.name = "kcp-development"

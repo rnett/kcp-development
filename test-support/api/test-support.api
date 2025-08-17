@@ -1,0 +1,345 @@
+public final class dev/rnett/kcp/development/testing/UtilsKt {
+	public static final fun allDirectives (Lorg/jetbrains/kotlin/test/services/TestServices;Lorg/jetbrains/kotlin/test/model/TestFile;)Lorg/jetbrains/kotlin/test/directives/model/RegisteredDirectives;
+}
+
+public final class dev/rnett/kcp/development/testing/configuration/CompilerPluginRegistrarConfigurationKt {
+	public static final fun withCompilerPluginRegistrar (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar;)V
+}
+
+public final class dev/rnett/kcp/development/testing/configuration/CompilerPluginRegistrarConfigurator : org/jetbrains/kotlin/test/services/EnvironmentConfigurator {
+	public fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar;)V
+	public final fun getRegistrar ()Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar;
+	public fun registerCompilerExtensions (Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar$ExtensionStorage;Lorg/jetbrains/kotlin/test/model/TestModule;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
+}
+
+public abstract interface class dev/rnett/kcp/development/testing/configuration/TestSpecProducer {
+	public abstract fun produceSpec (Ljava/lang/Object;Lorg/jetbrains/kotlin/test/model/TestModule;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)Ljava/lang/Object;
+}
+
+public final class dev/rnett/kcp/development/testing/directives/UtilityDirectives : org/jetbrains/kotlin/test/directives/model/SimpleDirectivesContainer {
+	public static final field INSTANCE Ldev/rnett/kcp/development/testing/directives/UtilityDirectives;
+	public final fun getBOX_OPT_IN ()Lorg/jetbrains/kotlin/test/directives/model/StringDirective;
+	public final fun getIMPORTS ()Lorg/jetbrains/kotlin/test/directives/model/StringDirective;
+}
+
+public final class dev/rnett/kcp/development/testing/directives/preprocessors/BoxOptInPreprocessor : org/jetbrains/kotlin/test/services/ReversibleSourceFilePreprocessor {
+	public fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;)V
+	public fun process (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+	public fun revert (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/directives/preprocessors/BoxOptInPreprocessorKt {
+	public static final fun useBoxOptInPreprocessor (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+}
+
+public final class dev/rnett/kcp/development/testing/directives/preprocessors/ImportsPreprocessor : org/jetbrains/kotlin/test/services/ReversibleSourceFilePreprocessor {
+	public fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;)V
+	public fun process (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+	public fun revert (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/directives/preprocessors/ImportsPreprocessorKt {
+	public static final fun useImportsPreprocessor (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+}
+
+public final class dev/rnett/kcp/development/testing/generation/AutoGenerateKt {
+	public static final fun autoGenerateTests (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun autoGenerateTests$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public final class dev/rnett/kcp/development/testing/generation/AutoGenerator : dev/rnett/kcp/development/testing/generation/BaseTestGenerator {
+	public static final field INSTANCE Ldev/rnett/kcp/development/testing/generation/AutoGenerator;
+	public fun getTestsRootPackage ()Ljava/lang/String;
+}
+
+public abstract class dev/rnett/kcp/development/testing/generation/BaseTestGenerator : dev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost {
+	public fun <init> ()V
+	public fun adjustCompilerConfiguration (Lorg/jetbrains/kotlin/test/model/TestModule;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
+	public fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public fun coreConfiguration (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public fun defaultConfiguration (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public fun generateTests (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;)V
+	public fun getAdditionalMethods ()Ljava/util/List;
+	public fun getBoxOptIns ()Ljava/util/Set;
+	public fun getCleanGeneratedRoot ()Z
+	public fun getCompilerPluginRegistrar ()Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar;
+	public fun getDisableAutogeneration ()Z
+	public fun getImports ()Ljava/util/Set;
+	public fun getOptIns ()Ljava/util/Set;
+	public fun getTestDataRoot ()Ljava/nio/file/Path;
+	public fun getTestGenerationRoot ()Ljava/nio/file/Path;
+	public fun getTestsRootPackage ()Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/generation/TestArguments {
+	public fun <init> ()V
+	public fun <init> (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZ)V
+	public synthetic fun <init> (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component10 ()Ljava/util/List;
+	public final fun component11 ()Ljava/lang/Boolean;
+	public final fun component12 ()Z
+	public final fun component13 ()Ljava/lang/Integer;
+	public final fun component14 ()Lkotlin/jvm/functions/Function1;
+	public final fun component15 ()Z
+	public final fun component16 ()Z
+	public final fun component17 ()Z
+	public final fun component2 ()Z
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Z
+	public final fun component8 ()Lorg/jetbrains/kotlin/test/TargetBackend;
+	public final fun component9 ()Ljava/util/List;
+	public final fun copy (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZ)Ldev/rnett/kcp/development/testing/generation/TestArguments;
+	public static synthetic fun copy$default (Ldev/rnett/kcp/development/testing/generation/TestArguments;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZILjava/lang/Object;)Ldev/rnett/kcp/development/testing/generation/TestArguments;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDeep ()Ljava/lang/Integer;
+	public final fun getExcludeDirs ()Ljava/util/List;
+	public final fun getExcludeDirsRecursively ()Ljava/util/List;
+	public final fun getExcludeParentDirs ()Z
+	public final fun getExcludedPattern ()Ljava/lang/String;
+	public final fun getExtension ()Ljava/lang/String;
+	public final fun getFilenameStartsLowerCase ()Ljava/lang/Boolean;
+	public final fun getGenerateEmptyTestClasses ()Z
+	public final fun getNativeTestInNonNativeTestInfra ()Z
+	public final fun getPattern ()Ljava/lang/String;
+	public final fun getRecursive ()Z
+	public final fun getSingleClass ()Z
+	public final fun getSkipIgnored ()Z
+	public final fun getSkipSpecificFile ()Lkotlin/jvm/functions/Function1;
+	public final fun getSkipTestAllFilesCheck ()Z
+	public final fun getTargetBackend ()Lorg/jetbrains/kotlin/test/TargetBackend;
+	public final fun getTestMethod ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/generation/TestGenerationBootstrapper {
+	public static final field INSTANCE Ldev/rnett/kcp/development/testing/generation/TestGenerationBootstrapper;
+	public static final fun main ([Ljava/lang/String;)V
+}
+
+public abstract interface class dev/rnett/kcp/development/testing/generation/TestGenerationBuilder {
+	public abstract fun configure (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun configureGeneration (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun getPath ()Ljava/nio/file/Path;
+	public abstract fun getPathFromRoot ()Ljava/nio/file/Path;
+	public abstract fun group (Ljava/lang/String;ZZLkotlin/jvm/functions/Function1;)V
+	public static synthetic fun group$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;ZZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public abstract fun tests (Ljava/lang/String;Ljava/lang/String;Lkotlin/reflect/KClass;Ldev/rnett/kcp/development/testing/generation/TestArguments;)V
+	public abstract fun tests (Ljava/lang/String;Lkotlin/reflect/KClass;Ldev/rnett/kcp/development/testing/generation/TestArguments;)V
+	public static synthetic fun tests$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/reflect/KClass;Ldev/rnett/kcp/development/testing/generation/TestArguments;ILjava/lang/Object;)V
+	public static synthetic fun tests$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;Lkotlin/reflect/KClass;Ldev/rnett/kcp/development/testing/generation/TestArguments;ILjava/lang/Object;)V
+}
+
+public final class dev/rnett/kcp/development/testing/generation/TestGenerationBuilder$DefaultImpls {
+	public static synthetic fun group$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;ZZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun tests$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/reflect/KClass;Ldev/rnett/kcp/development/testing/generation/TestArguments;ILjava/lang/Object;)V
+	public static synthetic fun tests$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;Lkotlin/reflect/KClass;Ldev/rnett/kcp/development/testing/generation/TestArguments;ILjava/lang/Object;)V
+}
+
+public final class dev/rnett/kcp/development/testing/generation/TestGenerationBuilderKt {
+	public static final fun addLevel (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)V
+	public static final fun annotation (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Lorg/jetbrains/kotlin/generators/model/AnnotationModel;)V
+	public static final fun directives (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Lorg/jetbrains/kotlin/test/directives/model/DirectivesContainer;Lkotlin/jvm/functions/Function1;)V
+	public static final fun group (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;Ldev/rnett/kcp/development/testing/tests/TestType;Lkotlin/jvm/functions/Function1;)V
+	public static final fun group (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;[Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun group$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;Ldev/rnett/kcp/development/testing/tests/TestType;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static synthetic fun group$default (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ljava/lang/String;[Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun import (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Ljava/lang/String;)V
+	public static final fun import (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Lkotlin/reflect/KClass;)V
+	public static final fun method (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Lorg/jetbrains/kotlin/generators/model/MethodModel;)V
+	public static final fun optIn (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Ljava/lang/String;)V
+	public static final fun optIn (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Lkotlin/reflect/KClass;)V
+	public static final fun optInBox (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Ljava/lang/String;)V
+	public static final fun optInBox (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Lkotlin/reflect/KClass;)V
+	public static final fun registerDirectives (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Lorg/jetbrains/kotlin/test/directives/model/DirectivesContainer;)V
+	public static final fun removeLevel (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)V
+	public static final fun testsPackage (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;[Ljava/lang/String;)V
+	public static final fun unaryMinus (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)V
+	public static final fun unaryMinus (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;)V
+	public static final fun unaryPlus (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ldev/rnett/kcp/development/testing/tests/TestType;)V
+	public static final fun unaryPlus (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)V
+	public static final fun unaryPlus (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;)V
+	public static final fun withCompilerConfiguration (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Lkotlin/jvm/functions/Function2;)V
+	public static final fun withTestSpec (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;Lkotlin/reflect/KClass;Ljava/lang/Object;)V
+}
+
+public abstract interface class dev/rnett/kcp/development/testing/generation/TestGenerationConfigBuilder {
+	public abstract fun addLevel (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)V
+	public abstract fun annotation (Lorg/jetbrains/kotlin/generators/model/AnnotationModel;)V
+	public abstract fun method (Lorg/jetbrains/kotlin/generators/model/MethodModel;)V
+	public abstract fun removeLevel (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)V
+	public abstract fun testsPackage ([Ljava/lang/String;)V
+}
+
+public abstract interface annotation class dev/rnett/kcp/development/testing/generation/TestGenerationDslMarker : java/lang/annotation/Annotation {
+}
+
+public abstract class dev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost {
+	public static final field Companion Ldev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost$Companion;
+	public fun <init> ()V
+	public static final fun applyRuntimeConfiguration (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;[Ljava/lang/Class;)V
+	public abstract fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+}
+
+public final class dev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost$Companion {
+	public final fun applyRuntimeConfiguration (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;[Ljava/lang/Class;)V
+}
+
+public final class dev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel : org/jetbrains/kotlin/generators/model/MethodModel {
+	public fun <init> (Ljava/util/Set;)V
+	public fun getDataString ()Ljava/lang/String;
+	public final fun getHosts ()Ljava/util/Set;
+	public fun getKind ()Lorg/jetbrains/kotlin/generators/model/MethodModel$Kind;
+	public fun getName ()Ljava/lang/String;
+	public fun getTags ()Ljava/util/List;
+	public fun imports ()Ljava/util/Collection;
+	public fun isTestMethod ()Z
+	public fun shouldBeGenerated ()Z
+	public fun shouldBeGeneratedForInnerTestClass ()Z
+}
+
+public final class dev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel$Generator : org/jetbrains/kotlin/generators/MethodGenerator {
+	public static final field INSTANCE Ldev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel$Generator;
+	public fun generateBody (Ldev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel;Lorg/jetbrains/kotlin/utils/Printer;)V
+	public synthetic fun generateBody (Lorg/jetbrains/kotlin/generators/model/MethodModel;Lorg/jetbrains/kotlin/utils/Printer;)V
+	public fun generateSignature (Ldev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel;Lorg/jetbrains/kotlin/utils/Printer;)V
+	public synthetic fun generateSignature (Lorg/jetbrains/kotlin/generators/model/MethodModel;Lorg/jetbrains/kotlin/utils/Printer;)V
+	public fun getKind ()Lorg/jetbrains/kotlin/generators/model/MethodModel$Kind;
+}
+
+public final class dev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel$Kind : org/jetbrains/kotlin/generators/model/MethodModel$Kind {
+	public static final field INSTANCE Ldev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel$Kind;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/preprocessors/BoOpBoxPreprocessor : org/jetbrains/kotlin/test/services/ReversibleSourceFilePreprocessor {
+	public fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;)V
+	public fun process (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+	public fun revert (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/preprocessors/PackagePreprocessor : org/jetbrains/kotlin/test/services/ReversibleSourceFilePreprocessor {
+	public fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;Ljava/lang/String;)V
+	public synthetic fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun process (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+	public fun revert (Lorg/jetbrains/kotlin/test/model/TestFile;Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/runtime/ClasspathBasedStandardLibrariesPathProvider : org/jetbrains/kotlin/test/services/KotlinStandardLibrariesPathProvider {
+	public static final field INSTANCE Ldev/rnett/kcp/development/testing/runtime/ClasspathBasedStandardLibrariesPathProvider;
+	public fun defaultJsStdlib ()Ljava/io/File;
+	public fun fullJsStdlib ()Ljava/io/File;
+	public fun getAnnotationsJar ()Ljava/io/File;
+	public fun jvmAnnotationsForTests ()Ljava/io/File;
+	public fun kotlinTestJarForTests ()Ljava/io/File;
+	public fun kotlinTestJsKLib ()Ljava/io/File;
+	public fun minimalRuntimeJarForTests ()Ljava/io/File;
+	public fun reflectJarForTests ()Ljava/io/File;
+	public fun runtimeJarForTests ()Ljava/io/File;
+	public fun runtimeJarForTestsWithJdk8 ()Ljava/io/File;
+	public fun scriptRuntimeJarForTests ()Ljava/io/File;
+	public fun scriptingPluginFilesForTests ()Ljava/util/Collection;
+}
+
+public final class dev/rnett/kcp/development/testing/runtime/RuntimeClassPathProvider : org/jetbrains/kotlin/test/services/RuntimeClasspathProvider {
+	public fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;)V
+	public fun runtimeClassPaths (Lorg/jetbrains/kotlin/test/model/TestModule;)Ljava/util/List;
+}
+
+public final class dev/rnett/kcp/development/testing/runtime/RuntimeEnvironmentConfigurator : org/jetbrains/kotlin/test/services/EnvironmentConfigurator {
+	public fun <init> (Lorg/jetbrains/kotlin/test/services/TestServices;)V
+}
+
+public final class dev/rnett/kcp/development/testing/runtime/RuntimeTestServicesKt {
+	public static final fun useTestRuntime (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+}
+
+public final class dev/rnett/kcp/development/testing/tests/TestType : java/lang/Enum {
+	public static final field Box Ldev/rnett/kcp/development/testing/tests/TestType;
+	public static final field Companion Ldev/rnett/kcp/development/testing/tests/TestType$Companion;
+	public static final field Compile Ldev/rnett/kcp/development/testing/tests/TestType;
+	public static final field Diagnostics Ldev/rnett/kcp/development/testing/tests/TestType;
+	public static final field Fir Ldev/rnett/kcp/development/testing/tests/TestType;
+	public static final field Ir Ldev/rnett/kcp/development/testing/tests/TestType;
+	public static final field Run Ldev/rnett/kcp/development/testing/tests/TestType;
+	public final fun getDirectoryName ()Ljava/lang/String;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getSpec ()Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public final fun getTestSuiteName ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Ldev/rnett/kcp/development/testing/tests/TestType;
+	public static fun values ()[Ldev/rnett/kcp/development/testing/tests/TestType;
+}
+
+public final class dev/rnett/kcp/development/testing/tests/TestType$Companion {
+	public final fun getByDirectoryName ()Ljava/util/Map;
+}
+
+public class dev/rnett/kcp/development/testing/tests/levels/AbstractLeveledBoxTest : org/jetbrains/kotlin/test/runners/codegen/AbstractFirLightTreeBlackBoxCodegenTest {
+	public fun <init> ()V
+	public fun configure (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+}
+
+public class dev/rnett/kcp/development/testing/tests/levels/AbstractLeveledFirTest : org/jetbrains/kotlin/test/runners/AbstractFirLightTreeDiagnosticsTest {
+	public fun <init> ()V
+	public fun configure (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+}
+
+public class dev/rnett/kcp/development/testing/tests/levels/AbstractLeveledIrTest : org/jetbrains/kotlin/test/runners/ir/AbstractFirLightTreeJvmIrTextTest {
+	public fun <init> ()V
+	public fun configure (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+}
+
+public final class dev/rnett/kcp/development/testing/tests/levels/TestLevel : java/lang/Enum {
+	public static final field Diagnostics Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+	public static final field Fir Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+	public static final field Ir Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+	public static final field Run Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getFull ()Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public final fun getOnly ()Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public static fun valueOf (Ljava/lang/String;)Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+	public static fun values ()[Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+}
+
+public final class dev/rnett/kcp/development/testing/tests/levels/TestSpec {
+	public static final field Companion Ldev/rnett/kcp/development/testing/tests/levels/TestSpec$Companion;
+	public fun <init> (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;[Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)V
+	public fun <init> (Ljava/util/Collection;)V
+	public fun <init> (Ljava/util/EnumSet;)V
+	public final fun annotations ()Ljava/util/List;
+	public final fun badTestSuiteName ()Ljava/lang/String;
+	public final fun component1 ()Ljava/util/EnumSet;
+	public final fun configure (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public final fun contains (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)Z
+	public final fun copy (Ljava/util/EnumSet;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public static synthetic fun copy$default (Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;Ljava/util/EnumSet;ILjava/lang/Object;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun forEachLevel (Lkotlin/jvm/functions/Function1;)V
+	public final fun forEachNotLevel (Lkotlin/jvm/functions/Function1;)V
+	public final fun getLevels ()Ljava/util/EnumSet;
+	public fun hashCode ()I
+	public final fun minus (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public final fun plus (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public final fun plus (Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
+	public final fun preConfigure (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public final fun testClass ()Lkotlin/reflect/KClass;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/rnett/kcp/development/testing/tests/levels/TestSpec$Companion {
+}
+
+public abstract interface annotation class dev/rnett/kcp/development/testing/tests/levels/TestWithLevel : java/lang/annotation/Annotation {
+	public abstract fun level ()Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+}
+
+public abstract interface annotation class dev/rnett/kcp/development/testing/tests/levels/TestWithLevel$Container : java/lang/annotation/Annotation {
+	public abstract fun value ()[Ldev/rnett/kcp/development/testing/tests/levels/TestWithLevel;
+}
+

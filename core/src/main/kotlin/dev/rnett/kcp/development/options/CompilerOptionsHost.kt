@@ -2,80 +2,80 @@ package dev.rnett.kcp.development.options
 
 import org.jetbrains.kotlin.cli.common.toBooleanLenient
 
-abstract class CompilerOptionsHost {
+public abstract class CompilerOptionsHost {
     private val _options = mutableListOf<CompilerOption<*>>()
-    val options: List<CompilerOption<*>> = _options
+    public val options: List<CompilerOption<*>> = _options
 
-    fun <T> singular(
+    public fun <T> singular(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean = true,
         transform: (String) -> T?,
-    ) = CompilerOption.Singular(name, valueDescription, description, required, transform)
+    ): Lazy<CompilerOption.Singular<T & Any>> = CompilerOption.Singular(name, valueDescription, description, required, transform)
         .also { _options += it }
         .let(::lazyOf)
 
-    fun <T> singular(
+    public fun <T> singular(
         name: String,
         defaultValue: T,
         valueDescription: String,
         description: String,
         transform: (String) -> T?,
-    ) = CompilerOption.SingularWithDefault(name, valueDescription, description, transform, defaultValue)
+    ): Lazy<CompilerOption.SingularWithDefault<T>> = CompilerOption.SingularWithDefault(name, valueDescription, description, transform, defaultValue)
         .also { _options += it }
         .let(::lazyOf)
 
-    fun <T> repeated(
+    public fun <T> repeated(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean = true,
         transform: (String) -> T?,
-    ) = CompilerOption.Repeated(name, valueDescription, description, required, transform)
+    ): Lazy<CompilerOption.Repeated<T>> = CompilerOption.Repeated(name, valueDescription, description, required, transform)
         .also { _options += it }
         .let(::lazyOf)
 
-    fun <K : Any, V : Any> keyed(
+    public fun <K : Any, V : Any> keyed(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean = true,
         transform: (String) -> Pair<K, V>?
-    ) = CompilerOption.Keyed(name, valueDescription, description, required, transform)
+    ): Lazy<CompilerOption.Keyed<K, V>> = CompilerOption.Keyed(name, valueDescription, description, required, transform)
         .also { _options += it }
         .let(::lazyOf)
 
-    fun singularString(
+    public fun singularString(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean = true
-    ) = singular(name, valueDescription, description, required) { it }
+    ): Lazy<CompilerOption.Singular<String>> = singular(name, valueDescription, description, required) { it }
 
-    fun singularString(
+    public fun singularString(
         name: String,
         defaultValue: String,
         valueDescription: String,
         description: String,
-    ) = singular(name, defaultValue, valueDescription, description) { it }
+    ): Lazy<CompilerOption.SingularWithDefault<String>> = singular(name, defaultValue, valueDescription, description) { it }
 
-    fun repeatedString(
+    public fun repeatedString(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean = true,
-    ) = repeated(name, valueDescription, description, required) { it }
+    ): Lazy<CompilerOption.Repeated<String>> = repeated(name, valueDescription, description, required) { it }
 
-    fun flag(
+    public fun flag(
         name: String,
         description: String,
         required: Boolean = true
-    ) = singular(name, "<true|false>", description, required) { it.toBooleanLenient() }
+    ): Lazy<CompilerOption.Singular<Boolean>> = singular(name, "<true|false>", description, required) { it.toBooleanLenient() }
 
-    fun flag(
+    public fun flag(
         name: String,
         defaultValue: Boolean,
         description: String,
-    ) = singular(name, defaultValue, "<true|false>", description) { it.toBooleanLenient() ?: defaultValue }
+    ): Lazy<CompilerOption.SingularWithDefault<Boolean>> = singular(name, defaultValue, "<true|false>", description) { it.toBooleanLenient() ?: defaultValue }
 }

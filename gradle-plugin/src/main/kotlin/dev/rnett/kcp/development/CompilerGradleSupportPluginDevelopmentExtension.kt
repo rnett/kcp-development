@@ -3,11 +3,11 @@ package dev.rnett.kcp.development
 import org.gradle.api.provider.MapProperty
 import org.gradle.api.provider.Property
 
-abstract class CompilerGradleSupportPluginDevelopmentExtension {
-    companion object {
-        const val NAME = "compilerSupportPluginDevelopment"
+public abstract class CompilerGradleSupportPluginDevelopmentExtension {
+    public companion object {
+        public const val NAME: String = "compilerSupportPluginDevelopment"
     }
 
-    abstract val compilerPluginProjectPath: Property<String>
-    abstract val additionalLibraryProjectPaths: MapProperty<String, String>
+    public abstract val compilerPluginProjectPath: Property<String>
+    public abstract val additionalLibraryProjectPaths: MapProperty<String, String>
 }

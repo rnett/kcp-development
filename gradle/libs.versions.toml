@@ -8,8 +8,10 @@ publishing-plugin = "0.34.0"
 [libraries]
 shadow-plugin = { module = "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin", version.ref = "shadow" }
 buildconfig-plugin = { module = "com.github.gmazzo.buildconfig:com.github.gmazzo.buildconfig.gradle.plugin", version.ref = "buildconfig" }
+
 dokka-plugin = { module = "org.jetbrains.dokka:org.jetbrains.dokka.gradle.plugin", version.ref = "dokka" }
 publishing-plugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "publishing-plugin" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

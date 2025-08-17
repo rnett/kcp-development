@@ -19,42 +19,42 @@ import org.gradle.process.ExecOperations
 import java.io.File
 import javax.inject.Inject
 
-abstract class CompilerPluginGenerateTestsTask @Inject constructor(
+public abstract class CompilerPluginGenerateTestsTask @Inject constructor(
     private val providers: ProviderFactory,
     private val execOperations: ExecOperations
 ) : DefaultTask() {
 
     @get:InputDirectory
-    abstract val testDataDirectory: DirectoryProperty
+    public abstract val testDataDirectory: DirectoryProperty
 
     @get:OutputDirectory
-    abstract val generatedTestsDirectory: DirectoryProperty
+    public abstract val generatedTestsDirectory: DirectoryProperty
 
     @get:Input
-    abstract val testGenerator: Property<String>
+    public abstract val testGenerator: Property<String>
 
     @get:Input
-    abstract val useTestGenerator: Property<Boolean>
+    public abstract val useTestGenerator: Property<Boolean>
 
     @get:Input
-    abstract val defaultPackage: Property<String>
+    public abstract val defaultPackage: Property<String>
 
     @get:InputFiles
     @get:Classpath
-    abstract val classpath: ConfigurableFileCollection
+    public abstract val classpath: ConfigurableFileCollection
 
     @get:Input
-    abstract val workingDirectory: Property<File>
+    public abstract val workingDirectory: Property<File>
 
     @get:Nested
-    abstract val launcher: Property<JavaLauncher>
+    public abstract val launcher: Property<JavaLauncher>
 
     @get:Input
     @get:Optional
-    abstract val compilerPluginRegistrar: Property<String>
+    public abstract val compilerPluginRegistrar: Property<String>
 
     @TaskAction
-    fun generateTests() {
+    protected fun generateTests() {
         execOperations.javaexec {
             executable = launcher.get().executablePath.asFile.absolutePath
             classpath(this@CompilerPluginGenerateTestsTask.classpath)

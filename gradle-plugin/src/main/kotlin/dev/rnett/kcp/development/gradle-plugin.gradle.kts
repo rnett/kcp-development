@@ -7,7 +7,7 @@ plugins {
 
 setProperty("kotlin.stdlib.default.dependency", false)
 
-val extension = extensions.create<CompilerGradleSupportPluginDevelopmentExtension>(CompilerGradleSupportPluginDevelopmentExtension.NAME).apply {
+private val extension: CompilerGradleSupportPluginDevelopmentExtension = extensions.create<CompilerGradleSupportPluginDevelopmentExtension>(CompilerGradleSupportPluginDevelopmentExtension.NAME).apply {
     compilerPluginProjectPath.convention(":compiler-plugin")
     compilerPluginProjectPath.finalizeValueOnRead()
 

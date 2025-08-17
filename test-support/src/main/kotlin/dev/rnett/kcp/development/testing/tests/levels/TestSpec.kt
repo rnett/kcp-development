@@ -25,32 +25,32 @@ import kotlin.reflect.KClass
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 @Repeatable
-annotation class TestWithLevel(val level: TestLevel)
+public annotation class TestWithLevel(val level: TestLevel)
 
-data class TestSpec(val levels: EnumSet<TestLevel>) {
-    constructor(levels: Collection<TestLevel>) : this(
+public data class TestSpec(val levels: EnumSet<TestLevel>) {
+    public constructor(levels: Collection<TestLevel>) : this(
         if (levels.isEmpty()) EnumSet.noneOf(TestLevel::class.java) else EnumSet.copyOf(levels)
     )
 
-    constructor(first: TestLevel, vararg rest: TestLevel) : this(EnumSet.of(first, *rest))
+    public constructor(first: TestLevel, vararg rest: TestLevel) : this(EnumSet.of(first, *rest))
 
-    operator fun contains(level: TestLevel) = level in levels
+    public operator fun contains(level: TestLevel): Boolean = level in levels
 
-    fun forEachLevel(block: (TestLevel) -> Unit) {
+    public fun forEachLevel(block: (TestLevel) -> Unit) {
         levels.forEach(block)
     }
 
-    fun forEachNotLevel(block: (TestLevel) -> Unit) {
+    public fun forEachNotLevel(block: (TestLevel) -> Unit) {
         EnumSet.complementOf(levels).forEach(block)
     }
 
-    operator fun plus(other: TestSpec) = TestSpec(levels + other.levels)
-    operator fun plus(other: TestLevel) = TestSpec(levels + other)
-    operator fun minus(other: TestLevel) = TestSpec(levels - other)
+    public operator fun plus(other: TestSpec): TestSpec = TestSpec(levels + other.levels)
+    public operator fun plus(other: TestLevel): TestSpec = TestSpec(levels + other)
+    public operator fun minus(other: TestLevel): TestSpec = TestSpec(levels - other)
 
-    fun annotations(): List<AnnotationModel> = levels.map { AnnotationModel(TestWithLevel::class.java, listOf(AnnotationArgumentModel("level", it))) }
+    public fun annotations(): List<AnnotationModel> = levels.map { AnnotationModel(TestWithLevel::class.java, listOf(AnnotationArgumentModel("level", it))) }
 
-    fun testClass(): KClass<*>? {
+    public fun testClass(): KClass<*>? {
         if (levels.isEmpty())
             return null
 
@@ -64,14 +64,14 @@ data class TestSpec(val levels: EnumSet<TestLevel>) {
         }
     }
 
-    companion object {
+    public companion object {
         internal fun forTestClass(testClass: Any) = TestSpec(testClass::class.java.getAnnotationsByType(TestWithLevel::class.java).map { it.level })
     }
 
-    fun preConfigure(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
+    public fun preConfigure(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
     }
 
-    fun configure(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
+    public fun configure(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
         with(builder) {
             forEachLevel {
                 when (it) {
@@ -153,5 +153,5 @@ data class TestSpec(val levels: EnumSet<TestLevel>) {
         }
     }
 
-    fun badTestSuiteName() = levels.joinToString("") { it.name }
+    public fun badTestSuiteName(): String = levels.joinToString("") { it.name }
 }

@@ -9,10 +9,10 @@ import org.jetbrains.kotlin.test.services.ReversibleSourceFilePreprocessor
 import org.jetbrains.kotlin.test.services.TestServices
 import org.jetbrains.kotlin.test.services.isKtFile
 
-class ImportsPreprocessor(testServices: TestServices) : ReversibleSourceFilePreprocessor(testServices) {
-    fun importsString(imports: Set<String>) = "\n" + imports.joinToString("\n") { "import $it" } + "\n"
+public class ImportsPreprocessor(testServices: TestServices) : ReversibleSourceFilePreprocessor(testServices) {
+    private fun importsString(imports: Set<String>) = "\n" + imports.joinToString("\n") { "import $it" } + "\n"
 
-    fun calculateImports(file: TestFile): Set<String> {
+    private fun calculateImports(file: TestFile): Set<String> {
         return testServices.allDirectives(file)[UtilityDirectives.IMPORTS].toSet()
     }
 
@@ -51,7 +51,7 @@ class ImportsPreprocessor(testServices: TestServices) : ReversibleSourceFilePrep
  * Adds imports based on the [UtilityDirectives.IMPORTS] directive.
  */
 @DefaultsDsl
-fun TestConfigurationBuilder.useImportsPreprocessor(
+public fun TestConfigurationBuilder.useImportsPreprocessor(
 ) {
     useSourcePreprocessor(
         ::ImportsPreprocessor

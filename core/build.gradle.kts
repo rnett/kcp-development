@@ -1,12 +1,9 @@
 plugins {
-    alias(libs.plugins.kotlin.jvm)
+    id("build.kotlin-jvm")
+    id("build.public-module")
 }
 
 description = "Kotlin compiler support and utilities"
-
-kotlin {
-    jvmToolchain(17)
-}
 
 dependencies {
     api(kotlin("compiler"))

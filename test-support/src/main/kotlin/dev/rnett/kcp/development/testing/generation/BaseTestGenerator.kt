@@ -1,6 +1,6 @@
 package dev.rnett.kcp.development.testing.generation
 
-import auto.test.box.dev.rnett.kcp.development.testing.SysProps
+import dev.rnett.kcp.development.testing.SysProps
 import dev.rnett.kcp.development.testing.configuration.withCompilerPluginRegistrar
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives.BOX_OPT_IN
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives.IMPORTS
@@ -32,47 +32,48 @@ import kotlin.io.path.ExperimentalPathApi
 import kotlin.io.path.Path
 import kotlin.io.path.deleteRecursively
 import kotlin.io.path.listDirectoryEntries
+import kotlin.io.path.pathString
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.isSubclassOf
 
-abstract class BaseTestGenerator : ConfigurationHost() {
-    open val testDataRoot: Path = Path(SysProps.testDataRoot)
-    open val cleanGeneratedRoot: Boolean = true
-    open val testGenerationRoot: Path = Path(SysProps.testGenRoot)
+public abstract class BaseTestGenerator : ConfigurationHost() {
+    public open val testDataRoot: Path = Path(SysProps.testDataRoot)
+    public open val cleanGeneratedRoot: Boolean = true
+    public open val testGenerationRoot: Path = Path(SysProps.testGenRoot)
 
-    open val testsRootPackage: String = this::class.java.packageName
+    public open val testsRootPackage: String = this::class.java.packageName
 
-    open val disableAutogeneration: Boolean get() = false
+    public open val disableAutogeneration: Boolean get() = false
 
     @OptIn(ExperimentalCompilerApi::class)
-    open val compilerPluginRegistrar: CompilerPluginRegistrar? = SysProps.pluginRegistrar?.let {
+    public open val compilerPluginRegistrar: CompilerPluginRegistrar? = SysProps.pluginRegistrar?.let {
         val cls = Class.forName(it).kotlin
         check(cls.isSubclassOf(CompilerPluginRegistrar::class)) { "Cannot use $it as a compiler plugin registrar, it is not a subclass of CompilerPluginRegistrar" }
         @Suppress("UNCHECKED_CAST")
         (cls as KClass<out CompilerPluginRegistrar>).createInstance()
     }
 
-    open fun TestGenerationBuilder.generateTests() {}
+    public open fun TestGenerationBuilder.generateTests() {}
 
-    open val imports: Set<String> = emptySet()
-    open val optIns: Set<String> = emptySet()
-    open val boxOptIns: Set<String> = emptySet()
+    public open val imports: Set<String> = emptySet()
+    public open val optIns: Set<String> = emptySet()
+    public open val boxOptIns: Set<String> = emptySet()
 
-    open fun adjustCompilerConfiguration(module: TestModule, configuration: CompilerConfiguration) {
+    public open fun adjustCompilerConfiguration(module: TestModule, configuration: CompilerConfiguration) {
 
     }
 
-    inner class Configurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
+    private inner class Configurator(testServices: TestServices) : EnvironmentConfigurator(testServices) {
         override fun configureCompilerConfiguration(configuration: CompilerConfiguration, module: TestModule) {
             adjustCompilerConfiguration(module, configuration)
         }
     }
 
-    open val additionalMethods: List<MethodGenerator<*>> = emptyList()
+    public open val additionalMethods: List<MethodGenerator<*>> = emptyList()
 
     @OptIn(ExperimentalCompilerApi::class)
-    open fun coreConfiguration(builder: TestConfigurationBuilder) {
+    public open fun coreConfiguration(builder: TestConfigurationBuilder) {
         with(builder) {
             defaultDirectives {
                 JVM_TARGET.with(JvmTarget.JVM_17)
@@ -97,13 +98,13 @@ abstract class BaseTestGenerator : ConfigurationHost() {
         }
     }
 
-    open fun defaultConfiguration(builder: TestConfigurationBuilder) {
+    public open fun defaultConfiguration(builder: TestConfigurationBuilder) {
         with(builder) {
-            useSourcePreprocessor(::PackagePreprocessor)
+            useSourcePreprocessor({ PackagePreprocessor(it, testDataRoot.pathString) })
         }
     }
 
-    private fun createTestGenerationBuilder(): TestGenerationBuilderImplementation = TestGenerationBuilderImplementation(TestGenerationPath.Root(testDataRoot)).apply {
+    private fun createTestGenerationBuilder(): TestGenerationBuilderImplementation = TestGenerationBuilderImplementation(TestGenerationPathSpec.Root(testDataRoot)).apply {
         method(RuntimeConfigurationMethodModel(setOf(this@BaseTestGenerator::class)))
         if (!disableAutogeneration) {
             group("auto") {
@@ -118,7 +119,7 @@ abstract class BaseTestGenerator : ConfigurationHost() {
         check(this::class.java.simpleName != null) { "TestGenerator class must have a simple name" }
     }
 
-    val testSpecs by lazy {
+    internal val testSpecs: Map<String, GeneratedTestSpec> by lazy {
         createTestGenerationBuilder().createGenerationSpecs(testsRootPackage)
     }
 

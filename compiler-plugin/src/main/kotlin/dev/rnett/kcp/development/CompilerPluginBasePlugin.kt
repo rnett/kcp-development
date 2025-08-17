@@ -8,8 +8,8 @@ import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.the
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmExtension
 
-class CompilerPluginBasePlugin : Plugin<Project> {
-    override fun apply(target: Project) = with(target) {
+public class CompilerPluginBasePlugin : Plugin<Project> {
+    override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply("java-base")
 
         if (!pluginManager.hasPlugin("org.jetbrains.kotlin.jvm")) {
