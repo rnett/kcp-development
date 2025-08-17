@@ -9,14 +9,9 @@ public abstract class dev/rnett/kcp/development/CompilerGradleSupportPluginDevel
 public final class dev/rnett/kcp/development/CompilerGradleSupportPluginDevelopmentExtension$Companion {
 }
 
-public final class dev/rnett/kcp/development/GradlePluginPlugin : org/gradle/api/Plugin {
+public final class dev/rnett/kcp/development/CompilerGradleSupportPluginDevelopmentPlugin : org/gradle/api/Plugin {
 	public fun <init> ()V
 	public synthetic fun apply (Ljava/lang/Object;)V
 	public fun apply (Lorg/gradle/api/Project;)V
-}
-
-public final class dev/rnett/kcp/development/Gradle_plugin_gradle : org/gradle/kotlin/dsl/precompile/v1/PrecompiledProjectScript {
-	public fun <init> (Lorg/gradle/api/Project;Lorg/gradle/api/Project;)V
-	public static final fun main ([Ljava/lang/String;)V
 }
 

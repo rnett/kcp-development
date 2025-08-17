@@ -14,3 +14,14 @@ dependencies {
 
     api(libs.buildconfig.plugin)
 }
+
+gradlePlugin {
+    plugins {
+        create("KcpDevelopmentGradlePluginPlugin") {
+            id = "dev.rnett.kcp-development.gradle-plugin"
+            implementationClass = "dev.rnett.kcp.development.CompilerGradleSupportPluginDevelopmentPlugin"
+            displayName = "KCP-Development - gradle"
+            description = "Sets up Gradle configuration for Kotlin compiler plugin support Gradle plugin development."
+        }
+    }
+}

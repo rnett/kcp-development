@@ -60,28 +60,14 @@ plugins.withId("org.gradle.java-test-fixtures") {
     component.withVariantsFromConfiguration(configurations["testFixturesRuntimeElements"]) { skip() }
 }
 
-plugins.withId("com.gradleup.shadow") {
-    tasks.named { it == "shadowJar" }.configureEach {
-        dependsOn("jar")
-    }
-}
-
 afterEvaluate {
     val hasGradlePlugin = project.plugins.hasPlugin("java-gradle-plugin")
     val hasKotlinJvm = project.plugins.hasPlugin("org.jetbrains.kotlin.jvm")
-    val hasShadowPlugin = project.plugins.hasPlugin("com.gradleup.shadow")
-
-    if (hasGradlePlugin) {
-        // we use our own publication instead
-        tasks.named { "PluginMavenPublication" in it }.configureEach {
-            enabled = false
-        }
-    }
 
     when {
         hasKotlinJvm -> {
             gradlePublishing.publications.register<MavenPublication>("maven") {
-                val componentName = if (hasShadowPlugin) "shadow" else "java"
+                val componentName = "java"
 
                 from(project.components.getByName(componentName))
             }
