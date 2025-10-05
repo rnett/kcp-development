@@ -10,6 +10,7 @@
     "rnett"
   ],
   "pruneStaleBranches": false,
+  automerge: true,
   "packageRules": [
     {
       "matchPackageNames": [
@@ -34,6 +35,7 @@
   ],
   enabledManagers: [
     "gradle",
-    "gradle-wrapper"
+    "gradle-wrapper",
+    "github-actions"
   ],
 }

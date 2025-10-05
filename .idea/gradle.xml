@@ -21,9 +21,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/compiler-plugin" />
+            <option value="$PROJECT_DIR$/compiler-plugin-plugins" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/gradle-plugin" />
+            <option value="$PROJECT_DIR$/gradle-plugin-plugins" />
             <option value="$PROJECT_DIR$/gradle/build-logic" />
             <option value="$PROJECT_DIR$/gradle/build-logic/kotlin-setup" />
             <option value="$PROJECT_DIR$/test-support" />
@@ -37,9 +37,9 @@
               <build path="$PROJECT_DIR$" name="kcp-development">
                 <projects>
                   <project path="$PROJECT_DIR$" />
-                  <project path="$PROJECT_DIR$/compiler-plugin" />
+                  <project path="$PROJECT_DIR$/compiler-plugin-plugins" />
                   <project path="$PROJECT_DIR$/core" />
-                  <project path="$PROJECT_DIR$/gradle-plugin" />
+                  <project path="$PROJECT_DIR$/gradle-plugin-plugins" />
                   <project path="$PROJECT_DIR$/test-support" />
                 </projects>
               </build>
@@ -56,15 +56,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/compiler-plugin" />
+            <option value="$PROJECT_DIR$/compiler-plugin-plugins" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/gradle-plugin" />
+            <option value="$PROJECT_DIR$/gradle-plugin-plugins" />
             <option value="$PROJECT_DIR$/gradle/build-logic" />
             <option value="$PROJECT_DIR$/gradle/build-logic/kotlin-setup" />
             <option value="$PROJECT_DIR$/integration-test" />
-            <option value="$PROJECT_DIR$/integration-test/annotations" />
             <option value="$PROJECT_DIR$/integration-test/compiler-plugin" />
-            <option value="$PROJECT_DIR$/integration-test/gradle-plugin" />
             <option value="$PROJECT_DIR$/test-support" />
           </set>
         </option>
