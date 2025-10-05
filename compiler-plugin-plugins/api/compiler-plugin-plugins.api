@@ -47,20 +47,10 @@ public final class dev/rnett/kcp/development/CompilerPluginShadowPlugin : org/gr
 	public fun apply (Lorg/gradle/api/Project;)V
 }
 
-public final class dev/rnett/kcp/development/CompilerPluginShadowPlugin$apply$1$1$inlined$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final synthetic fun execute (Ljava/lang/Object;)V
-}
-
 public final class dev/rnett/kcp/development/CompilerPluginTestingPlugin : org/gradle/api/Plugin {
 	public fun <init> ()V
 	public synthetic fun apply (Ljava/lang/Object;)V
 	public fun apply (Lorg/gradle/api/Project;)V
-}
-
-public final class dev/rnett/kcp/development/CompilerPluginTestingPlugin$inlined$sam$i$org_gradle_api_Action$0 : org/gradle/api/Action {
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final synthetic fun execute (Ljava/lang/Object;)V
 }
 
 public abstract class dev/rnett/kcp/development/tasks/CompilerPluginGenerateServicesTask : org/gradle/api/DefaultTask {
