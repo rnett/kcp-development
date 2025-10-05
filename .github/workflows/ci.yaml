@@ -104,7 +104,7 @@ jobs:
         run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
 
       - name: Upload docs
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: build/dokka/html
 
