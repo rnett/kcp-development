@@ -36,11 +36,12 @@ public class CompilerGradleSupportPluginDevelopmentPlugin : Plugin<Project> {
                 }
                 packageName.set(provider { group.toString() })
 
-                // must match the one in compiler-plugin-buildconfig.gradle.kts
-                buildConfigField("String", "KOTLIN_PLUGIN_ID", provider { "\"${group}.${name}\"" })
-
                 afterEvaluate {
                     val pluginProject = project(extension.compilerPluginProjectPath.get())
+
+                    // must match the one in compiler-plugin-buildconfig.gradle.kts
+                    buildConfigField("String", "KOTLIN_PLUGIN_ID", provider { "\"${pluginProject.group}.${pluginProject.name}\"" })
+
                     buildConfigField("String", "KOTLIN_PLUGIN_GROUP", provider { "\"${pluginProject.group}\"" })
                     buildConfigField("String", "KOTLIN_PLUGIN_NAME", provider { "\"${pluginProject.name}\"" })
                     buildConfigField("String", "KOTLIN_PLUGIN_VERSION", provider { "\"${pluginProject.version}\"" })
