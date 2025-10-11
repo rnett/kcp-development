@@ -55,6 +55,10 @@ public abstract class CompilerPluginGenerateTestsTask @Inject constructor(
 
     @TaskAction
     protected fun generateTests() {
+        if (!testGenerator.isPresent) {
+            logger.warn("No test generator specified, not generating tests")
+            return
+        }
         execOperations.javaexec {
             executable = launcher.get().executablePath.asFile.absolutePath
             classpath(this@CompilerPluginGenerateTestsTask.classpath)

@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
 @TestMetadata("src/testData/auto/test/box")
 @TestDataPath("$PROJECT_ROOT")
 @TestWithLevel(level = TestLevel.Diagnostics)
-@TestWithLevel(level = TestLevel.Fir)
-@TestWithLevel(level = TestLevel.Ir)
+@TestWithLevel(level = TestLevel.FIR)
+@TestWithLevel(level = TestLevel.IR)
 @TestWithLevel(level = TestLevel.Run)
 public class BoxTestGenerated extends AbstractLeveledBoxTest {
   @Override

@@ -4,6 +4,9 @@ import org.jetbrains.kotlin.compiler.plugin.CliOption
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.CompilerConfigurationKey
 
+/**
+ * A compiler option - includes both a [CliOption] and a [CompilerConfiguration] property.
+ */
 public sealed class CompilerOption<T>(
     public val name: String,
     valueDescription: String,

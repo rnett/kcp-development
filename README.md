@@ -6,3 +6,4 @@
 # KCP-Development
 
 Tools and utilities for the development of Kotlin compiler plugins.
+Consult the documentation for each module for usage instructions.

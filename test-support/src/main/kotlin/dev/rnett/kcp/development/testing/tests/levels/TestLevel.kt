@@ -5,8 +5,8 @@ import java.util.EnumSet
 
 public enum class TestLevel {
     Diagnostics,
-    Fir,
-    Ir,
+    FIR,
+    IR,
     Run;
 
     public val full: TestSpec by lazy { TestSpec(EnumSet.range(Diagnostics, this)) }

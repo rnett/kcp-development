@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("all")
 @TestMetadata("src/testData/generated/ir")
 @TestDataPath("$PROJECT_ROOT")
-@TestWithLevel(level = TestLevel.Ir)
+@TestWithLevel(level = TestLevel.IR)
 public class IrTestGenerated extends AbstractLeveledIrTest {
   @Override
   public void configure(TestConfigurationBuilder builder) {

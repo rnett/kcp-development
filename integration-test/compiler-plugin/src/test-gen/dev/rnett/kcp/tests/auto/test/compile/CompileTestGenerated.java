@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
 @TestMetadata("src/testData/auto/test/compile")
 @TestDataPath("$PROJECT_ROOT")
 @TestWithLevel(level = TestLevel.Diagnostics)
-@TestWithLevel(level = TestLevel.Fir)
-@TestWithLevel(level = TestLevel.Ir)
+@TestWithLevel(level = TestLevel.FIR)
+@TestWithLevel(level = TestLevel.IR)
 public class CompileTestGenerated extends AbstractLeveledIrTest {
   @Override
   public void configure(TestConfigurationBuilder builder) {

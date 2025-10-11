@@ -2,6 +2,9 @@ package dev.rnett.kcp.development.testing.generation
 
 import kotlin.reflect.full.createInstance
 
+/**
+ * A utility object used to invoke test generation.
+ */
 // hard coded in gradle plugin
 public object TestGenerationBootstrapper {
     @JvmStatic

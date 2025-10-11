@@ -5,14 +5,34 @@ import dev.rnett.kcp.development.testing.tests.levels.TestSpec
 import org.jetbrains.kotlin.generators.model.AnnotationModel
 import org.jetbrains.kotlin.generators.model.MethodModel
 
+/**
+ * Configuration options for the test class generator.
+ */
 public interface TestGenerationConfigBuilder {
 
+    /**
+     * Adds to the package name of generated test classes.
+     */
     public fun testsPackage(vararg packageNames: String)
 
+    /**
+     * Adds annotations to the generated test classes.
+     */
     public fun annotation(annotation: AnnotationModel)
+
+    /**
+     * Adds methods to the generated test classes.
+     */
     public fun method(method: MethodModel)
 
+    /**
+     * Adds a test level to the generated tests.
+     */
     public fun addLevel(level: TestLevel)
+
+    /**
+     * Removes a test level from the generated tests.
+     */
     public fun removeLevel(level: TestLevel)
 }
 

@@ -5,6 +5,9 @@ import java.io.File
 import java.io.File.pathSeparator
 import java.io.File.separator
 
+/**
+ * Provide the Kotlin libraries from the java classpath (e.g. `java.class.path` system property).
+ */
 public object ClasspathBasedStandardLibrariesPathProvider : KotlinStandardLibrariesPathProvider() {
     private val SEP = "\\$separator"
 

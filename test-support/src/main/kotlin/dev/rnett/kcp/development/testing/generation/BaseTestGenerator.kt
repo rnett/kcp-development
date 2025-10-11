@@ -1,5 +1,6 @@
 package dev.rnett.kcp.development.testing.generation
 
+import dev.rnett.kcp.development.annotations.DelicateKcpDevApi
 import dev.rnett.kcp.development.testing.SysProps
 import dev.rnett.kcp.development.testing.configuration.withCompilerPluginRegistrar
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives.BOX_OPT_IN
@@ -37,15 +38,40 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.isSubclassOf
 
+/**
+ * A test generator. Configures test generation, and can override [generateTests] to generate tests using the DSL.
+ */
+@OptIn(DelicateKcpDevApi::class)
 public abstract class BaseTestGenerator : ConfigurationHost() {
+    /**
+     * The root of the test data. Autoconfigured by the Gradle plugin.
+     */
     public open val testDataRoot: Path = Path(SysProps.testDataRoot)
+
+    /**
+     * Whether to clean the root of the generated tests before generating.  Defaults to true.
+     */
     public open val cleanGeneratedRoot: Boolean = true
+
+    /**
+     * The root of the generated tests.  Autoconfigured by the Gradle plugin.
+     */
     public open val testGenerationRoot: Path = Path(SysProps.testGenRoot)
 
+    /**
+     * The package name of the generated tests.  Defaults to the package of the test generator.
+     */
     public open val testsRootPackage: String = this::class.java.packageName
 
+    /**
+     * Whether to disable autogeneration.  Defaults to false. If true, override [generateTests] or else no tests will be generated.
+     */
     public open val disableAutogeneration: Boolean get() = false
 
+    /**
+     * A [CompilerPluginRegistrar] to register the compiler plugin.  Defaults to the plugin registrar specified in the
+     * Gradle plugin.
+     */
     @OptIn(ExperimentalCompilerApi::class)
     public open val compilerPluginRegistrar: CompilerPluginRegistrar? = SysProps.pluginRegistrar?.let {
         val cls = Class.forName(it).kotlin
@@ -54,12 +80,29 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
         (cls as KClass<out CompilerPluginRegistrar>).createInstance()
     }
 
+    /**
+     * Override this to generate your tests.
+     */
     public open fun TestGenerationBuilder.generateTests() {}
 
+    /**
+     * Imports to add to all test data files, via a preprocessor.
+     */
     public open val imports: Set<String> = emptySet()
+
+    /**
+     * Opt-ins to add to all test data files, via a preprocessor.
+     */
     public open val optIns: Set<String> = emptySet()
+
+    /**
+     * Opt-ins to add to all test data files as box tests, via a preprocessor.
+     */
     public open val boxOptIns: Set<String> = emptySet()
 
+    /**
+     * Called to adjust the compiler configuration before tests are run.
+     */
     public open fun adjustCompilerConfiguration(module: TestModule, configuration: CompilerConfiguration) {
 
     }
@@ -70,8 +113,15 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
         }
     }
 
+    /**
+     * Additional methods to add to generated test classes.
+     */
     public open val additionalMethods: List<MethodGenerator<*>> = emptyList()
 
+    /**
+     * The core configuration used to set up the other options in this class. Override at your own risk. If you do not call super things will not work as expected.
+     */
+    @DelicateKcpDevApi
     @OptIn(ExperimentalCompilerApi::class)
     public open fun coreConfiguration(builder: TestConfigurationBuilder) {
         with(builder) {
@@ -98,6 +148,11 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
         }
     }
 
+    /**
+     * The default configuration applied to all tests.
+     * Override at your own risk, but not suite as dangerous as [coreConfiguration].
+     */
+    @DelicateKcpDevApi
     public open fun defaultConfiguration(builder: TestConfigurationBuilder) {
         with(builder) {
             useSourcePreprocessor({ PackagePreprocessor(it, testDataRoot.pathString) })
@@ -143,7 +198,7 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
         }
     }
 
-    override fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
+    final override fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
         coreConfiguration(builder)
         defaultConfiguration(builder)
         val testClass = testSpecs[testInstance::class.java.name] ?: error("No test spec for ${testInstance::class.java.name}")

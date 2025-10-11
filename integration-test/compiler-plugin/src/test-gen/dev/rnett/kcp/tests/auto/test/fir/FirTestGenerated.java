@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("all")
 @TestMetadata("src/testData/auto/test/fir")
 @TestDataPath("$PROJECT_ROOT")
-@TestWithLevel(level = TestLevel.Fir)
+@TestWithLevel(level = TestLevel.FIR)
 public class FirTestGenerated extends AbstractLeveledFirTest {
   @Override
   public void configure(TestConfigurationBuilder builder) {

@@ -12,10 +12,6 @@ public final class dev/rnett/kcp/development/testing/configuration/CompilerPlugi
 	public fun registerCompilerExtensions (Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar$ExtensionStorage;Lorg/jetbrains/kotlin/test/model/TestModule;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
 }
 
-public abstract interface class dev/rnett/kcp/development/testing/configuration/TestSpecProducer {
-	public abstract fun produceSpec (Ljava/lang/Object;Lorg/jetbrains/kotlin/test/model/TestModule;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)Ljava/lang/Object;
-}
-
 public final class dev/rnett/kcp/development/testing/directives/UtilityDirectives : org/jetbrains/kotlin/test/directives/model/SimpleDirectivesContainer {
 	public static final field INSTANCE Ldev/rnett/kcp/development/testing/directives/UtilityDirectives;
 	public final fun getBOX_OPT_IN ()Lorg/jetbrains/kotlin/test/directives/model/StringDirective;
@@ -55,7 +51,7 @@ public final class dev/rnett/kcp/development/testing/generation/AutoGenerator : 
 public abstract class dev/rnett/kcp/development/testing/generation/BaseTestGenerator : dev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost {
 	public fun <init> ()V
 	public fun adjustCompilerConfiguration (Lorg/jetbrains/kotlin/test/model/TestModule;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
-	public fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public final fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
 	public fun coreConfiguration (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
 	public fun defaultConfiguration (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
 	public fun generateTests (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;)V
@@ -298,8 +294,8 @@ public class dev/rnett/kcp/development/testing/tests/levels/AbstractLeveledIrTes
 
 public final class dev/rnett/kcp/development/testing/tests/levels/TestLevel : java/lang/Enum {
 	public static final field Diagnostics Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
-	public static final field Fir Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
-	public static final field Ir Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+	public static final field FIR Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
+	public static final field IR Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
 	public static final field Run Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getFull ()Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;

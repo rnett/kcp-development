@@ -7,6 +7,9 @@ import org.jetbrains.kotlin.test.services.TestServices
 import org.jetbrains.kotlin.test.services.defaultDirectives
 import org.jetbrains.kotlin.test.services.moduleStructure
 
+/**
+ * Compute all directives that apply to a given file.
+ */
 public fun TestServices.allDirectives(file: TestFile): RegisteredDirectives = ComposedRegisteredDirectives(
     buildList {
         add(defaultDirectives)

@@ -16,6 +16,9 @@ import org.jetbrains.kotlin.test.services.PhasedPipelineChecker
 import org.jetbrains.kotlin.test.services.TestPhase
 import org.jetbrains.kotlin.utils.bind
 
+/**
+ * The test class used for any tests that include [TestLevel.IR] but not [TestLevel.Run].
+ */
 public open class AbstractLeveledIrTest : AbstractFirLightTreeJvmIrTextTest() {
 
     override fun configure(builder: TestConfigurationBuilder) {

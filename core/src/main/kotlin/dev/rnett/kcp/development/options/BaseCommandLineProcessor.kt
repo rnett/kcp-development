@@ -5,6 +5,9 @@ import org.jetbrains.kotlin.compiler.plugin.CommandLineProcessor
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.jetbrains.kotlin.config.CompilerConfiguration
 
+/**
+ * An enhanced [CommandLineProcessor] that has its options configured via a [CompilerOptionsHost].
+ */
 @ExperimentalCompilerApi
 public abstract class BaseCommandLineProcessor : CommandLineProcessor {
     public abstract val options: CompilerOptionsHost

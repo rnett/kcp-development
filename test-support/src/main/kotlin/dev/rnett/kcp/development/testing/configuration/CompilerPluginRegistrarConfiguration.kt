@@ -1,5 +1,6 @@
 package dev.rnett.kcp.development.testing.configuration
 
+import dev.rnett.kcp.development.testing.generation.BaseTestGenerator
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.jetbrains.kotlin.config.CompilerConfiguration
@@ -8,6 +9,10 @@ import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.TestServices
 
+/**
+ * Configures a compiler plugin.
+ * Configured automatically based on the test generation setup when using [BaseTestGenerator].
+ */
 @ExperimentalCompilerApi
 public class CompilerPluginRegistrarConfigurator(testServices: TestServices, public val registrar: CompilerPluginRegistrar) : EnvironmentConfigurator(testServices) {
     override fun CompilerPluginRegistrar.ExtensionStorage.registerCompilerExtensions(
@@ -18,10 +23,10 @@ public class CompilerPluginRegistrarConfigurator(testServices: TestServices, pub
     }
 }
 
+/**
+ * Configures a compiler plugin.
+ * Configured automatically based on the test generation setup when using [BaseTestGenerator].
+ */
 @ExperimentalCompilerApi
 public fun TestConfigurationBuilder.withCompilerPluginRegistrar(registrar: CompilerPluginRegistrar): Unit =
     useConfigurators({ CompilerPluginRegistrarConfigurator(it, registrar) })
-
-public fun interface TestSpecProducer<T> {
-    public fun produceSpec(original: Result<T>, module: TestModule, configuration: CompilerConfiguration): T
-}

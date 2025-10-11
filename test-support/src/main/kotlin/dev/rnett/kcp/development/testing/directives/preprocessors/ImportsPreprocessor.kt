@@ -2,6 +2,7 @@ package dev.rnett.kcp.development.testing.directives.preprocessors
 
 import dev.rnett.kcp.development.testing.allDirectives
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives
+import dev.rnett.kcp.development.testing.generation.BaseTestGenerator
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.model.TestFile
 import org.jetbrains.kotlin.test.services.DefaultsDsl
@@ -9,6 +10,11 @@ import org.jetbrains.kotlin.test.services.ReversibleSourceFilePreprocessor
 import org.jetbrains.kotlin.test.services.TestServices
 import org.jetbrains.kotlin.test.services.isKtFile
 
+
+/**
+ * Adds imports based on the [UtilityDirectives.IMPORTS] directive.
+ * Configured automatically based on the test generation setup when using [BaseTestGenerator].
+ */
 public class ImportsPreprocessor(testServices: TestServices) : ReversibleSourceFilePreprocessor(testServices) {
     private fun importsString(imports: Set<String>) = "\n" + imports.joinToString("\n") { "import $it" } + "\n"
 
@@ -49,6 +55,7 @@ public class ImportsPreprocessor(testServices: TestServices) : ReversibleSourceF
 
 /**
  * Adds imports based on the [UtilityDirectives.IMPORTS] directive.
+ * Configured automatically based on the test generation setup when using [BaseTestGenerator].
  */
 @DefaultsDsl
 public fun TestConfigurationBuilder.useImportsPreprocessor(

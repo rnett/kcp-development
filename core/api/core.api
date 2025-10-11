@@ -1,3 +1,6 @@
+public abstract interface annotation class dev/rnett/kcp/development/annotations/DelicateKcpDevApi : java/lang/annotation/Annotation {
+}
+
 public abstract class dev/rnett/kcp/development/options/BaseCommandLineProcessor : org/jetbrains/kotlin/compiler/plugin/CommandLineProcessor {
 	public fun <init> ()V
 	public fun appendList (Lorg/jetbrains/kotlin/config/CompilerConfiguration;Lorg/jetbrains/kotlin/config/CompilerConfigurationKey;Ljava/lang/Object;)V
@@ -88,8 +91,10 @@ public abstract class dev/rnett/kcp/development/options/CompilerOptionsHost {
 public abstract class dev/rnett/kcp/development/registrar/BaseSpecCompilerPluginRegistrar : org/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar {
 	public static final field Companion Ldev/rnett/kcp/development/registrar/BaseSpecCompilerPluginRegistrar$Companion;
 	public fun <init> ()V
-	public abstract fun getExtensions ()Ldev/rnett/kcp/development/registrar/SpecBasedCompilerPluginExtensions;
+	public abstract fun firExtension (Ljava/lang/Object;)Lorg/jetbrains/kotlin/fir/extensions/FirExtensionRegistrar;
+	public abstract fun irExtension (Ljava/lang/Object;)Lorg/jetbrains/kotlin/backend/common/extensions/IrGenerationExtension;
 	public abstract fun produceSpec (Lorg/jetbrains/kotlin/config/CompilerConfiguration;)Ljava/lang/Object;
+	public fun registerAdditionalExtensions (Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar$ExtensionStorage;Ljava/lang/Object;)V
 	public final fun registerExtensions (Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar$ExtensionStorage;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
 }
 
@@ -108,13 +113,5 @@ public final class dev/rnett/kcp/development/registrar/BaseSpecCompilerPluginReg
 	public final fun getSpec ()Ljava/lang/Object;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public abstract class dev/rnett/kcp/development/registrar/SpecBasedCompilerPluginExtensions {
-	public fun <init> ()V
-	public abstract fun firExtension (Ljava/lang/Object;)Lorg/jetbrains/kotlin/fir/extensions/FirExtensionRegistrar;
-	public abstract fun irExtension (Ljava/lang/Object;)Lorg/jetbrains/kotlin/backend/common/extensions/IrGenerationExtension;
-	public fun registerAdditionalExtensions (Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar$ExtensionStorage;Ljava/lang/Object;)V
-	public final fun registerExtensions (Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar$ExtensionStorage;Ljava/lang/Object;)V
 }
 

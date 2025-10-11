@@ -102,24 +102,3 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD }}
         run: ./gradlew publishAllPublicationsToMavenCentralRepository --no-configuration-cache
-
-      - name: Upload docs
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: build/dokka/html
-
-  deployDocs:
-    name: Deploy snapshot docs
-    needs: [ buildAndTest, publishSnapshot ]
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' && endsWith(needs.buildAndTest.outputs.version, '-SNAPSHOT') }}
-
-
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    steps:
-      - name: Deploy docs
-        uses: actions/deploy-pages@v4

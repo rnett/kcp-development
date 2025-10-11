@@ -57,9 +57,9 @@ public data class TestSpec(val levels: EnumSet<TestLevel>) {
         val max = levels.max()
         return when (max) {
             TestLevel.Diagnostics,
-            TestLevel.Fir -> AbstractLeveledFirTest::class
+            TestLevel.FIR -> AbstractLeveledFirTest::class
 
-            TestLevel.Ir -> AbstractLeveledIrTest::class
+            TestLevel.IR -> AbstractLeveledIrTest::class
             TestLevel.Run -> AbstractLeveledBoxTest::class
         }
     }
@@ -95,7 +95,7 @@ public data class TestSpec(val levels: EnumSet<TestLevel>) {
                         }
                     }
 
-                    TestLevel.Fir -> {
+                    TestLevel.FIR -> {
                         defaultDirectives {
                             +FIR_DUMP
                         }
@@ -111,7 +111,7 @@ public data class TestSpec(val levels: EnumSet<TestLevel>) {
                         }
                     }
 
-                    TestLevel.Ir -> {
+                    TestLevel.IR -> {
                         defaultDirectives {
                             +DUMP_IR
                             +DUMP_KT_IR
@@ -136,13 +136,13 @@ public data class TestSpec(val levels: EnumSet<TestLevel>) {
                         }
                     }
 
-                    TestLevel.Fir -> {
+                    TestLevel.FIR -> {
                         defaultDirectives {
                             -FIR_DUMP
                         }
                     }
 
-                    TestLevel.Ir -> defaultDirectives {
+                    TestLevel.IR -> defaultDirectives {
                         -DUMP_IR
                         -DUMP_KT_IR
                     }

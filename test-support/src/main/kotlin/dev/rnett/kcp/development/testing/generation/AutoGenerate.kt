@@ -8,7 +8,9 @@ import kotlin.io.path.isDirectory
 import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 
-
+/**
+ * Auto-generate tests for this group, inferring test types from directory names.
+ */
 public fun TestGenerationBuilder.autoGenerateTests(skip: (Path) -> Boolean = { false }) {
     if (!path.exists() || !path.isDirectory()) {
         return
@@ -29,6 +31,9 @@ public fun TestGenerationBuilder.autoGenerateTests(skip: (Path) -> Boolean = { f
     }
 }
 
+/**
+ * A test generator that only does auto-generation.
+ */
 public object AutoGenerator : BaseTestGenerator() {
     override val testsRootPackage: String = SysProps.defaultPackage
 }

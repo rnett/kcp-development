@@ -17,6 +17,9 @@ public class CompilerPluginShadowPlugin : Plugin<Project> {
                     exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib"))
                 }
             }
+            tasks.named("jar") {
+                enabled = false
+            }
         }
     }
 }
