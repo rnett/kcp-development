@@ -2,6 +2,8 @@
 
 A Gradle plugin to set up the Gradle plugin for the compiler plugin. Boy that's a mouthful.
 
+The plugin ID is `dev.rnett.kcp-development.gradle-plugin`.
+
 The extension is registered at `compilerSupportPluginDevelopment`:
 
 ```kotlin

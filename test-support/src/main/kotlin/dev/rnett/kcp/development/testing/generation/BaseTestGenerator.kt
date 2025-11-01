@@ -73,11 +73,13 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
      * Gradle plugin.
      */
     @OptIn(ExperimentalCompilerApi::class)
-    public open val compilerPluginRegistrar: CompilerPluginRegistrar? = SysProps.pluginRegistrar?.let {
-        val cls = Class.forName(it).kotlin
-        check(cls.isSubclassOf(CompilerPluginRegistrar::class)) { "Cannot use $it as a compiler plugin registrar, it is not a subclass of CompilerPluginRegistrar" }
-        @Suppress("UNCHECKED_CAST")
-        (cls as KClass<out CompilerPluginRegistrar>).createInstance()
+    public open val compilerPluginRegistrar: CompilerPluginRegistrar? by lazy {
+        SysProps.pluginRegistrar?.let {
+            val cls = Class.forName(it).kotlin
+            check(cls.isSubclassOf(CompilerPluginRegistrar::class)) { "Cannot use $it as a compiler plugin registrar, it is not a subclass of CompilerPluginRegistrar" }
+            @Suppress("UNCHECKED_CAST")
+            (cls as KClass<out CompilerPluginRegistrar>).createInstance()
+        }
     }
 
     /**

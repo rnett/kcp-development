@@ -11,30 +11,33 @@ import org.gradle.kotlin.dsl.the
 public class CompilerGradleSupportPluginDevelopmentPlugin : Plugin<Project> {
     override fun apply(target: Project): Unit = with(target) {
         pluginManager.apply("com.github.gmazzo.buildconfig")
+
+
+        extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
+
+        target.dependencies {
+            "compileOnly"(kotlin("stdlib"))
+            "compileOnly"(kotlin("gradle-plugin-api"))
+            "compileOnly"(gradleApi())
+        }
+
+
+        val extension: CompilerGradleSupportPluginDevelopmentExtension = extensions.create<CompilerGradleSupportPluginDevelopmentExtension>(CompilerGradleSupportPluginDevelopmentExtension.NAME).apply {
+            compilerPluginProjectPath.convention(":compiler-plugin")
+            compilerPluginProjectPath.finalizeValueOnRead()
+
+            additionalLibraryProjectPaths.convention(emptyMap())
+            additionalLibraryProjectPaths.finalizeValueOnRead()
+        }
+
+
         pluginManager.withPlugin("com.github.gmazzo.buildconfig") {
             val buildConfig = the<BuildConfigExtension>()
-
-
-            val extension: CompilerGradleSupportPluginDevelopmentExtension = extensions.create<CompilerGradleSupportPluginDevelopmentExtension>(CompilerGradleSupportPluginDevelopmentExtension.NAME).apply {
-                compilerPluginProjectPath.convention(":compiler-plugin")
-                compilerPluginProjectPath.finalizeValueOnRead()
-
-                additionalLibraryProjectPaths.convention(emptyMap())
-                additionalLibraryProjectPaths.finalizeValueOnRead()
-            }
-
-            extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
-
-            dependencies {
-                "compileOnly"(kotlin("stdlib"))
-                "compileOnly"(kotlin("gradle-plugin-api"))
-            }
-
             buildConfig.apply {
                 useKotlinOutput {
                     internalVisibility = true
                 }
-                packageName.set(provider { group.toString() })
+                packageName.set(provider { target.group.toString() })
 
                 afterEvaluate {
                     val pluginProject = project(extension.compilerPluginProjectPath.get())

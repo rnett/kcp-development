@@ -15,9 +15,9 @@ public class CompilerPluginBuildConfigPlugin : Plugin<Project> {
                     internalVisibility = true
                 }
 
-                packageName.set(provider { group.toString() })
+                packageName.set(provider { target.group.toString() })
                 // must match the one in gradle-plugin.gradle.kts
-                buildConfigField("String", "KOTLIN_PLUGIN_ID", provider { "\"${group}.${name}\"" })
+                buildConfigField("String", "KOTLIN_PLUGIN_ID", provider { "\"${target.group}.${target.name}\"" })
             }
         }
     }

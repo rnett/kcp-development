@@ -22,7 +22,7 @@ public abstract class CompilerPluginDevelopmentExtension {
     /**
      * The class to use for test generation. Typically your object that extends `BaseTestGenerator`.
      *
-     * If not set, no tests will be generated.
+     * If not set, will only auto-generate tests (if [useTestGenerator] is true).
      *
      * @see useTestGenerator
      */

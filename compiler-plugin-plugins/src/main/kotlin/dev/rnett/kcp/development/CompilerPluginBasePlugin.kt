@@ -17,6 +17,7 @@ public class CompilerPluginBasePlugin : Plugin<Project> {
         }
 
         val extension = extensions.create<CompilerPluginDevelopmentExtension>(CompilerPluginDevelopmentExtension.Companion.NAME).apply {
+            testGenerator.convention("dev.rnett.kcp.development.testing.generation.AutoGenerator")
             testGenerator.finalizeValueOnRead()
 
             useTestGenerator.convention(true)
