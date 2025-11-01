@@ -52,6 +52,10 @@ jobs:
         working-directory: ./integration-test
         run: ./gradlew check
 
+      - name: Generate docs
+        run: |
+          ./gradlew :dokkaGenerate
+
       - name: Get version
         id: get-version
         run: echo "version=$(cat version.txt)" >> "$GITHUB_OUTPUT"

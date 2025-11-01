@@ -14,7 +14,7 @@ It requires the use of the `dev.rnett.kcp-development.compiler-plugin.testing` G
 Like when using the base test framework, you create a test generator in `src/testFixtures` and put the test data in `src/testData`.
 Unlike the base framework, you don't create a `main` method, instead, you create a class with a no-arg constructor that extends `BaseTestGenerator`.
 Set the Gradle `compilerPluginDevelopment.testGenerator` property to the FQN of this class in your build script.
-[Auto-generation](#autogeneration) is also available and is used by default.
+Auto-generation (see below) is also available and is used by default.
 
 Even if you don't extend `BaseTestGenerator`, you can set `compilerPluginDevelopment.testGenerator` to your main class and `compilerPluginDevelopment.useTestGenerator` to false.
 You can still use the utilities in this module, just not the test generation DSL.
