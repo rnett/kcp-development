@@ -6,6 +6,6 @@ plugins {
 description = "Kotlin compiler support and utilities"
 
 dependencies {
-    api(kotlin("compiler"))
-    api(kotlin("stdlib"))
+    compileOnly(kotlin("compiler"))
+    compileOnly(kotlin("stdlib"))
 }
