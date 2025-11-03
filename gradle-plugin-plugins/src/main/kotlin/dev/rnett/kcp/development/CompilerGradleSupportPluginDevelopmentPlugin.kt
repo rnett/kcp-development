@@ -25,11 +25,7 @@ public class CompilerGradleSupportPluginDevelopmentPlugin : Plugin<Project> {
         val extension: CompilerGradleSupportPluginDevelopmentExtension = extensions.create<CompilerGradleSupportPluginDevelopmentExtension>(CompilerGradleSupportPluginDevelopmentExtension.NAME).apply {
             compilerPluginProjectPath.convention(":compiler-plugin")
             compilerPluginProjectPath.finalizeValueOnRead()
-
-            additionalLibraryProjectPaths.convention(emptyMap())
-            additionalLibraryProjectPaths.finalizeValueOnRead()
         }
-
 
         pluginManager.withPlugin("com.github.gmazzo.buildconfig") {
             val buildConfig = the<BuildConfigExtension>()
@@ -48,29 +44,6 @@ public class CompilerGradleSupportPluginDevelopmentPlugin : Plugin<Project> {
                     buildConfigField("String", "KOTLIN_PLUGIN_GROUP", provider { "\"${pluginProject.group}\"" })
                     buildConfigField("String", "KOTLIN_PLUGIN_NAME", provider { "\"${pluginProject.name}\"" })
                     buildConfigField("String", "KOTLIN_PLUGIN_VERSION", provider { "\"${pluginProject.version}\"" })
-
-
-
-                    extension.additionalLibraryProjectPaths.get().forEach { (name, project) ->
-                        val libraryProject = project(project)
-
-                        val libraryCoordinates = buildString {
-                            append(libraryProject.group)
-                            append(":")
-                            append(libraryProject.name)
-                            val versionString = libraryProject.version.toString().ifEmpty { null }?.takeUnless { it == "undefined" }
-                            if (versionString != null) {
-                                append(":")
-                                append(versionString)
-                            }
-                        }
-
-                        buildConfigField(
-                            type = "String",
-                            name = "${name.uppercase().replace("-", "_")}_LIBRARY_COORDINATES",
-                            expression = "\"${libraryCoordinates}\""
-                        )
-                    }
                 }
             }
         }

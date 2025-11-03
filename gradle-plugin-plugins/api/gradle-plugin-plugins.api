@@ -2,7 +2,6 @@ public abstract class dev/rnett/kcp/development/CompilerGradleSupportPluginDevel
 	public static final field Companion Ldev/rnett/kcp/development/CompilerGradleSupportPluginDevelopmentExtension$Companion;
 	public static final field NAME Ljava/lang/String;
 	public fun <init> ()V
-	public abstract fun getAdditionalLibraryProjectPaths ()Lorg/gradle/api/provider/MapProperty;
 	public abstract fun getCompilerPluginProjectPath ()Lorg/gradle/api/provider/Property;
 }
 
