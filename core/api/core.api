@@ -115,3 +115,53 @@ public final class dev/rnett/kcp/development/registrar/BaseSpecCompilerPluginReg
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface annotation class dev/rnett/kcp/development/utils/ir/ExperimentalIrHelpers : java/lang/annotation/Annotation {
+}
+
+public final class dev/rnett/kcp/development/utils/ir/IrBuildersKt {
+	public static final fun withBuilder (Ldev/rnett/kcp/development/utils/ir/WithIrContext;Lorg/jetbrains/kotlin/ir/declarations/IrSymbolOwner;IILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static synthetic fun withBuilder$default (Ldev/rnett/kcp/development/utils/ir/WithIrContext;Lorg/jetbrains/kotlin/ir/declarations/IrSymbolOwner;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun withUnscopedBuilder (Ldev/rnett/kcp/development/utils/ir/WithIrContext;IILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static synthetic fun withUnscopedBuilder$default (Ldev/rnett/kcp/development/utils/ir/WithIrContext;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract class dev/rnett/kcp/development/utils/ir/IrFullProcessor : org/jetbrains/kotlin/ir/visitors/IrVisitorVoid, dev/rnett/kcp/development/utils/ir/WithIrContext {
+	public fun <init> (Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;)V
+	public fun getBuiltIns ()Lorg/jetbrains/kotlin/ir/IrBuiltIns;
+	public fun getContext ()Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;
+	public fun getFactory ()Lorg/jetbrains/kotlin/ir/declarations/IrFactory;
+	public fun visitElement (Lorg/jetbrains/kotlin/ir/IrElement;)V
+}
+
+public abstract class dev/rnett/kcp/development/utils/ir/IrFullTransformer : org/jetbrains/kotlin/ir/visitors/IrElementTransformerVoid, dev/rnett/kcp/development/utils/ir/WithIrContext {
+	public fun <init> (Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;)V
+	public fun getBuiltIns ()Lorg/jetbrains/kotlin/ir/IrBuiltIns;
+	public fun getContext ()Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;
+	public fun getFactory ()Lorg/jetbrains/kotlin/ir/declarations/IrFactory;
+}
+
+public abstract class dev/rnett/kcp/development/utils/ir/IrFullTransformerWithContext : org/jetbrains/kotlin/backend/common/IrElementTransformerVoidWithContext, dev/rnett/kcp/development/utils/ir/WithIrContext {
+	public fun <init> (Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;)V
+	public fun getBuiltIns ()Lorg/jetbrains/kotlin/ir/IrBuiltIns;
+	public fun getContext ()Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;
+	public fun getFactory ()Lorg/jetbrains/kotlin/ir/declarations/IrFactory;
+	protected final fun withBuilderForCurrentScope (IILkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static synthetic fun withBuilderForCurrentScope$default (Ldev/rnett/kcp/development/utils/ir/IrFullTransformerWithContext;IILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class dev/rnett/kcp/development/utils/ir/IrUtilsKt {
+	public static final fun createLambda (Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;Lorg/jetbrains/kotlin/ir/declarations/IrDeclarationParent;Lorg/jetbrains/kotlin/ir/types/IrType;Lkotlin/jvm/functions/Function1;)Lorg/jetbrains/kotlin/ir/expressions/impl/IrFunctionExpressionImpl;
+	public static synthetic fun createLambda$default (Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;Lorg/jetbrains/kotlin/ir/declarations/IrDeclarationParent;Lorg/jetbrains/kotlin/ir/types/IrType;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lorg/jetbrains/kotlin/ir/expressions/impl/IrFunctionExpressionImpl;
+}
+
+public abstract interface class dev/rnett/kcp/development/utils/ir/WithIrContext {
+	public fun getBuiltIns ()Lorg/jetbrains/kotlin/ir/IrBuiltIns;
+	public abstract fun getContext ()Lorg/jetbrains/kotlin/backend/common/extensions/IrPluginContext;
+	public fun getFactory ()Lorg/jetbrains/kotlin/ir/declarations/IrFactory;
+}
+
+public final class dev/rnett/kcp/development/utils/ir/WithIrContext$DefaultImpls {
+	public static fun getBuiltIns (Ldev/rnett/kcp/development/utils/ir/WithIrContext;)Lorg/jetbrains/kotlin/ir/IrBuiltIns;
+	public static fun getFactory (Ldev/rnett/kcp/development/utils/ir/WithIrContext;)Lorg/jetbrains/kotlin/ir/declarations/IrFactory;
+}
+
