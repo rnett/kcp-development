@@ -1,5 +1,6 @@
 package dev.rnett.kcp.development.testing.generation
 
+import com.intellij.util.takeWhileInclusive
 import dev.rnett.kcp.development.testing.tests.TestType
 import dev.rnett.kcp.development.testing.tests.levels.TestSpec
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
@@ -39,7 +40,7 @@ internal class TestGenerationBuilderImplementation(internal val pathSpec: TestGe
     internal val children: MutableList<TestGenerationBuilderImplementation> = mutableListOf<TestGenerationBuilderImplementation>()
     private val childrenByPath: MutableMap<Path, TestGenerationBuilderImplementation> = mutableMapOf<Path, TestGenerationBuilderImplementation>()
 
-    val ancestors: List<TestGenerationBuilderImplementation> by lazy { parent?.ancestors.orEmpty() + this }
+    val thisAndAncestors: List<TestGenerationBuilderImplementation> by lazy { parent?.thisAndAncestors.orEmpty() + this }
 
     val configurations: MutableList<TestConfigurationBuilder.() -> Unit> = mutableListOf()
     val generationConfigs: MutableList<TestGenerationConfigBuilder.() -> Unit> = mutableListOf()
@@ -116,8 +117,7 @@ internal class TestGenerationBuilderImplementation(internal val pathSpec: TestGe
     }
 
     fun applyConfiguration(builder: TestConfigurationBuilder) {
-        ancestors.forEach { it.configurations.forEach { builder.it() } }
-        configurations.forEach { builder.it() }
+        thisAndAncestors.forEach { it.configurations.forEach { builder.it() } }
     }
 }
 
@@ -128,16 +128,22 @@ private fun TestGenerationBuilderImplementation.createAndPutGenerationSpecs(root
 
     if (tests != null) {
         val config = TestGenerationConfig()
-        ancestors.forEach { it.generationConfigs.forEach { config.it() } }
+        thisAndAncestors.forEach { it.generationConfigs.forEach { config.it() } }
 
         val spec = TestSpec(config.levels)
 
         val path = pathFromRoot ?: error("Can't generate test with a null path")
 
+        val pathNames = thisAndAncestors.asReversed().mapNotNull { it.pathSpec.relativePath }
+        val testClassName = pathNames.asSequence()
+            .flatMap { it }
+            .map { it.name }
+            .takeWhileInclusive { it.lowercase() in TestType.byDirectoryName }.toList().asReversed().joinToString("") { it.capitalizeAsciiOnly() }
+
         val suiteName = buildList {
             addAll(rootPackage.trim('.').split(".").filter { it.isNotBlank() })
             addAll(config.testsPackage)
-            add(adjustTestName(tests.testClassName ?: guessTestClassNameFromPath(pathSpec.relativePath ?: ancestors.asReversed().firstNotNullOf { it.pathSpec.relativePath })))
+            add(adjustTestName(tests.testClassName ?: testClassName))
         }.joinToString(".")
 
         if (suiteName in specs) {
@@ -171,8 +177,4 @@ private fun adjustTestName(name: String): String {
         name.endsWith("Tests") -> name + "Generated"
         else -> name + "TestGenerated"
     }
-}
-
-private fun guessTestClassNameFromPath(path: Path): String {
-    return path.joinToString("") { it.name.capitalizeAsciiOnly() }
 }
