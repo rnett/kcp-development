@@ -3,7 +3,7 @@ kotlin = "2.2.21"
 buildconfig = "5.7.1"
 shadow = "9.2.2"
 dokka = "2.1.0"
-publishing-plugin = "0.34.0"
+publishing-plugin = "0.35.0"
 
 [libraries]
 shadow-plugin = { module = "com.gradleup.shadow:com.gradleup.shadow.gradle.plugin", version.ref = "shadow" }
