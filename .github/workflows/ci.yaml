@@ -1,6 +1,6 @@
 name: CI
 run-name: CI
-on: [ push ]
+on: [ push, workflow_call ]
 jobs:
   buildAndTest:
     name: Build and test
