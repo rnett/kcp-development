@@ -20,3 +20,4 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 publishing = { id = "com.vanniktech.maven.publish", version.ref = "publishing-plugin" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }

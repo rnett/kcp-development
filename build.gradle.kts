@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.targets.js.npm.tasks.KotlinNpmInstallTask
 
 plugins {
-    alias(libs.plugins.kotlin.jvm) apply false
     id("build.dokka")
 }
 

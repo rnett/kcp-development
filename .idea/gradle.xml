@@ -7,10 +7,9 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/gradle/build-logic" name="build-logic">
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
                 <projects>
-                  <project path="$PROJECT_DIR$/gradle/build-logic" />
-                  <project path="$PROJECT_DIR$/gradle/build-logic/kotlin-setup" />
+                  <project path="$PROJECT_DIR$/buildSrc" />
                 </projects>
               </build>
             </builds>
@@ -21,11 +20,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/compiler-plugin-plugins" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/gradle-plugin-plugins" />
-            <option value="$PROJECT_DIR$/gradle/build-logic" />
-            <option value="$PROJECT_DIR$/gradle/build-logic/kotlin-setup" />
             <option value="$PROJECT_DIR$/test-support" />
           </set>
         </option>
@@ -43,10 +41,9 @@
                   <project path="$PROJECT_DIR$/test-support" />
                 </projects>
               </build>
-              <build path="$PROJECT_DIR$/gradle/build-logic" name="build-logic">
+              <build path="$PROJECT_DIR$/buildSrc" name="buildSrc">
                 <projects>
-                  <project path="$PROJECT_DIR$/gradle/build-logic" />
-                  <project path="$PROJECT_DIR$/gradle/build-logic/kotlin-setup" />
+                  <project path="$PROJECT_DIR$/buildSrc" />
                 </projects>
               </build>
             </builds>
@@ -56,11 +53,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/compiler-plugin-plugins" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/gradle-plugin-plugins" />
-            <option value="$PROJECT_DIR$/gradle/build-logic" />
-            <option value="$PROJECT_DIR$/gradle/build-logic/kotlin-setup" />
             <option value="$PROJECT_DIR$/integration-test" />
             <option value="$PROJECT_DIR$/integration-test/compiler-plugin" />
             <option value="$PROJECT_DIR$/test-support" />
