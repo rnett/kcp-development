@@ -16,6 +16,8 @@ extensionIfPresent<MavenPublishBaseExtension> {
         name = "KCP-Development - ${project.name}"
         description = provider { project.description }
         inceptionYear = "2025"
+        url = "https://kcp-development.rnett.dev"
+
         licenses {
             license {
                 name = "The Apache License, Version 2.0"
