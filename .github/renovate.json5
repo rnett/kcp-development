@@ -10,7 +10,7 @@
     "rnett"
   ],
   "pruneStaleBranches": false,
-  automerge: true,
+  "automerge": true,
   "packageRules": [
     {
       "matchPackageNames": [
