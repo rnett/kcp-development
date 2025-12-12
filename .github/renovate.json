@@ -3,10 +3,10 @@
   "extends": [
     "config:recommended"
   ],
-  reviewers: [
+  "reviewers:" [
     "rnett"
   ],
-  assignees: [
+  "assignees": [
     "rnett"
   ],
   "pruneStaleBranches": false,
@@ -17,16 +17,16 @@
         "org.jetbrains.kotlin:kotlin-gradle-plugin",
         "com.google.devtools.ksp:symbol-processing-api"
       ],
-      groupName: "kotlin",
-      labels: [
+      "groupName": "kotlin",
+      "labels": [
         "kotlin"
       ],
-      branchPrefix: "kotlin-update/",
+      "branchPrefix": "kotlin-update/",
       "allowedVersions": "/.*/",
       "ignoreUnstable": false,
-      automerge: false,
-      draftPR: true,
-      baseBranchPatterns: [
+      "automerge": false,
+      "draftPR": true,
+      "baseBranchPatterns": [
         "main",
         "renovate/kotlin",
         "kotlin-update/*"
