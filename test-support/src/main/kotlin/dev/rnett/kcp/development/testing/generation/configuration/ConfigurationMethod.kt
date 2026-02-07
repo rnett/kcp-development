@@ -8,7 +8,6 @@ import org.jetbrains.kotlin.utils.Printer
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
-
 public abstract class ConfigurationHost {
     public abstract fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder)
 
@@ -26,8 +25,8 @@ public abstract class ConfigurationHost {
     }
 }
 
-public class RuntimeConfigurationMethodModel(public val hosts: Set<KClass<out ConfigurationHost>>) : MethodModel {
-    override val kind: MethodModel.Kind = Kind
+public class RuntimeConfigurationMethodModel(public val hosts: Set<KClass<out ConfigurationHost>>) : MethodModel<RuntimeConfigurationMethodModel>() {
+    override val generator: MethodGenerator<RuntimeConfigurationMethodModel> = Generator
     override val name: String = "configuration"
     override val dataString: String? = null
     override val tags: List<String> = emptyList()
@@ -40,13 +39,11 @@ public class RuntimeConfigurationMethodModel(public val hosts: Set<KClass<out Co
         return super.imports() + hosts.map { it.java } + ConfigurationHost::class.java + TestConfigurationBuilder::class.java
     }
 
-    public data object Kind : MethodModel.Kind()
+    override val isTestMethod: Boolean = false
 
-    override fun isTestMethod(): Boolean = false
+    override val shouldBeGeneratedForInnerTestClass: Boolean = false
 
-    override fun shouldBeGeneratedForInnerTestClass(): Boolean = false
-
-    override fun shouldBeGenerated(): Boolean = hosts.isNotEmpty()
+    public fun shouldBeGenerated(): Boolean = hosts.isNotEmpty()
 
     public object Generator : MethodGenerator<RuntimeConfigurationMethodModel>() {
 
@@ -59,8 +56,5 @@ public class RuntimeConfigurationMethodModel(public val hosts: Set<KClass<out Co
             p.println("super.configure(builder);")
             p.println("ConfigurationHost.applyRuntimeConfiguration(this, builder, ${method.hosts.joinToString { it.java.simpleName + ".class" }});")
         }
-
-
-        override val kind: MethodModel.Kind = Kind
     }
 }

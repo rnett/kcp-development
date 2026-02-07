@@ -69,42 +69,28 @@ public abstract class dev/rnett/kcp/development/testing/generation/BaseTestGener
 
 public final class dev/rnett/kcp/development/testing/generation/TestArguments {
 	public fun <init> ()V
-	public fun <init> (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZ)V
-	public synthetic fun <init> (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Z)V
+	public synthetic fun <init> (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Z
-	public final fun component10 ()Ljava/util/List;
-	public final fun component11 ()Ljava/lang/Boolean;
-	public final fun component12 ()Z
-	public final fun component13 ()Ljava/lang/Integer;
-	public final fun component14 ()Lkotlin/jvm/functions/Function1;
-	public final fun component15 ()Z
-	public final fun component16 ()Z
-	public final fun component17 ()Z
+	public final fun component10 ()Z
 	public final fun component2 ()Z
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()Ljava/lang/String;
-	public final fun component7 ()Z
-	public final fun component8 ()Lorg/jetbrains/kotlin/test/TargetBackend;
+	public final fun component7 ()Lorg/jetbrains/kotlin/test/TargetBackend;
+	public final fun component8 ()Ljava/util/List;
 	public final fun component9 ()Ljava/util/List;
-	public final fun copy (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZ)Ldev/rnett/kcp/development/testing/generation/TestArguments;
-	public static synthetic fun copy$default (Ldev/rnett/kcp/development/testing/generation/TestArguments;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Ljava/lang/Boolean;ZLjava/lang/Integer;Lkotlin/jvm/functions/Function1;ZZZILjava/lang/Object;)Ldev/rnett/kcp/development/testing/generation/TestArguments;
+	public final fun copy (ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;Z)Ldev/rnett/kcp/development/testing/generation/TestArguments;
+	public static synthetic fun copy$default (Ldev/rnett/kcp/development/testing/generation/TestArguments;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lorg/jetbrains/kotlin/test/TargetBackend;Ljava/util/List;Ljava/util/List;ZILjava/lang/Object;)Ldev/rnett/kcp/development/testing/generation/TestArguments;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDeep ()Ljava/lang/Integer;
 	public final fun getExcludeDirs ()Ljava/util/List;
 	public final fun getExcludeDirsRecursively ()Ljava/util/List;
 	public final fun getExcludeParentDirs ()Z
 	public final fun getExcludedPattern ()Ljava/lang/String;
 	public final fun getExtension ()Ljava/lang/String;
-	public final fun getFilenameStartsLowerCase ()Ljava/lang/Boolean;
-	public final fun getGenerateEmptyTestClasses ()Z
-	public final fun getNativeTestInNonNativeTestInfra ()Z
 	public final fun getPattern ()Ljava/lang/String;
 	public final fun getRecursive ()Z
-	public final fun getSingleClass ()Z
-	public final fun getSkipIgnored ()Z
-	public final fun getSkipSpecificFile ()Lkotlin/jvm/functions/Function1;
 	public final fun getSkipTestAllFilesCheck ()Z
 	public final fun getTargetBackend ()Lorg/jetbrains/kotlin/test/TargetBackend;
 	public final fun getTestMethod ()Ljava/lang/String;
@@ -188,14 +174,14 @@ public final class dev/rnett/kcp/development/testing/generation/configuration/Co
 public final class dev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel : org/jetbrains/kotlin/generators/model/MethodModel {
 	public fun <init> (Ljava/util/Set;)V
 	public fun getDataString ()Ljava/lang/String;
+	public fun getGenerator ()Lorg/jetbrains/kotlin/generators/MethodGenerator;
 	public final fun getHosts ()Ljava/util/Set;
-	public fun getKind ()Lorg/jetbrains/kotlin/generators/model/MethodModel$Kind;
 	public fun getName ()Ljava/lang/String;
+	public fun getShouldBeGeneratedForInnerTestClass ()Z
 	public fun getTags ()Ljava/util/List;
 	public fun imports ()Ljava/util/Collection;
 	public fun isTestMethod ()Z
-	public fun shouldBeGenerated ()Z
-	public fun shouldBeGeneratedForInnerTestClass ()Z
+	public final fun shouldBeGenerated ()Z
 }
 
 public final class dev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel$Generator : org/jetbrains/kotlin/generators/MethodGenerator {
@@ -204,14 +190,6 @@ public final class dev/rnett/kcp/development/testing/generation/configuration/Ru
 	public synthetic fun generateBody (Lorg/jetbrains/kotlin/generators/model/MethodModel;Lorg/jetbrains/kotlin/utils/Printer;)V
 	public fun generateSignature (Ldev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel;Lorg/jetbrains/kotlin/utils/Printer;)V
 	public synthetic fun generateSignature (Lorg/jetbrains/kotlin/generators/model/MethodModel;Lorg/jetbrains/kotlin/utils/Printer;)V
-	public fun getKind ()Lorg/jetbrains/kotlin/generators/model/MethodModel$Kind;
-}
-
-public final class dev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel$Kind : org/jetbrains/kotlin/generators/model/MethodModel$Kind {
-	public static final field INSTANCE Ldev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel$Kind;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/rnett/kcp/development/testing/preprocessors/BoOpBoxPreprocessor : org/jetbrains/kotlin/test/services/ReversibleSourceFilePreprocessor {

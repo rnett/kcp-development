@@ -10,6 +10,7 @@ data class Spec(val name: String)
 
 @OptIn(ExperimentalCompilerApi::class)
 class Registrar : BaseSpecCompilerPluginRegistrar<Spec>() {
+    override val pluginId: String = "kcp-dev-test"
     override fun irExtension(spec: Spec): IrGenerationExtension? = null
 
     override fun firExtension(spec: Spec): FirExtensionRegistrar? = null

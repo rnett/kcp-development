@@ -33,7 +33,7 @@ internal class TestGenerationBuilderImplementation(internal val pathSpec: TestGe
     override val path: Path
         get() = pathSpec.path
     override val pathFromRoot: Path?
-        get() = path.relativeTo(pathSpec.root).takeIf { it.count() != 0 }
+        get() = path.relativeTo(pathSpec.root).takeIf { it.getNameCount() != 0 }
 
     val parent: TestGenerationBuilderImplementation? get() = pathSpec.parent
 

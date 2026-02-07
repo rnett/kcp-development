@@ -1,6 +1,6 @@
 package dev.rnett.kcp.development.testing.generation
 
-import org.jetbrains.kotlin.generators.TestGroup
+import org.jetbrains.kotlin.generators.dsl.TestGroup
 import org.jetbrains.kotlin.generators.model.AnnotationModel
 import org.jetbrains.kotlin.generators.model.MethodModel
 import kotlin.reflect.KClass
@@ -11,16 +11,17 @@ internal data class GeneratedTestSpec(
     val testDataPath: String,
     val baseClass: KClass<*>,
     val annotations: List<AnnotationModel>,
-    val methods: List<MethodModel>,
+    val methods: List<MethodModel<*>>,
     val arguments: TestArguments
 ) {
-    fun applyTo(rootPackage: String?, testGroup: TestGroup) {
+    fun applyTo(rootPackage: String?, testGroup: TestGroup, additionalMethods: List<MethodModel<*>> = emptyList()) {
         testGroup.testClass(
             baseClass.java,
+            baseTestClassName = baseClass.java.name,
             suiteTestClassName = rootPackage?.let { it.trimEnd('.') + ".$suiteName" } ?: suiteName,
-            useJunit4 = false,
             annotations = annotations
         ) {
+            additionalMethods.forEach { this.method(it) }
             methods.forEach { this.method(it) }
             model(
                 relativeRootPath = testDataPath,
@@ -30,18 +31,11 @@ internal data class GeneratedTestSpec(
                 pattern = arguments.pattern,
                 excludedPattern = arguments.excludedPattern,
                 testMethod = arguments.testMethod,
-                singleClass = arguments.singleClass,
                 testClassName = null,
                 targetBackend = arguments.targetBackend,
                 excludeDirs = arguments.excludeDirs,
                 excludeDirsRecursively = arguments.excludeDirsRecursively,
-                filenameStartsLowerCase = arguments.filenameStartsLowerCase,
-                skipIgnored = arguments.skipIgnored,
-                deep = arguments.deep,
-                skipSpecificFile = arguments.skipSpecificFile,
                 skipTestAllFilesCheck = arguments.skipTestAllFilesCheck,
-                generateEmptyTestClasses = arguments.generateEmptyTestClasses,
-                nativeTestInNonNativeTestInfra = arguments.nativeTestInNonNativeTestInfra,
             )
         }
     }

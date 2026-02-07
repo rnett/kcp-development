@@ -9,7 +9,6 @@ import dev.rnett.kcp.development.testing.tests.levels.TestLevel;
 import dev.rnett.kcp.tests.TestGenerator;
 import dev.rnett.kcp.development.testing.generation.configuration.ConfigurationHost;
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder;
-import org.jetbrains.kotlin.test.TargetBackend;
 import dev.rnett.kcp.development.testing.tests.levels.AbstractLeveledIrTest;
 import org.jetbrains.kotlin.test.TestMetadata;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ public class TestCompileTestGenerated extends AbstractLeveledIrTest {
 
   @Test
   public void testAllFilesPresentInCompile() {
-    KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("src/testData/auto/test/compile"), Pattern.compile("^(.+)\\.kt$"), null, TargetBackend.JVM_IR, true);
+    KtTestUtil.assertAllTestsPresentByMetadataWithExcluded(this.getClass(), new File("src/testData/auto/test/compile"), Pattern.compile("^(.+)\\.kt$"), null, true);
   }
 
   @Test

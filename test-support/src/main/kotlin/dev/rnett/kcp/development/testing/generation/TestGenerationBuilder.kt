@@ -17,7 +17,6 @@ import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.OPT_IN
 import org.jetbrains.kotlin.test.directives.model.DirectivesContainer
 import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
-import java.io.File
 import java.nio.file.Path
 import kotlin.reflect.KClass
 
@@ -101,20 +100,13 @@ public data class TestArguments(
     val pattern: String = if (extension == null) """^([^\.]+)$""" else "^(.+)\\.$extension\$",
     val excludedPattern: String? = null,
     val testMethod: String = "doTest",
-    val singleClass: Boolean = false, // if true then tests from subdirectories will be flattened to single class
 //    val testClassName: String? = null, // specific name for generated test class
     // which backend will be used in test. Specifying value may affect some test with
     // directives TARGET_BACKEND/DONT_TARGET_EXACT_BACKEND won't be generated
     val targetBackend: TargetBackend? = null,
     val excludeDirs: List<String> = listOf(),
     val excludeDirsRecursively: List<String> = listOf(),
-    val filenameStartsLowerCase: Boolean? = null, // assert that file is properly named
-    val skipIgnored: Boolean = false, // pretty meaningless flag, affects only few test names in one test runner
-    val deep: Int? = null, // specifies how deep recursive search will follow directory with testdata
-    val skipSpecificFile: (File) -> Boolean = { false },
     val skipTestAllFilesCheck: Boolean = false,
-    val generateEmptyTestClasses: Boolean = true, // All test classes will be generated, even if empty
-    val nativeTestInNonNativeTestInfra: Boolean = false,
 )
 
 /**
@@ -299,7 +291,7 @@ public fun TestGenerationBuilder.annotation(annotation: AnnotationModel): Unit =
  * Add test class methods to this group, and any descendents.
  */
 @TestGenerationDslMarker
-public fun TestGenerationBuilder.method(method: MethodModel): Unit = configureGeneration { method(method) }
+public fun TestGenerationBuilder.method(method: MethodModel<*>): Unit = configureGeneration { method(method) }
 
 /**
  * Use the specified [spec] for the corresponding [pluginRegistrar] for this group, and any descendents (unless overridden).

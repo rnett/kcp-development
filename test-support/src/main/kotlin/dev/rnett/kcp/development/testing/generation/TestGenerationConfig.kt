@@ -23,7 +23,7 @@ public interface TestGenerationConfigBuilder {
     /**
      * Adds methods to the generated test classes.
      */
-    public fun method(method: MethodModel)
+    public fun method(method: MethodModel<*>)
 
     /**
      * Adds a test level to the generated tests.
@@ -39,7 +39,7 @@ public interface TestGenerationConfigBuilder {
 internal class TestGenerationConfig() : TestGenerationConfigBuilder {
     val testsPackage: MutableList<String> = mutableListOf()
     private val annotations: MutableList<AnnotationModel> = mutableListOf()
-    val methods: MutableList<MethodModel> = mutableListOf()
+    val methods: MutableList<MethodModel<*>> = mutableListOf()
     val levels: MutableSet<TestLevel> = mutableSetOf()
 
     fun annotations() = annotations + TestSpec(levels).annotations()
@@ -52,7 +52,7 @@ internal class TestGenerationConfig() : TestGenerationConfigBuilder {
         annotations += annotation
     }
 
-    override fun method(method: MethodModel) {
+    override fun method(method: MethodModel<*>) {
         methods += method
     }
 

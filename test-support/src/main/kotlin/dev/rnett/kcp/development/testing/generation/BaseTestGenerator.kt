@@ -16,8 +16,8 @@ import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.JvmTarget
-import org.jetbrains.kotlin.generators.MethodGenerator
-import org.jetbrains.kotlin.generators.generateTestGroupSuiteWithJUnit5
+import org.jetbrains.kotlin.generators.dsl.junit5.generateTestGroupSuiteWithJUnit5
+import org.jetbrains.kotlin.generators.model.MethodModel
 import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
 import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.FULL_JDK
@@ -118,7 +118,7 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
     /**
      * Additional methods to add to generated test classes.
      */
-    public open val additionalMethods: List<MethodGenerator<*>> = emptyList()
+    public open val additionalMethods: List<MethodModel<*>> = emptyList()
 
     /**
      * The core configuration used to set up the other options in this class. Override at your own risk. If you do not call super things will not work as expected.
@@ -181,20 +181,22 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
     }
 
     @OptIn(ExperimentalPathApi::class)
-    internal fun generateSuite(dryRun: Boolean = false, additionalMethodGenerators: List<MethodGenerator<Nothing>> = emptyList()) {
+    internal fun generateSuite(dryRun: Boolean = false, additionalMethodGenerators: List<MethodModel<*>> = emptyList()) {
         if (cleanGeneratedRoot) {
             testGenerationRoot.listDirectoryEntries().forEach { it.deleteRecursively() }
         }
 
+        val additionalMethods: List<MethodModel<*>> = additionalMethodGenerators + additionalMethods
+        
         generateTestGroupSuiteWithJUnit5(
-            additionalMethodGenerators = additionalMethodGenerators + additionalMethods + RuntimeConfigurationMethodModel.Generator
+            dryRun = dryRun
         ) {
-            testGroup(
+            this.testGroup(
                 testGenerationRoot.toString(),
                 testDataRoot.toString()
             ) {
                 testSpecs.forEach { (_, spec) ->
-                    spec.applyTo(null, this)
+                    spec.applyTo(null, this, additionalMethods)
                 }
             }
         }
