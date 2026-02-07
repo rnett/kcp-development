@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.3.10"
 buildconfig = "6.0.6"
-shadow = "9.3.0"
+shadow = "9.3.1"
 dokka = "2.1.0"
 publishing-plugin = "0.35.0"
 
