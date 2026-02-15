@@ -91,7 +91,7 @@ public interface TestGenerationBuilder {
 
 /**
  * Test arguments to pass to the underlying Kotlin compiler plugin test framework test generator.
- * See [org.jetbrains.kotlin.generators.TestGroup.TestClass.model] for details.
+ * See [org.jetbrains.kotlin.generators.dsl.TestGroup.TestClass.model] for details.
  */
 public data class TestArguments(
     val recursive: Boolean = true,
