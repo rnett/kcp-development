@@ -19,9 +19,19 @@ public enum class TestType(public val spec: TestSpec) {
     Fir(TestLevel.FIR.only),
 
     /**
+     * Combines [Diagnostics] and [Fir].
+     */
+    Frontend(TestLevel.Diagnostics.full + TestLevel.FIR.full),
+
+    /**
      * Run and dump IR - [TestLevel.IR] only.
      */
     Ir(TestLevel.IR.only),
+
+    /**
+     * Alias for [Ir]. If additional backend levels are added in the future, will be updated to include them.
+     */
+    Backend(TestLevel.IR.only),
 
     /**
      * Run diagnostics, FIR, and IR - [TestLevel.Diagnostics], [TestLevel.FIR], and [TestLevel.IR].

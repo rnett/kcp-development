@@ -236,11 +236,13 @@ public final class dev/rnett/kcp/development/testing/runtime/RuntimeTestServices
 }
 
 public final class dev/rnett/kcp/development/testing/tests/TestType : java/lang/Enum {
+	public static final field Backend Ldev/rnett/kcp/development/testing/tests/TestType;
 	public static final field Box Ldev/rnett/kcp/development/testing/tests/TestType;
 	public static final field Companion Ldev/rnett/kcp/development/testing/tests/TestType$Companion;
 	public static final field Compile Ldev/rnett/kcp/development/testing/tests/TestType;
 	public static final field Diagnostics Ldev/rnett/kcp/development/testing/tests/TestType;
 	public static final field Fir Ldev/rnett/kcp/development/testing/tests/TestType;
+	public static final field Frontend Ldev/rnett/kcp/development/testing/tests/TestType;
 	public static final field Ir Ldev/rnett/kcp/development/testing/tests/TestType;
 	public static final field Run Ldev/rnett/kcp/development/testing/tests/TestType;
 	public final fun getDirectoryName ()Ljava/lang/String;
