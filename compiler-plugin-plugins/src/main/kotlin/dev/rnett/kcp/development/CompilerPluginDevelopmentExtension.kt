@@ -62,9 +62,13 @@ public abstract class CompilerPluginDevelopmentExtension {
     public abstract val compilerPluginRegistrar: Property<String>
 
     /**
-     * Whether to run the tests in parallel.  Defaults to true.
+     * Whether to run the tests in parallel.
+     * If 0, tests will run sequentially.
+     * If >0, tests will run in parallel with the specified number of threads.
+     * If <0, tests will run in parallel with the default Junit parallelism settings.
+     * Defaults to 5.
      */
-    public abstract val parallelTests: Property<Boolean>
+    public abstract val parallelTests: Property<Int>
 
     init {
         this::class.objectInstance

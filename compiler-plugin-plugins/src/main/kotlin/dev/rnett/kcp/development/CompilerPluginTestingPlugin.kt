@@ -97,9 +97,12 @@ public class CompilerPluginTestingPlugin : Plugin<Project> {
                     systemProperty("kcp.dev.plugin-registrar", it)
                 }
 
-                if (extension.parallelTests.get()) {
+                val parallelTests = extension.parallelTests.get()
+                if (parallelTests != 0) {
                     systemProperty("junit.jupiter.execution.parallel.enabled", "true")
                     systemProperty("junit.jupiter.execution.parallel.mode.classes.default", "concurrent")
+                    if (parallelTests > 0)
+                        systemProperty("junit.jupiter.execution.parallel.config.fixed.parallelism", parallelTests.toString())
                 }
             }
             systemProperty("idea.ignore.disabled.plugins", "true")

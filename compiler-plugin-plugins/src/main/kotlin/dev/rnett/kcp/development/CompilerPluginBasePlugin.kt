@@ -35,7 +35,7 @@ public class CompilerPluginBasePlugin : Plugin<Project> {
             testDataRoot.convention(layout.projectDirectory.dir("src/testData"))
             testDataRoot.finalizeValueOnRead()
 
-            parallelTests.convention(true)
+            parallelTests.convention(5)
         }
 
         extensions.extraProperties["kotlin.stdlib.default.dependency"] = "false"
