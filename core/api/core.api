@@ -9,7 +9,6 @@ public abstract class dev/rnett/kcp/development/options/BaseCommandLineProcessor
 	public abstract fun getOptions ()Ldev/rnett/kcp/development/options/CompilerOptionsHost;
 	public fun getPluginOptions ()Ljava/util/Collection;
 	public fun processOption (Lorg/jetbrains/kotlin/compiler/plugin/AbstractCliOption;Ljava/lang/String;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
-	public fun processOption (Lorg/jetbrains/kotlin/compiler/plugin/CliOption;Ljava/lang/String;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
 }
 
 public abstract class dev/rnett/kcp/development/options/CompilerOption {

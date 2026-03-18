@@ -8,7 +8,7 @@ import java.io.File.separator
 /**
  * Provide the Kotlin libraries from the java classpath (e.g. `java.class.path` system property).
  */
-public object ClasspathBasedStandardLibrariesPathProvider : KotlinStandardLibrariesPathProvider() {
+public object ClasspathBasedStandardLibrariesPathProvider : KotlinStandardLibrariesPathProvider {
     private val SEP = "\\$separator"
 
     private val GRADLE_DEPENDENCY = (".*?" +
@@ -42,6 +42,8 @@ public object ClasspathBasedStandardLibrariesPathProvider : KotlinStandardLibrar
     override fun fullJsStdlib(): File = getFile("kotlin-stdlib-js")
     override fun defaultJsStdlib(): File = getFile("kotlin-stdlib-js")
     override fun kotlinTestJsKLib(): File = getFile("kotlin-test-js")
+    override fun webStdlibForTests(): File = getFile("kotlin-stdlib-web")
+
     override fun commonStdlibForTests(): File = getFile("kotlin-stdlib-common")
 
     override fun scriptingPluginFilesForTests(): Collection<File> {

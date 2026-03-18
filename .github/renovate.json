@@ -3,14 +3,11 @@
   "extends": [
     "config:recommended"
   ],
-  "reviewers": [
-    "rnett"
-  ],
   "assignees": [
     "rnett"
   ],
-  "pruneStaleBranches": false,
   "automerge": true,
+  "pruneStaleBranches": false,
   "packageRules": [
     {
       "matchPackageNames": [

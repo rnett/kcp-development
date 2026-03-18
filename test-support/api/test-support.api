@@ -211,6 +211,10 @@ public final class dev/rnett/kcp/development/testing/runtime/ClasspathBasedStand
 	public fun defaultJsStdlib ()Ljava/io/File;
 	public fun fullJsStdlib ()Ljava/io/File;
 	public fun getAnnotationsJar ()Ljava/io/File;
+	public fun getRuntimeAndK1ReflectJarClassLoader ()Ljava/lang/ClassLoader;
+	public fun getRuntimeAndReflectJarClassLoader ()Ljava/lang/ClassLoader;
+	public fun getRuntimeAndReflectWithNewFakeOverrridesJarClassLoader ()Ljava/lang/ClassLoader;
+	public fun getRuntimeJarClassLoader ()Ljava/lang/ClassLoader;
 	public fun jvmAnnotationsForTests ()Ljava/io/File;
 	public fun kotlinTestJarForTests ()Ljava/io/File;
 	public fun kotlinTestJsKLib ()Ljava/io/File;
@@ -220,6 +224,7 @@ public final class dev/rnett/kcp/development/testing/runtime/ClasspathBasedStand
 	public fun runtimeJarForTestsWithJdk8 ()Ljava/io/File;
 	public fun scriptRuntimeJarForTests ()Ljava/io/File;
 	public fun scriptingPluginFilesForTests ()Ljava/util/Collection;
+	public fun webStdlibForTests ()Ljava/io/File;
 }
 
 public final class dev/rnett/kcp/development/testing/runtime/RuntimeClassPathProvider : org/jetbrains/kotlin/test/services/RuntimeClasspathProvider {
