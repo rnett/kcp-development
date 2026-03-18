@@ -16,9 +16,11 @@ import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 import org.gradle.jvm.toolchain.JavaLauncher
 import org.gradle.process.ExecOperations
+import org.gradle.work.DisableCachingByDefault
 import java.io.File
 import javax.inject.Inject
 
+@DisableCachingByDefault(because = "Not worth caching")
 public abstract class CompilerPluginGenerateTestsTask @Inject constructor(
     private val providers: ProviderFactory,
     private val execOperations: ExecOperations
@@ -73,14 +75,11 @@ public abstract class CompilerPluginGenerateTestsTask @Inject constructor(
             }
 
             if (useTestGenerator.get()) {
-                mainClass.set(CompilerPluginDevelopmentExtension.Companion.TEST_GENERATOR_MAIN)
+                mainClass.set(CompilerPluginDevelopmentExtension.TEST_GENERATOR_MAIN)
                 args(testGenerator.get())
             } else {
                 mainClass.set(testGenerator.get())
             }
-
-//            standardOutput = System.out
-//            errorOutput = System.err
 
         }.apply {
             rethrowFailure()
