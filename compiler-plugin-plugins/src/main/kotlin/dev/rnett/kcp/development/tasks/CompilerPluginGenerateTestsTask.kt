@@ -29,10 +29,10 @@ public abstract class CompilerPluginGenerateTestsTask @Inject constructor(
 ) : DefaultTask() {
 
     @get:InputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     public abstract val testDataDirectory: DirectoryProperty
 
     @get:OutputDirectory
-    @get:PathSensitive(PathSensitivity.RELATIVE)
     public abstract val generatedTestsDirectory: DirectoryProperty
 
     @get:Input
