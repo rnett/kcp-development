@@ -13,6 +13,8 @@ import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Nested
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 import org.gradle.jvm.toolchain.JavaLauncher
 import org.gradle.process.ExecOperations
@@ -30,6 +32,7 @@ public abstract class CompilerPluginGenerateTestsTask @Inject constructor(
     public abstract val testDataDirectory: DirectoryProperty
 
     @get:OutputDirectory
+    @get:PathSensitive(PathSensitivity.RELATIVE)
     public abstract val generatedTestsDirectory: DirectoryProperty
 
     @get:Input
