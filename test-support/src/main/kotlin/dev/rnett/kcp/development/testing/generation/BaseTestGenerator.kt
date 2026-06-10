@@ -18,7 +18,7 @@ import org.jetbrains.kotlin.config.CompilerConfiguration
 import org.jetbrains.kotlin.config.JvmTarget
 import org.jetbrains.kotlin.generators.dsl.junit5.generateTestGroupSuiteWithJUnit5
 import org.jetbrains.kotlin.generators.model.MethodModel
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.test.directives.ConfigurationDirectives.WITH_STDLIB
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.FULL_JDK
 import org.jetbrains.kotlin.test.directives.JvmEnvironmentConfigurationDirectives.JVM_TARGET
@@ -125,7 +125,7 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
      */
     @DelicateKcpDevApi
     @OptIn(ExperimentalCompilerApi::class)
-    public open fun coreConfiguration(builder: TestConfigurationBuilder) {
+    public open fun coreConfiguration(builder: NonGroupingPhaseTestConfigurationBuilder) {
         with(builder) {
             defaultDirectives {
                 JVM_TARGET.with(JvmTarget.JVM_17)
@@ -155,7 +155,7 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
      * Override at your own risk, but not suite as dangerous as [coreConfiguration].
      */
     @DelicateKcpDevApi
-    public open fun defaultConfiguration(builder: TestConfigurationBuilder) {
+    public open fun defaultConfiguration(builder: NonGroupingPhaseTestConfigurationBuilder) {
         with(builder) {
             useSourcePreprocessor({ PackagePreprocessor(it, testDataRoot.pathString) })
         }
@@ -202,7 +202,7 @@ public abstract class BaseTestGenerator : ConfigurationHost() {
         }
     }
 
-    final override fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
+    final override fun configureTest(testInstance: AbstractKotlinCompilerTest, builder: NonGroupingPhaseTestConfigurationBuilder) {
         coreConfiguration(builder)
         defaultConfiguration(builder)
         val testClass = testSpecs[testInstance::class.java.name] ?: error("No test spec for ${testInstance::class.java.name}")

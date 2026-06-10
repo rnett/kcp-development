@@ -4,7 +4,7 @@ import dev.rnett.kcp.development.testing.generation.BaseTestGenerator
 import org.jetbrains.kotlin.compiler.plugin.CompilerPluginRegistrar
 import org.jetbrains.kotlin.compiler.plugin.ExperimentalCompilerApi
 import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.TestServices
@@ -28,5 +28,5 @@ public class CompilerPluginRegistrarConfigurator(testServices: TestServices, pub
  * Configured automatically based on the test generation setup when using [BaseTestGenerator].
  */
 @ExperimentalCompilerApi
-public fun TestConfigurationBuilder.withCompilerPluginRegistrar(registrar: CompilerPluginRegistrar): Unit =
+public fun NonGroupingPhaseTestConfigurationBuilder.withCompilerPluginRegistrar(registrar: CompilerPluginRegistrar): Unit =
     useConfigurators({ CompilerPluginRegistrarConfigurator(it, registrar) })

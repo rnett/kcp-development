@@ -3,7 +3,7 @@ package dev.rnett.kcp.development.testing.tests.levels
 import org.jetbrains.kotlin.generators.model.AnnotationArgumentModel
 import org.jetbrains.kotlin.generators.model.AnnotationModel
 import org.jetbrains.kotlin.test.backend.handlers.IrPrettyKotlinDumpHandler
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.test.builders.configureIrHandlersStep
 import org.jetbrains.kotlin.test.builders.firHandlersStep
 import org.jetbrains.kotlin.test.configuration.setupHandlersForDiagnosticTest
@@ -68,10 +68,10 @@ public data class TestSpec(val levels: EnumSet<TestLevel>) {
         internal fun forTestClass(testClass: Any) = TestSpec(testClass::class.java.getAnnotationsByType(TestWithLevel::class.java).map { it.level })
     }
 
-    public fun preConfigure(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
+    public fun preConfigure(test: AbstractKotlinCompilerTest, builder: NonGroupingPhaseTestConfigurationBuilder) {
     }
 
-    public fun configure(test: AbstractKotlinCompilerTest, builder: TestConfigurationBuilder) {
+    public fun configure(test: AbstractKotlinCompilerTest, builder: NonGroupingPhaseTestConfigurationBuilder) {
         with(builder) {
             forEachLevel {
                 when (it) {

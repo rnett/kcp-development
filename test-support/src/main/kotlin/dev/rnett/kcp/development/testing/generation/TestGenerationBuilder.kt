@@ -12,7 +12,7 @@ import org.jetbrains.kotlin.generators.model.AnnotationModel
 import org.jetbrains.kotlin.generators.model.MethodModel
 import org.jetbrains.kotlin.test.TargetBackend
 import org.jetbrains.kotlin.test.builders.RegisteredDirectivesBuilder
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.test.directives.LanguageSettingsDirectives.OPT_IN
 import org.jetbrains.kotlin.test.directives.model.DirectivesContainer
 import org.jetbrains.kotlin.test.model.TestModule
@@ -40,7 +40,7 @@ public interface TestGenerationBuilder {
      * Applies to this group's tests, and any descendents.
      */
     @TestGenerationDslMarker
-    public fun configure(block: TestConfigurationBuilder.() -> Unit)
+    public fun configure(block: NonGroupingPhaseTestConfigurationBuilder.() -> Unit)
 
     /**
      * Apply test class generation configuration.

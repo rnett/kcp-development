@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.test.backend.BlackBoxCodegenSuppressor
 import org.jetbrains.kotlin.test.backend.handlers.IrPrettyKotlinDumpHandler
 import org.jetbrains.kotlin.test.backend.handlers.IrTextDumpHandler
 import org.jetbrains.kotlin.test.backend.handlers.IrTreeVerifierHandler
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.test.builders.configureIrHandlersStep
 import org.jetbrains.kotlin.test.configuration.additionalK2ConfigurationForIrTextTest
 import org.jetbrains.kotlin.test.configuration.commonConfigurationForJvmTest
@@ -21,7 +21,7 @@ import org.jetbrains.kotlin.utils.bind
  */
 public open class AbstractLeveledIrTest : AbstractFirLightTreeJvmIrTextTest() {
 
-    override fun configure(builder: TestConfigurationBuilder) {
+    override fun configure(builder: NonGroupingPhaseTestConfigurationBuilder) {
         // this - pre super
         val levels = TestSpec.forTestClass(this)
         levels.preConfigure(this, builder)

@@ -3,7 +3,7 @@ package dev.rnett.kcp.development.testing.generation
 import com.intellij.util.takeWhileInclusive
 import dev.rnett.kcp.development.testing.tests.TestType
 import dev.rnett.kcp.development.testing.tests.levels.TestSpec
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.capitalizeAsciiOnly
 import java.nio.file.Path
 import kotlin.io.path.Path
@@ -42,7 +42,7 @@ internal class TestGenerationBuilderImplementation(internal val pathSpec: TestGe
 
     val thisAndAncestors: List<TestGenerationBuilderImplementation> by lazy { parent?.thisAndAncestors.orEmpty() + this }
 
-    val configurations: MutableList<TestConfigurationBuilder.() -> Unit> = mutableListOf()
+    val configurations: MutableList<NonGroupingPhaseTestConfigurationBuilder.() -> Unit> = mutableListOf()
     val generationConfigs: MutableList<TestGenerationConfigBuilder.() -> Unit> = mutableListOf()
 
     var generatedTests: TestData? = null
@@ -54,7 +54,7 @@ internal class TestGenerationBuilderImplementation(internal val pathSpec: TestGe
         val arguments: TestArguments,
     )
 
-    override fun configure(block: TestConfigurationBuilder.() -> Unit) {
+    override fun configure(block: NonGroupingPhaseTestConfigurationBuilder.() -> Unit) {
         configurations += block
     }
 
@@ -116,7 +116,7 @@ internal class TestGenerationBuilderImplementation(internal val pathSpec: TestGe
         generatedTests = TestData(testClassName, customBaseClass, arguments)
     }
 
-    fun applyConfiguration(builder: TestConfigurationBuilder) {
+    fun applyConfiguration(builder: NonGroupingPhaseTestConfigurationBuilder) {
         thisAndAncestors.forEach { it.configurations.forEach { builder.it() } }
     }
 }

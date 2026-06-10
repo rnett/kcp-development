@@ -3,7 +3,7 @@ package dev.rnett.kcp.development.testing.directives.preprocessors
 import dev.rnett.kcp.development.testing.allDirectives
 import dev.rnett.kcp.development.testing.directives.UtilityDirectives
 import dev.rnett.kcp.development.testing.generation.BaseTestGenerator
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.test.model.TestFile
 import org.jetbrains.kotlin.test.services.DefaultsDsl
 import org.jetbrains.kotlin.test.services.ReversibleSourceFilePreprocessor
@@ -43,7 +43,7 @@ public class BoxOptInPreprocessor(testServices: TestServices) : ReversibleSource
  * Configured automatically based on the test generation setup when using [BaseTestGenerator].
  */
 @DefaultsDsl
-public fun TestConfigurationBuilder.useBoxOptInPreprocessor(
+public fun NonGroupingPhaseTestConfigurationBuilder.useBoxOptInPreprocessor(
 ) {
     useSourcePreprocessor(
         ::BoxOptInPreprocessor
