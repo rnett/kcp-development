@@ -13,20 +13,20 @@ public abstract class CompilerOptionsHost {
     /**
      * A single parameter with no default. Required by default.
      */
-    public fun <T> singular(
+    public fun <T : Any> singular(
         name: String,
         valueDescription: String,
         description: String,
         required: Boolean = true,
         transform: (String) -> T?,
-    ): Lazy<CompilerOption.Singular<T & Any>> = CompilerOption.Singular(name, valueDescription, description, required, transform)
+    ): Lazy<CompilerOption.Singular<T>> = CompilerOption.Singular(name, valueDescription, description, required, transform)
         .also { _options += it }
         .let(::lazyOf)
 
     /**
      * A single optional parameter with a default.
      */
-    public fun <T> singular(
+    public fun <T : Any> singular(
         name: String,
         defaultValue: T,
         valueDescription: String,

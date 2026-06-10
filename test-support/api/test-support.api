@@ -3,7 +3,7 @@ public final class dev/rnett/kcp/development/testing/UtilsKt {
 }
 
 public final class dev/rnett/kcp/development/testing/configuration/CompilerPluginRegistrarConfigurationKt {
-	public static final fun withCompilerPluginRegistrar (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar;)V
+	public static final fun withCompilerPluginRegistrar (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;Lorg/jetbrains/kotlin/compiler/plugin/CompilerPluginRegistrar;)V
 }
 
 public final class dev/rnett/kcp/development/testing/configuration/CompilerPluginRegistrarConfigurator : org/jetbrains/kotlin/test/services/EnvironmentConfigurator {
@@ -25,7 +25,7 @@ public final class dev/rnett/kcp/development/testing/directives/preprocessors/Bo
 }
 
 public final class dev/rnett/kcp/development/testing/directives/preprocessors/BoxOptInPreprocessorKt {
-	public static final fun useBoxOptInPreprocessor (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public static final fun useBoxOptInPreprocessor (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 }
 
 public final class dev/rnett/kcp/development/testing/directives/preprocessors/ImportsPreprocessor : org/jetbrains/kotlin/test/services/ReversibleSourceFilePreprocessor {
@@ -35,7 +35,7 @@ public final class dev/rnett/kcp/development/testing/directives/preprocessors/Im
 }
 
 public final class dev/rnett/kcp/development/testing/directives/preprocessors/ImportsPreprocessorKt {
-	public static final fun useImportsPreprocessor (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public static final fun useImportsPreprocessor (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 }
 
 public final class dev/rnett/kcp/development/testing/generation/AutoGenerateKt {
@@ -51,9 +51,9 @@ public final class dev/rnett/kcp/development/testing/generation/AutoGenerator : 
 public abstract class dev/rnett/kcp/development/testing/generation/BaseTestGenerator : dev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost {
 	public fun <init> ()V
 	public fun adjustCompilerConfiguration (Lorg/jetbrains/kotlin/test/model/TestModule;Lorg/jetbrains/kotlin/config/CompilerConfiguration;)V
-	public final fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
-	public fun coreConfiguration (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
-	public fun defaultConfiguration (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public final fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
+	public fun coreConfiguration (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
+	public fun defaultConfiguration (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 	public fun generateTests (Ldev/rnett/kcp/development/testing/generation/TestGenerationBuilder;)V
 	public fun getAdditionalMethods ()Ljava/util/List;
 	public fun getBoxOptIns ()Ljava/util/Set;
@@ -163,12 +163,12 @@ public abstract interface annotation class dev/rnett/kcp/development/testing/gen
 public abstract class dev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost {
 	public static final field Companion Ldev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost$Companion;
 	public fun <init> ()V
-	public static final fun applyRuntimeConfiguration (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;[Ljava/lang/Class;)V
-	public abstract fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public static final fun applyRuntimeConfiguration (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;[Ljava/lang/Class;)V
+	public abstract fun configureTest (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 }
 
 public final class dev/rnett/kcp/development/testing/generation/configuration/ConfigurationHost$Companion {
-	public final fun applyRuntimeConfiguration (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;[Ljava/lang/Class;)V
+	public final fun applyRuntimeConfiguration (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;[Ljava/lang/Class;)V
 }
 
 public final class dev/rnett/kcp/development/testing/generation/configuration/RuntimeConfigurationMethodModel : org/jetbrains/kotlin/generators/model/MethodModel {
@@ -210,6 +210,7 @@ public final class dev/rnett/kcp/development/testing/runtime/ClasspathBasedStand
 	public fun commonStdlibForTests ()Ljava/io/File;
 	public fun defaultJsStdlib ()Ljava/io/File;
 	public fun fullJsStdlib ()Ljava/io/File;
+	public fun fullWasmStdlib (Lorg/jetbrains/kotlin/platform/wasm/WasmTarget;)Ljava/io/File;
 	public fun getAnnotationsJar ()Ljava/io/File;
 	public fun getRuntimeAndK1ReflectJarClassLoader ()Ljava/lang/ClassLoader;
 	public fun getRuntimeAndReflectJarClassLoader ()Ljava/lang/ClassLoader;
@@ -218,6 +219,7 @@ public final class dev/rnett/kcp/development/testing/runtime/ClasspathBasedStand
 	public fun jvmAnnotationsForTests ()Ljava/io/File;
 	public fun kotlinTestJarForTests ()Ljava/io/File;
 	public fun kotlinTestJsKLib ()Ljava/io/File;
+	public fun kotlinTestWasmKLib (Lorg/jetbrains/kotlin/platform/wasm/WasmTarget;)Ljava/io/File;
 	public fun minimalRuntimeJarForTests ()Ljava/io/File;
 	public fun reflectJarForTests ()Ljava/io/File;
 	public fun runtimeJarForTests ()Ljava/io/File;
@@ -237,7 +239,7 @@ public final class dev/rnett/kcp/development/testing/runtime/RuntimeEnvironmentC
 }
 
 public final class dev/rnett/kcp/development/testing/runtime/RuntimeTestServicesKt {
-	public static final fun useTestRuntime (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public static final fun useTestRuntime (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 }
 
 public final class dev/rnett/kcp/development/testing/tests/TestType : java/lang/Enum {
@@ -264,17 +266,17 @@ public final class dev/rnett/kcp/development/testing/tests/TestType$Companion {
 
 public class dev/rnett/kcp/development/testing/tests/levels/AbstractLeveledBoxTest : org/jetbrains/kotlin/test/runners/codegen/AbstractFirLightTreeBlackBoxCodegenTest {
 	public fun <init> ()V
-	public fun configure (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public fun configure (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 }
 
 public class dev/rnett/kcp/development/testing/tests/levels/AbstractLeveledFirTest : org/jetbrains/kotlin/test/runners/AbstractFirLightTreeDiagnosticsTest {
 	public fun <init> ()V
-	public fun configure (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public fun configure (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 }
 
 public class dev/rnett/kcp/development/testing/tests/levels/AbstractLeveledIrTest : org/jetbrains/kotlin/test/runners/ir/AbstractFirLightTreeJvmIrTextTest {
 	public fun <init> ()V
-	public fun configure (Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public fun configure (Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 }
 
 public final class dev/rnett/kcp/development/testing/tests/levels/TestLevel : java/lang/Enum {
@@ -297,7 +299,7 @@ public final class dev/rnett/kcp/development/testing/tests/levels/TestSpec {
 	public final fun annotations ()Ljava/util/List;
 	public final fun badTestSuiteName ()Ljava/lang/String;
 	public final fun component1 ()Ljava/util/EnumSet;
-	public final fun configure (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public final fun configure (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 	public final fun contains (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)Z
 	public final fun copy (Ljava/util/EnumSet;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
 	public static synthetic fun copy$default (Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;Ljava/util/EnumSet;ILjava/lang/Object;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
@@ -309,7 +311,7 @@ public final class dev/rnett/kcp/development/testing/tests/levels/TestSpec {
 	public final fun minus (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
 	public final fun plus (Ldev/rnett/kcp/development/testing/tests/levels/TestLevel;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
 	public final fun plus (Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;)Ldev/rnett/kcp/development/testing/tests/levels/TestSpec;
-	public final fun preConfigure (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/TestConfigurationBuilder;)V
+	public final fun preConfigure (Lorg/jetbrains/kotlin/test/runners/AbstractKotlinCompilerTest;Lorg/jetbrains/kotlin/test/builders/NonGroupingPhaseTestConfigurationBuilder;)V
 	public final fun testClass ()Lkotlin/reflect/KClass;
 	public fun toString ()Ljava/lang/String;
 }
