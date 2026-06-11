@@ -30,7 +30,7 @@ FILE fqName:generated.ir fileName:/Ir.kt
         public open fun toString (): kotlin.String declared in kotlin.Any
   FUN name:box visibility:public modality:FINAL returnType:kotlin.Unit
     annotations:
-      OptIn(markerClass = [CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB ANNOTATION_CLASS name:ExperimentalStdlibApi modality:OPEN visibility:public superTypes:[kotlin.Annotation]' type=kotlin.reflect.KClass<kotlin.ExperimentalStdlibApi>, CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB ANNOTATION_CLASS name:ExperimentalTime modality:OPEN visibility:public superTypes:[kotlin.Annotation]' type=kotlin.reflect.KClass<kotlin.time.ExperimentalTime>, CLASS_REFERENCE 'CLASS IR_EXTERNAL_DECLARATION_STUB ANNOTATION_CLASS name:ExperimentalPathApi modality:OPEN visibility:public superTypes:[kotlin.Annotation]' type=kotlin.reflect.KClass<kotlin.io.path.ExperimentalPathApi>] type=kotlin.Array<out kotlin.reflect.KClass<out kotlin.Annotation>> varargElementType=kotlin.reflect.KClass<out kotlin.Annotation>)
+      OptIn(markerClass = [ExperimentalStdlibApi::class, ExperimentalTime::class, ExperimentalPathApi::class] type=kotlin.Array<out kotlin.reflect.KClass<out kotlin.Annotation>> varargElementType=kotlin.reflect.KClass<out kotlin.Annotation>)
     BLOCK_BODY
   FUN name:test visibility:public modality:FINAL returnType:kotlin.Unit
     BLOCK_BODY

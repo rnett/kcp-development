@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.config.CompilerConfigurationKey
 /**
  * A compiler option - includes both a [CliOption] and a [CompilerConfiguration] property.
  */
-public sealed class CompilerOption<T>(
+public sealed class CompilerOption<T : Any>(
     public val name: String,
     valueDescription: String,
     description: String,
@@ -21,7 +21,7 @@ public sealed class CompilerOption<T>(
 
     public val key: CompilerConfigurationKey<T> = CompilerConfigurationKey.create<T>(name)
 
-    public sealed class WithDefault<T>(name: String, valueDescription: String, description: String, required: Boolean, allowMultipleOccurrences: Boolean) :
+    public sealed class WithDefault<T : Any>(name: String, valueDescription: String, description: String, required: Boolean, allowMultipleOccurrences: Boolean) :
         CompilerOption<T>(name, valueDescription, description, required, allowMultipleOccurrences) {
         public abstract fun defaultValue(): T
 
@@ -45,7 +45,7 @@ public sealed class CompilerOption<T>(
         }
     }
 
-    public class SingularWithDefault<T>(
+    public class SingularWithDefault<T : Any>(
         name: String,
         valueDescription: String,
         description: String,

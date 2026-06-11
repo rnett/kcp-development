@@ -3,7 +3,7 @@ package dev.rnett.kcp.development.testing.runtime
 import dev.rnett.kcp.development.testing.generation.BaseTestGenerator
 import org.jetbrains.kotlin.cli.jvm.config.addJvmClasspathRoot
 import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.test.builders.TestConfigurationBuilder
+import org.jetbrains.kotlin.test.builders.NonGroupingPhaseTestConfigurationBuilder
 import org.jetbrains.kotlin.test.model.TestModule
 import org.jetbrains.kotlin.test.services.EnvironmentConfigurator
 import org.jetbrains.kotlin.test.services.RuntimeClasspathProvider
@@ -40,7 +40,7 @@ public class RuntimeClassPathProvider(testServices: TestServices) : RuntimeClass
  * Adds both [RuntimeEnvironmentConfigurator] and [RuntimeClassPathProvider] to the test services.
  * Autoconfigured by the Gradle plugin and automatically added by [BaseTestGenerator].
  */
-public fun TestConfigurationBuilder.useTestRuntime() {
+public fun NonGroupingPhaseTestConfigurationBuilder.useTestRuntime() {
     useConfigurators(::RuntimeEnvironmentConfigurator)
     useCustomRuntimeClasspathProviders(::RuntimeClassPathProvider)
 }
